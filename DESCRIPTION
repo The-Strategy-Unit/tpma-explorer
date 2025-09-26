@@ -1,0 +1,16 @@
+Package: cpma.explorer
+Title: Explore CPMA Data
+Version: 0.0.0.9000
+Authors@R:
+    person("Matt", "Dray", , "matt.dray@nhs.net", role = c("aut", "cre"))
+Description: A Shiny-app-in-a-package to explore data related to
+    categories of potentially mitigaable activity (CPMAs).
+License: MIT + file LICENSE
+URL: https://github.com/The-Strategy-Unit/cpma-explorer
+BugReports: https://github.com/The-Strategy-Unit/cpma-explorer/issues
+Imports:
+    bslib,
+    shiny
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2

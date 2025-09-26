@@ -1,0 +1,19 @@
+#' The application server-side
+#' @param input,output,session Internal parameters for {shiny}.
+#' @noRd
+app_server <- function(input, output, session) {
+  output$distPlot <- shiny::renderPlot({
+    x <- datasets::faithful[, 2]
+    bins <- seq(min(x), max(x), length.out = input$bins + 1)
+
+    # draw the histogram with the specified number of bins
+    graphics::hist(
+      x,
+      breaks = bins,
+      col = "darkgray",
+      border = "white",
+      xlab = "Waiting time to next eruption (in mins)",
+      main = "Histogram of waiting times"
+    )
+  })
+}
