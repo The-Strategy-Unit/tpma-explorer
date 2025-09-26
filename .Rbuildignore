@@ -1,0 +1,10 @@
+^\.github$
+^\.Rproj\.user$
+^\.vscode$
+^app\.R$
+^CODEOWNERS$
+^cpma-explorer\.Rproj$
+^dev$
+^LICENSE\.md$
+^README\.md$
+^rsconnect$
