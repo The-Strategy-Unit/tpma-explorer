@@ -1,4 +1,5 @@
 ^\.github$
+^\.Renviron\.example$
 ^\.Rproj\.user$
 ^\.vscode$
 ^app\.R$

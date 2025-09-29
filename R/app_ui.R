@@ -1,24 +1,39 @@
 #' The application User-Interface
-#' @param request Internal parameter for `{shiny}`.
+#' @param request Internal parameter for shiny.
 #' @noRd
 app_ui <- function(request) {
   bslib::page_sidebar(
-    title = "Old Faithful Geyser Data",
-    lang = "en",
-    theme = bslib::bs_theme(primary = "#005EB8", base_font = "Frutiger"),
+    title = "CPMA Explorer",
     sidebar = bslib::sidebar(
-      shiny::sliderInput(
-        "bins",
-        "Number of bins:",
-        min = 1,
-        max = 50,
-        value = 30
+      shiny::selectInput(
+        "provider_select",
+        "Choose a provider:",
+        choices = NULL
+      ),
+      shiny::selectInput(
+        "strategy_select",
+        "Choose a strategy:",
+        choices = NULL
       )
     ),
 
     bslib::card(
-      bslib::card_header("A nice plot"),
-      shiny::plotOutput("distPlot")
+      fill = FALSE,
+      bslib::card_header(
+        class = "bg-warning",
+        bsicons::bs_icon("exclamation-triangle"),
+        "Warning"
+      ),
+      "This application is in development and its output has not been verified.
+      The information presented here should not be relied on as fact."
+    ),
+
+    bslib::card(
+      bslib::card_header("Trend in rates"),
+      bslib::card_body(
+        shiny::plotOutput("rates_plot")
+      ),
+      full_screen = TRUE
     )
   )
 }

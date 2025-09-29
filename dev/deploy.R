@@ -10,6 +10,10 @@ rsconnect::deployApp(
     "DESCRIPTION",
     "app.R"
   ),
+  envVars = c(
+    "AZ_CONTAINER_INPUTS",
+    "AZ_STORAGE_EP"
+  ),
   lint = FALSE,
   forceUpdate = TRUE
 )
