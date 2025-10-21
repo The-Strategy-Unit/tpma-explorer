@@ -34,12 +34,14 @@ mod_plot_trend_server <- function(
           .data$strategy == selected_strategy()
         ) |>
         dplyr::arrange(.data$fyear)
-    }) |>
-      shiny::bindEvent(selected_provider(), selected_strategy())
+    })
 
     output$rates_plot <- shiny::renderPlot({
       rates <- rates_prepared()
-      shiny::req(nrow(rates) > 0)
+      shiny::validate(shiny::need(
+        nrow(rates) > 0,
+        "No data available for these selections"
+      ))
       plot_rates(rates)
     })
   })
