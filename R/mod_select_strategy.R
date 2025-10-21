@@ -12,14 +12,15 @@ mod_select_strategy_ui <- function(id) {
 
 #' Select Strategy Server
 #' @param id Internal parameter for `shiny`.
+#' @param strategies A named list. Names are TPMA variable names (e.g.
+#'     `"alcohol_partially_attributable_acute"`) and their values are the
+#'     corresponding human-readable names and codes (e.g.
+#'     `"Alcohol Related Admissions (Acute Conditions - Partially Attributable)
+#'     (IP-AA-001)"`).
 #' @noRd
-mod_select_strategy_server <- function(id) {
+mod_select_strategy_server <- function(id, strategies) {
   shiny::moduleServer(id, function(input, output, session) {
     shiny::observe({
-      strategies <- jsonlite::read_json(
-        app_sys("app", "data", "mitigators.json"),
-        simplify_vector = TRUE
-      )
       strategy_choices <- purrr::set_names(names(strategies), strategies)
       shiny::updateSelectInput(
         session,

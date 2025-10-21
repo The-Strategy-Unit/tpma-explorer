@@ -12,14 +12,13 @@ mod_select_provider_ui <- function(id) {
 
 #' Select Provider Server
 #' @param id Internal parameter for `shiny`.
+#' @param providers A named list. Names are provider codes (e.g. `"RCF"`) and
+#'     their values are the corresponding human-readable names and codes (e.g.
+#'     `"Airedale NHS Foundation Trust (RCF)"`).
 #' @noRd
-mod_select_provider_server <- function(id) {
+mod_select_provider_server <- function(id, providers) {
   shiny::moduleServer(id, function(input, output, session) {
     shiny::observe({
-      providers <- jsonlite::read_json(
-        app_sys("app", "data", "datasets.json"),
-        simplify_vector = TRUE
-      )
       provider_choices <- purrr::set_names(names(providers), providers)
       shiny::updateSelectInput(
         session,
