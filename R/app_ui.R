@@ -1,20 +1,12 @@
-#' The application User-Interface
-#' @param request Internal parameter for shiny.
+#' Application User Interface
+#' @param request Internal parameter for 'shiny'.
 #' @noRd
 app_ui <- function(request) {
   bslib::page_sidebar(
     title = "CPMA Explorer",
     sidebar = bslib::sidebar(
-      shiny::selectInput(
-        "provider_select",
-        "Choose a provider:",
-        choices = NULL
-      ),
-      shiny::selectInput(
-        "strategy_select",
-        "Choose a strategy:",
-        choices = NULL
-      )
+      mod_select_provider_ui("mod_select_provider"),
+      mod_select_strategy_ui("mod_select_strategy"),
     ),
 
     bslib::card(
@@ -30,9 +22,7 @@ app_ui <- function(request) {
 
     bslib::card(
       bslib::card_header("Trend in rates"),
-      bslib::card_body(
-        shiny::plotOutput("rates_plot")
-      ),
+      bslib::card_body(mod_plot_trend_ui("mod_plot_trend")),
       full_screen = TRUE
     )
   )
