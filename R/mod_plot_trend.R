@@ -21,8 +21,6 @@ mod_plot_trend_server <- function(
   selected_strategy
 ) {
   shiny::moduleServer(id, function(input, output, session) {
-    ns <- session$ns
-
     rates_prepared <- shiny::reactive({
       shiny::req(rates)
       shiny::req(selected_provider())
