@@ -12,7 +12,6 @@ mod_select_provider_ui <- function(id) {
 
 #' Select Provider Server
 #' @param id Internal parameter for `shiny`.
-#' @param
 #' @noRd
 mod_select_provider_server <- function(id) {
   shiny::moduleServer(id, function(input, output, session) {

@@ -12,7 +12,6 @@ mod_select_strategy_ui <- function(id) {
 
 #' Select Strategy Server
 #' @param id Internal parameter for `shiny`.
-#' @param
 #' @noRd
 mod_select_strategy_server <- function(id) {
   shiny::moduleServer(id, function(input, output, session) {

@@ -3,7 +3,7 @@
 #' @noRd
 app_ui <- function(request) {
   bslib::page_sidebar(
-    title = "CPMA Explorer",
+    title = "TPMA Explorer",
     sidebar = bslib::sidebar(
       mod_select_provider_ui("mod_select_provider"),
       mod_select_strategy_ui("mod_select_strategy"),
