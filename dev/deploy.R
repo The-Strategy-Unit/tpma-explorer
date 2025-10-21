@@ -1,6 +1,6 @@
 rsconnect::deployApp(
-  appName = "cpma-explorer",
-  appTitle = "CPMA explorer",
+  appName = "tpma-explorer",
+  appTitle = "TPMA explorer",
   server = "connect.strategyunitwm.nhs.uk",
   appId = 200,
   appFiles = c(

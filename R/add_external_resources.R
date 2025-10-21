@@ -16,5 +16,5 @@ add_external_resources <- function() {
 #'     within your package. The default, none, returns the root of the app.
 #' @noRd
 app_sys <- function(...) {
-  system.file(..., package = "cpma.explorer")
+  system.file(..., package = "tpma.explorer")
 }

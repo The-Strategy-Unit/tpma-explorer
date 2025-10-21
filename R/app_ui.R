@@ -3,7 +3,7 @@
 #' @noRd
 app_ui <- function(request) {
   bslib::page_sidebar(
-    title = "CPMA Explorer",
+    title = "TPMA Explorer",
     sidebar = bslib::sidebar(
       shiny::selectInput(
         "provider_select",
