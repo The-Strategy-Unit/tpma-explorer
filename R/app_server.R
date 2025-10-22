@@ -9,10 +9,13 @@ app_server <- function(input, output, session) {
     app_sys("app", "data", "datasets.json"),
     simplify_vector = TRUE
   )
-
   strategies_lookup <- jsonlite::read_json(
     app_sys("app", "data", "mitigators.json"),
     simplify_vector = TRUE
+  )
+  descriptions_lookup <- jsonlite::read_json(
+    "inst/app/data/descriptions.json",
+    simplifyVector = TRUE
   )
 
   selected_provider <- mod_select_provider_server(
@@ -24,6 +27,11 @@ app_server <- function(input, output, session) {
     strategies_lookup
   )
 
+  mod_show_description_server(
+    "mod_show_description",
+    descriptions_lookup,
+    selected_strategy
+  )
   mod_plot_trend_server(
     "mod_plot_trend",
     rates_data,
