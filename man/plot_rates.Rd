@@ -17,6 +17,9 @@ financial year in the form \code{"2023/24"}.}
 \item{rate_col}{Character. Name of the column in \code{rates_df} containing the
 rate value (the type of which is dependent on the strategy).}
 }
+\value{
+A ggplot2 object.
+}
 \description{
 Plot Trend in Rates
 }
