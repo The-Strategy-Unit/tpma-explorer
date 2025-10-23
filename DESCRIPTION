@@ -16,13 +16,18 @@ Imports:
     bslib,
     dplyr,
     ggplot2,
+    ggrepel,
     glue,
     jsonlite,
     markdown,
     purrr,
+    readr,
     rlang,
+    scales,
     shiny,
     stringr,
+    tidyr,
+    tidyselect,
     withr
 Remotes:
     The-Strategy-Unit/azkit
