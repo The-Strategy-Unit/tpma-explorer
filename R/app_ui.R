@@ -4,6 +4,7 @@
 app_ui <- function(request) {
   bslib::page_sidebar(
     title = "TPMA Explorer",
+
     sidebar = bslib::sidebar(
       mod_select_provider_ui("mod_select_provider"),
       mod_select_strategy_ui("mod_select_strategy"),
@@ -26,8 +27,13 @@ app_ui <- function(request) {
         bslib::card_body(mod_show_description_ui("mod_show_description"))
       ),
       bslib::card(
-        bslib::card_header("Trend in rates"),
+        bslib::card_header("Trend"),
         bslib::card_body(mod_plot_trend_ui("mod_plot_trend")),
+        full_screen = TRUE
+      ),
+      bslib::card(
+        bslib::card_header("Funnel"),
+        bslib::card_body(mod_plot_funnel_ui("mod_plot_funnel")),
         full_screen = TRUE
       )
     )

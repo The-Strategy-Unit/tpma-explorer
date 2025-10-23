@@ -22,3 +22,50 @@ plot_rates <- function(rates_df, fyear_col = "fyear", rate_col = "rate") {
       y = "Rate"
     )
 }
+
+#' Plot Funnel
+#' @param rates_funnel_data A data.frame.
+#' @param plot_range Character. A vector of length two giving the y-axis limits.
+#' @param x_axis_title Character.
+#' @return A ggplot2 object.
+#' @export
+plot_funnel <- function(rates_funnel_data, plot_range, x_axis_title) {
+  lines_data <- rates_funnel_data |>
+    dplyr::select(
+      "denominator",
+      tidyselect::matches("^(lower|upper)"),
+      "mean"
+    ) |>
+    tidyr::pivot_longer(-"denominator", values_to = "rate")
+
+  rates_funnel_data |>
+    ggplot2::ggplot(ggplot2::aes(.data$denominator, .data$rate)) +
+    ggplot2::geom_line(
+      data = lines_data,
+      ggplot2::aes(group = .data$name),
+      linetype = "dashed",
+      na.rm = TRUE
+    ) +
+    ggplot2::geom_point(ggplot2::aes(colour = .data$is_peer)) +
+    ggrepel::geom_text_repel(
+      data = dplyr::filter(rates_funnel_data, !is.na(.data$is_peer)),
+      ggplot2::aes(label = .data$provider, colour = .data$is_peer),
+      max.overlaps = Inf # include all labels
+    ) +
+    ggplot2::scale_colour_manual(
+      values = c("TRUE" = "black", "FALSE" = "red"),
+      na.value = "lightgrey"
+    ) +
+    ggplot2::theme(legend.position = "none") +
+    ggplot2::scale_x_continuous(labels = scales::comma_format()) +
+    ggplot2::coord_cartesian(ylim = plot_range) +
+    ggplot2::labs(x = x_axis_title) +
+    ggplot2::theme(
+      axis.ticks.y = ggplot2::element_blank(),
+      axis.text.y = ggplot2::element_blank(),
+      axis.title.y = ggplot2::element_blank(),
+      legend.position = "none",
+      panel.background = ggplot2::element_blank(),
+      panel.grid.major.y = ggplot2::element_line("#9d928a", linetype = "dotted")
+    )
+}
