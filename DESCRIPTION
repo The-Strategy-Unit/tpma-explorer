@@ -16,10 +16,14 @@ Imports:
     bslib,
     dplyr,
     ggplot2,
+    glue,
     jsonlite,
+    markdown,
     purrr,
     rlang,
-    shiny
+    shiny,
+    stringr,
+    withr
 Remotes:
     The-Strategy-Unit/azkit
 Encoding: UTF-8

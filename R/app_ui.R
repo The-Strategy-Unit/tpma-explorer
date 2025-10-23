@@ -20,10 +20,16 @@ app_ui <- function(request) {
       The information presented here should not be relied on as fact."
     ),
 
-    bslib::card(
-      bslib::card_header("Trend in rates"),
-      bslib::card_body(mod_plot_trend_ui("mod_plot_trend")),
-      full_screen = TRUE
+    bslib::layout_columns(
+      bslib::card(
+        bslib::card_header("Description"),
+        bslib::card_body(mod_show_description_ui("mod_show_description"))
+      ),
+      bslib::card(
+        bslib::card_header("Trend in rates"),
+        bslib::card_body(mod_plot_trend_ui("mod_plot_trend")),
+        full_screen = TRUE
+      )
     )
   )
 }
