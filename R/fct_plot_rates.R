@@ -1,4 +1,4 @@
-#' Plot Trend in Rates
+#' Plot Rates Trend Over Time
 #' @param rates_df A data.frame. Must contain columns given by `fyear_col` and
 #'     `rate_col`. Pre-filtered for a given provider and strategy. One row per
 #'     financial year.
@@ -8,7 +8,7 @@
 #'     rate value (the type of which is dependent on the strategy).
 #' @return A ggplot2 object.
 #' @export
-plot_rates <- function(rates_df, fyear_col = "fyear", rate_col = "rate") {
+plot_rates_trend <- function(rates_df, fyear_col = "fyear", rate_col = "rate") {
   rates_df |>
     ggplot2::ggplot(
       ggplot2::aes(
@@ -23,13 +23,13 @@ plot_rates <- function(rates_df, fyear_col = "fyear", rate_col = "rate") {
     )
 }
 
-#' Plot Funnel
+#' Plot Rates Funnel with Peers
 #' @param rates_funnel_data A data.frame.
 #' @param plot_range Character. A vector of length two giving the y-axis limits.
 #' @param x_axis_title Character.
 #' @return A ggplot2 object.
 #' @export
-plot_funnel <- function(rates_funnel_data, plot_range, x_axis_title) {
+plot_rates_funnel <- function(rates_funnel_data, plot_range, x_axis_title) {
   lines_data <- rates_funnel_data |>
     dplyr::select(
       "denominator",
@@ -66,6 +66,33 @@ plot_funnel <- function(rates_funnel_data, plot_range, x_axis_title) {
       axis.title.y = ggplot2::element_blank(),
       legend.position = "none",
       panel.background = ggplot2::element_blank(),
+      panel.grid.major.y = ggplot2::element_line("#9d928a", linetype = "dotted")
+    )
+}
+
+#' Plot Rates Boxplot with Peers
+#' @param trend_data A data.frame.
+#' @param plot_range Character. A vector of length two giving the y-axis limits.
+#' @return A ggplot2 object.
+#' @export
+plot_rates_box <- function(trend_data, plot_range) {
+  trend_data |>
+    ggplot2::ggplot(ggplot2::aes(x = "", y = .data$rate)) +
+    ggplot2::geom_boxplot(alpha = 0.2, outlier.shape = NA) +
+    ggbeeswarm::geom_quasirandom(ggplot2::aes(colour = .data$is_peer)) +
+    ggplot2::scale_colour_manual(
+      values = c("TRUE" = "black", "FALSE" = "red"),
+      na.value = "lightgrey"
+    ) +
+    ggplot2::coord_cartesian(ylim = plot_range) +
+    ggplot2::labs(x = "") +
+    ggplot2::theme(
+      axis.ticks.y = ggplot2::element_blank(),
+      axis.text.y = ggplot2::element_blank(),
+      axis.title.y = ggplot2::element_blank(),
+      legend.position = "none",
+      panel.background = ggplot2::element_blank(),
+      axis.ticks.x = ggplot2::element_blank(),
       panel.grid.major.y = ggplot2::element_line("#9d928a", linetype = "dotted")
     )
 }

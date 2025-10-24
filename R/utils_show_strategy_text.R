@@ -7,7 +7,7 @@
 #'     [NHP Inputs](https://github.com/The-Strategy-Unit/nhp_inputs/).
 #' @return Character.
 #' @export
-fetch_strategy_description <- function(strategy, descriptions_lookup) {
+fetch_strategy_text <- function(strategy, descriptions_lookup) {
   is_stub <- stringr::str_detect(strategy, descriptions_lookup)
   strategy_stub <- descriptions_lookup[is_stub]
 
@@ -28,7 +28,7 @@ fetch_strategy_description <- function(strategy, descriptions_lookup) {
 
 #' Convert Strategy Text from Markdown to HTML
 #' @param text Character. The Markdown text description for a strategy, as read
-#'     by [fetch_strategy_description].
+#'     by [fetch_strategy_text].
 #' @return HTML/character.
 #' @export
 convert_md_to_html <- function(text) {

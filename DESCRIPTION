@@ -15,6 +15,7 @@ Imports:
     bsicons,
     bslib,
     dplyr,
+    ggbeeswarm,
     ggplot2,
     ggrepel,
     glue,

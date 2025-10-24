@@ -1,12 +1,12 @@
-#' Plot Funnel UI
+#' Plot Rates Box UI
 #' @param id,input,output,session Internal parameters for `shiny`.
 #' @noRd
-mod_plot_funnel_ui <- function(id) {
+mod_plot_rates_box_ui <- function(id) {
   ns <- shiny::NS(id)
-  shiny::plotOutput(ns("funnel_plot"))
+  shiny::plotOutput(ns("rates_box_plot"))
 }
 
-#' Plot Funnel Server
+#' Plot Rates Box Server
 #' @param id Internal parameter for `shiny`.
 #' @param rates A data.frame. Annual rate values for combinations of provider
 #'     and TPMA.
@@ -15,7 +15,8 @@ mod_plot_funnel_ui <- function(id) {
 #' @param selected_strategy Character. TPMA variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
 #' @noRd
-mod_plot_funnel_server <- function(
+#' @noRd
+mod_plot_rates_box_server <- function(
   id,
   rates,
   peers_lookup,
@@ -33,27 +34,22 @@ mod_plot_funnel_server <- function(
         selected_provider(),
         peers_lookup
       )
-      rates_baseline_data <- rates |>
+      rates |>
         generate_rates_baseline_data(
           selected_provider(),
           provider_peers,
           selected_strategy(),
           start_year = "202324"
         )
-      generate_rates_funnel_data(rates_baseline_data)
     })
 
-    output$funnel_plot <- shiny::renderPlot({
+    output$rates_box_plot <- shiny::renderPlot({
       rates <- rates_prepared()
       shiny::validate(shiny::need(
         nrow(rates) > 0,
-        "No data available for these selections"
+        "No data available for these selections."
       ))
-      plot_funnel(
-        rates,
-        plot_range = c(0, max(rates$rate)),
-        x_axis_title = "Denominator"
-      )
+      plot_rates_box(rates, plot_range = c(0, max(rates$rate)))
     })
   })
 }

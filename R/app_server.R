@@ -35,19 +35,26 @@ app_server <- function(input, output, session) {
   )
 
   # Modules ----
-  mod_show_description_server(
-    "mod_show_description",
+  mod_show_strategy_text_server(
+    "mod_show_strategy_text",
     descriptions_lookup,
     selected_strategy
   )
-  mod_plot_trend_server(
-    "mod_plot_trend",
+  mod_plot_rates_trend_server(
+    "mod_plot_rates_trend",
     rates_data,
     selected_provider,
     selected_strategy
   )
-  mod_plot_funnel_server(
-    "mod_plot_funnel",
+  mod_plot_rates_funnel_server(
+    "mod_plot_rates_funnel",
+    rates_data,
+    peers_lookup,
+    selected_provider,
+    selected_strategy
+  )
+  mod_plot_rates_box_server(
+    "mod_plot_rates_box",
     rates_data,
     peers_lookup,
     selected_provider,
