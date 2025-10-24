@@ -1,12 +1,12 @@
-#' Plot Trend UI
+#' Plot Rates Trend UI
 #' @param id,input,output,session Internal parameters for `shiny`.
 #' @noRd
-mod_plot_trend_ui <- function(id) {
+mod_plot_rates_trend_ui <- function(id) {
   ns <- shiny::NS(id)
-  shiny::plotOutput(ns("rates_plot"))
+  shiny::plotOutput(ns("rates_trend_plot"))
 }
 
-#' Plot Trend Server
+#' Plot Rates Trend Server
 #' @param id Internal parameter for `shiny`.
 #' @param rates A data.frame. Annual rate values for combinations of provider
 #'     and TPMA.
@@ -14,7 +14,7 @@ mod_plot_trend_ui <- function(id) {
 #' @param selected_strategy Character. TPMA variable name, e.g.
 #'     `"discharged_no_treatment_adult_ambulance"`.
 #' @noRd
-mod_plot_trend_server <- function(
+mod_plot_rates_trend_server <- function(
   id,
   rates,
   selected_provider,
@@ -34,13 +34,13 @@ mod_plot_trend_server <- function(
         dplyr::arrange(.data$fyear)
     })
 
-    output$rates_plot <- shiny::renderPlot({
+    output$rates_trend_plot <- shiny::renderPlot({
       rates <- rates_prepared()
       shiny::validate(shiny::need(
         nrow(rates) > 0,
-        "No data available for these selections"
+        "No data available for these selections."
       ))
-      plot_rates(rates)
+      plot_rates_trend(rates)
     })
   })
 }

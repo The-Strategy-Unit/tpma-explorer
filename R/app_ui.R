@@ -3,7 +3,7 @@
 #' @noRd
 app_ui <- function(request) {
   bslib::page_sidebar(
-    title = "TPMA Explorer",
+    title = "Explore TPMA data (in development)",
 
     sidebar = bslib::sidebar(
       mod_select_provider_ui("mod_select_provider"),
@@ -24,16 +24,23 @@ app_ui <- function(request) {
     bslib::layout_columns(
       bslib::card(
         bslib::card_header("Description"),
-        bslib::card_body(mod_show_description_ui("mod_show_description"))
+        bslib::card_body(mod_show_strategy_text_ui(
+          "mod_show_strategy_text"
+        ))
       ),
       bslib::card(
-        bslib::card_header("Trend"),
-        bslib::card_body(mod_plot_trend_ui("mod_plot_trend")),
+        bslib::card_header("Rates Trend"),
+        bslib::card_body(mod_plot_rates_trend_ui("mod_plot_rates_trend")),
         full_screen = TRUE
       ),
       bslib::card(
-        bslib::card_header("Funnel"),
-        bslib::card_body(mod_plot_funnel_ui("mod_plot_funnel")),
+        bslib::card_header("Rates Funnel"),
+        bslib::card_body(mod_plot_rates_funnel_ui("mod_plot_rates_funnel")),
+        full_screen = TRUE
+      ),
+      bslib::card(
+        bslib::card_header("Rates Box"),
+        bslib::card_body(mod_plot_rates_box_ui("mod_plot_rates_box")),
         full_screen = TRUE
       )
     )
