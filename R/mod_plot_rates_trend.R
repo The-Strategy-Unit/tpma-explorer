@@ -3,7 +3,11 @@
 #' @noRd
 mod_plot_rates_trend_ui <- function(id) {
   ns <- shiny::NS(id)
-  shiny::plotOutput(ns("rates_trend_plot"))
+  bslib::card(
+    bslib::card_header("Rates Trend"),
+    bslib::card_body(shiny::plotOutput(ns("rates_trend_plot"))),
+    full_screen = TRUE
+  )
 }
 
 #' Plot Rates Trend Server
@@ -13,34 +17,23 @@ mod_plot_rates_trend_ui <- function(id) {
 #' @param selected_provider Character. Provider code, e.g. `"RCX"`.
 #' @param selected_strategy Character. TPMA variable name, e.g.
 #'     `"discharged_no_treatment_adult_ambulance"`.
+#' @param y_axis_limits Numeric vector. Min and max values for the y axis.
 #' @noRd
 mod_plot_rates_trend_server <- function(
   id,
   rates,
   selected_provider,
-  selected_strategy
+  selected_strategy,
+  y_axis_limits
 ) {
   shiny::moduleServer(id, function(input, output, session) {
-    rates_prepared <- shiny::reactive({
-      shiny::req(rates)
-      shiny::req(selected_provider())
-      shiny::req(selected_strategy())
-
-      rates |>
-        dplyr::filter(
-          .data$provider == selected_provider(),
-          .data$strategy == selected_strategy()
-        ) |>
-        dplyr::arrange(.data$fyear)
-    })
-
     output$rates_trend_plot <- shiny::renderPlot({
-      rates <- rates_prepared()
+      rates <- rates()
       shiny::validate(shiny::need(
         nrow(rates) > 0,
         "No data available for these selections."
       ))
-      plot_rates_trend(rates)
+      plot_rates_trend(rates, y_axis_limits = y_axis_limits())
     })
   })
 }

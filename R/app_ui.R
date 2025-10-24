@@ -22,27 +22,9 @@ app_ui <- function(request) {
     ),
 
     bslib::layout_columns(
-      bslib::card(
-        bslib::card_header("Description"),
-        bslib::card_body(mod_show_strategy_text_ui(
-          "mod_show_strategy_text"
-        ))
-      ),
-      bslib::card(
-        bslib::card_header("Rates Trend"),
-        bslib::card_body(mod_plot_rates_trend_ui("mod_plot_rates_trend")),
-        full_screen = TRUE
-      ),
-      bslib::card(
-        bslib::card_header("Rates Funnel"),
-        bslib::card_body(mod_plot_rates_funnel_ui("mod_plot_rates_funnel")),
-        full_screen = TRUE
-      ),
-      bslib::card(
-        bslib::card_header("Rates Box"),
-        bslib::card_body(mod_plot_rates_box_ui("mod_plot_rates_box")),
-        full_screen = TRUE
-      )
+      col_widths = c(3, 9),
+      mod_show_strategy_text_ui("mod_show_strategy_text"),
+      mod_plot_rates_ui("mod_plot_rates")
     )
   )
 }
