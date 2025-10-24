@@ -2,9 +2,11 @@
 #' @param input,output,session Internal parameters for 'shiny'.
 #' @noRd
 app_server <- function(input, output, session) {
+  # Data ----
   container <- azkit::get_container(Sys.getenv("AZ_CONTAINER_INPUTS"))
   rates_data <- azkit::read_azure_parquet(container, "rates", "dev")
 
+  # Lookups ----
   providers_lookup <- jsonlite::read_json(
     app_sys("app", "data", "datasets.json"),
     simplify_vector = TRUE
@@ -14,10 +16,15 @@ app_server <- function(input, output, session) {
     simplify_vector = TRUE
   )
   descriptions_lookup <- jsonlite::read_json(
-    "inst/app/data/descriptions.json",
+    app_sys("app", "data", "descriptions.json"),
     simplifyVector = TRUE
   )
+  peers_lookup <- readr::read_csv(
+    app_sys("app", "data", "peers.csv"),
+    col_types = "c"
+  )
 
+  # User inputs ----
   selected_provider <- mod_select_provider_server(
     "mod_select_provider",
     providers_lookup
@@ -27,6 +34,7 @@ app_server <- function(input, output, session) {
     strategies_lookup
   )
 
+  # Modules ----
   mod_show_description_server(
     "mod_show_description",
     descriptions_lookup,
@@ -35,6 +43,13 @@ app_server <- function(input, output, session) {
   mod_plot_trend_server(
     "mod_plot_trend",
     rates_data,
+    selected_provider,
+    selected_strategy
+  )
+  mod_plot_funnel_server(
+    "mod_plot_funnel",
+    rates_data,
+    peers_lookup,
     selected_provider,
     selected_strategy
   )
