@@ -4,17 +4,17 @@
 \alias{plot_rates_funnel}
 \title{Plot Rates Funnel with Peers}
 \usage{
-plot_rates_funnel(rates_funnel_data, plot_range, x_axis_title)
+plot_rates_funnel(rates_funnel_data, y_axis_limits, x_axis_title)
 }
 \arguments{
 \item{rates_funnel_data}{A data.frame.}
 
-\item{plot_range}{Character. A vector of length two giving the y-axis limits.}
+\item{y_axis_limits}{Numeric vector. Min and max values for the y axis.}
 
 \item{x_axis_title}{Character.}
 }
 \value{
-A ggplot2 object.
+A 'ggplot2' object.
 }
 \description{
 Plot Rates Funnel with Peers

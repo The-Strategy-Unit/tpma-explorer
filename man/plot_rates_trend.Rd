@@ -4,21 +4,29 @@
 \alias{plot_rates_trend}
 \title{Plot Rates Trend Over Time}
 \usage{
-plot_rates_trend(rates_df, fyear_col = "fyear", rate_col = "rate")
+plot_rates_trend(
+  rates_df,
+  baseline_year = 202324,
+  x_axis_title = "Financial year",
+  y_axis_title = "Rate",
+  y_axis_limits
+)
 }
 \arguments{
 \item{rates_df}{A data.frame. Must contain columns given by \code{fyear_col} and
 \code{rate_col}. Pre-filtered for a given provider and strategy. One row per
 financial year.}
 
-\item{fyear_col}{Character. Name of the column in \code{rates_df} containing the
-financial year in the form \code{"2023/24"}.}
+\item{baseline_year}{Numeric. In the form \code{202324}.}
 
-\item{rate_col}{Character. Name of the column in \code{rates_df} containing the
-rate value (the type of which is dependent on the strategy).}
+\item{x_axis_title}{Character.}
+
+\item{y_axis_title}{Character.}
+
+\item{y_axis_limits}{Numeric vector. Min and max values for the y axis.}
 }
 \value{
-A ggplot2 object.
+A 'ggplot2' object.
 }
 \description{
 Plot Rates Trend Over Time

@@ -3,7 +3,11 @@
 #' @noRd
 mod_plot_rates_box_ui <- function(id) {
   ns <- shiny::NS(id)
-  shiny::plotOutput(ns("rates_box_plot"))
+  bslib::card(
+    bslib::card_header("Rates Box"),
+    bslib::card_body(shiny::plotOutput(ns("rates_box_plot"))),
+    full_screen = TRUE
+  )
 }
 
 #' Plot Rates Box Server
@@ -14,42 +18,24 @@ mod_plot_rates_box_ui <- function(id) {
 #' @param selected_provider Character. Provider code, e.g. `"RCX"`.
 #' @param selected_strategy Character. TPMA variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
-#' @noRd
+#' @param y_axis_limits Numeric vector. Min and max values for the y axis.
 #' @noRd
 mod_plot_rates_box_server <- function(
   id,
   rates,
   peers_lookup,
   selected_provider,
-  selected_strategy
+  selected_strategy,
+  y_axis_limits
 ) {
   shiny::moduleServer(id, function(input, output, session) {
-    rates_prepared <- shiny::reactive({
-      shiny::req(rates)
-      shiny::req(peers_lookup)
-      shiny::req(selected_provider())
-      shiny::req(selected_strategy())
-
-      provider_peers <- isolate_provider_peers(
-        selected_provider(),
-        peers_lookup
-      )
-      rates |>
-        generate_rates_baseline_data(
-          selected_provider(),
-          provider_peers,
-          selected_strategy(),
-          start_year = "202324"
-        )
-    })
-
     output$rates_box_plot <- shiny::renderPlot({
-      rates <- rates_prepared()
+      rates <- rates()
       shiny::validate(shiny::need(
         nrow(rates) > 0,
         "No data available for these selections."
       ))
-      plot_rates_box(rates, plot_range = c(0, max(rates$rate)))
+      plot_rates_box(rates, y_axis_limits())
     })
   })
 }

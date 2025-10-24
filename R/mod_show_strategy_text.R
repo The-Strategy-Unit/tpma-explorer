@@ -3,7 +3,10 @@
 #' @noRd
 mod_show_strategy_text_ui <- function(id) {
   ns <- shiny::NS(id)
-  shiny::htmlOutput(ns("strategy_text"))
+  bslib::card(
+    bslib::card_header("Description"),
+    bslib::card_body(shiny::htmlOutput(ns("strategy_text")))
+  )
 }
 
 #' Show Strategy Description Server
