@@ -1,6 +1,6 @@
 #' Fetch Strategy Text from NHP Inputs
-#' @param strategy Character. The variable name for a strategy, e.g.
-#'     `"discharged_no_treatment_adult_ambulance"`.
+#' @param strategy Character. Strategy variable name, e.g.
+#'     `"alcohol_partially_attributable_acute"`.
 #' @param descriptions_lookup Character. The names of the available Markdown
 #'     description files.
 #' @details Markdown files containing strategy descriptions are read from

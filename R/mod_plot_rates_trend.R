@@ -6,17 +6,18 @@ mod_plot_rates_trend_ui <- function(id) {
   bslib::card(
     bslib::card_header("Rates Trend"),
     bslib::card_body(shiny::plotOutput(ns("rates_trend_plot"))),
-    full_screen = TRUE
+    full_screen = TRUE,
+    fill = FALSE
   )
 }
 
 #' Plot Rates Trend Server
 #' @param id Internal parameter for `shiny`.
 #' @param rates A data.frame. Annual rate values for combinations of provider
-#'     and TPMA.
-#' @param selected_provider Character. Provider code, e.g. `"RCX"`.
-#' @param selected_strategy Character. TPMA variable name, e.g.
-#'     `"discharged_no_treatment_adult_ambulance"`.
+#'     and strategy.
+#' @param selected_provider Character. Provider code, e.g. `"RCF"`.
+#' @param selected_strategy Character. Strategy variable name, e.g.
+#'     `"alcohol_partially_attributable_acute"`.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
 #' @noRd
 mod_plot_rates_trend_server <- function(

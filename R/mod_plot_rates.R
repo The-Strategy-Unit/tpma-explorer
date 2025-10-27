@@ -3,6 +3,7 @@
 #' @noRd
 mod_plot_rates_ui <- function(id) {
   ns <- shiny::NS(id)
+  # these plots share a y axis, so don't use layout_column_wrap()
   bslib::layout_columns(
     col_widths = 4,
     mod_plot_rates_trend_ui(ns("mod_plot_rates_trend")),
@@ -14,10 +15,10 @@ mod_plot_rates_ui <- function(id) {
 #' Plot Rates Server
 #' @param id Internal parameter for `shiny`.
 #' @param rates A data.frame. Annual rate values for combinations of provider
-#'     and TPMA.
+#'     and strategy.
 #' @param peers_lookup A data.frame. A row per provider-peer pair.
-#' @param selected_provider Character. Provider code, e.g. `"RCX"`.
-#' @param selected_strategy Character. TPMA variable name, e.g.
+#' @param selected_provider Character. Provider code, e.g. `"RCF"`.
+#' @param selected_strategy Character. Strategy variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
 #' @noRd
 mod_plot_rates_server <- function(

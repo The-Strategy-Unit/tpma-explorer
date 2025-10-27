@@ -6,17 +6,18 @@ mod_plot_rates_funnel_ui <- function(id) {
   bslib::card(
     bslib::card_header("Rates Funnel"),
     bslib::card_body(shiny::plotOutput(ns("rates_funnel_plot"))),
-    full_screen = TRUE
+    full_screen = TRUE,
+    fill = FALSE
   )
 }
 
 #' Plot Rates Funnel Server
 #' @param id Internal parameter for `shiny`.
 #' @param rates A data.frame. Annual rate values for combinations of provider
-#'     and TPMA.
+#'     and strategy
 #' @param peers_lookup A data.frame. A row per provider-peer pair.
-#' @param selected_provider Character. Provider code, e.g. `"RCX"`.
-#' @param selected_strategy Character. TPMA variable name, e.g.
+#' @param selected_provider Character. Provider code, e.g. `"RCF"`.
+#' @param selected_strategy Character. Strategy variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
 #' @noRd
