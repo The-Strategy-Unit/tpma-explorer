@@ -4,15 +4,15 @@
 \alias{plot_rates_box}
 \title{Plot Rates Boxplot with Peers}
 \usage{
-plot_rates_box(trend_data, plot_range)
+plot_rates_box(trend_data, y_axis_limits)
 }
 \arguments{
 \item{trend_data}{A data.frame.}
 
-\item{plot_range}{Character. A vector of length two giving the y-axis limits.}
+\item{y_axis_limits}{Numeric vector. Min and max values for the y axis.}
 }
 \value{
-A ggplot2 object.
+A 'ggplot2' object.
 }
 \description{
 Plot Rates Boxplot with Peers
