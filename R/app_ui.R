@@ -21,10 +21,10 @@ app_ui <- function(request) {
       The information presented here should not be relied on as fact."
     ),
 
-    bslib::layout_columns(
-      col_widths = c(3, 9),
+    bslib::layout_column_wrap(
       mod_show_strategy_text_ui("mod_show_strategy_text"),
-      mod_plot_rates_ui("mod_plot_rates")
+      mod_plot_rates_ui("mod_plot_rates"),
+      mod_table_procedures_ui("mod_table_procedures")
     )
   )
 }
