@@ -31,44 +31,29 @@ mod_table_diagnoses_server <- function(
   start_year
 ) {
   shiny::moduleServer(id, function(input, output, session) {
-    shiny::validate(
-      shiny::need(
+    diagnoses_prepared <- shiny::reactive({
+      shiny::req(diagnoses)
+      shiny::req(selected_provider())
+      shiny::req(selected_strategy())
+      shiny::req(start_year)
+
+      prepare_diagnoses_data(
         diagnoses,
-        message = "Insufficient or suppressed data."
+        diagnoses_lookup,
+        selected_provider(),
+        selected_strategy(),
+        start_year
       )
-    )
+    })
 
     output$diagnoses_table <- gt::render_gt({
-      shiny::validate(
-        shiny::need(
-          !is.null(diagnoses) && nrow(diagnoses) > 0,
-          "No diagnoses to display."
-        )
-      )
-
-      diagnoses_prepared <- shiny::reactive({
-        shiny::req(diagnoses)
-        shiny::req(selected_provider())
-        shiny::req(selected_strategy())
-        shiny::req(start_year)
-
-        prepare_diagnoses_data(
-          diagnoses,
-          diagnoses_lookup,
-          selected_provider(),
-          selected_strategy(),
-          start_year
-        )
-      })
-
       shiny::validate(
         shiny::need(
           !is.null(diagnoses_prepared()) && nrow(diagnoses_prepared()) > 0,
           "No diagnoses to display."
         )
       )
-
-      entable_diagnoses(diagnoses_prepared())
+      diagnoses_prepared() |> entable_diagnoses()
     })
   })
 }

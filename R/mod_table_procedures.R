@@ -31,44 +31,29 @@ mod_table_procedures_server <- function(
   start_year
 ) {
   shiny::moduleServer(id, function(input, output, session) {
-    shiny::validate(
-      shiny::need(
+    procedures_prepared <- shiny::reactive({
+      shiny::req(procedures)
+      shiny::req(selected_provider())
+      shiny::req(selected_strategy())
+      shiny::req(start_year)
+
+      prepare_procedures_data(
         procedures,
-        message = "Insufficient or suppressed data."
+        procedures_lookup,
+        selected_provider(),
+        selected_strategy(),
+        start_year
       )
-    )
+    })
 
     output$procedures_table <- gt::render_gt({
-      shiny::validate(
-        shiny::need(
-          !is.null(procedures) && nrow(procedures) > 0,
-          "No procedures to display."
-        )
-      )
-
-      procedures_prepared <- shiny::reactive({
-        shiny::req(procedures)
-        shiny::req(selected_provider())
-        shiny::req(selected_strategy())
-        shiny::req(start_year)
-
-        prepare_procedures_data(
-          procedures,
-          procedures_lookup,
-          selected_provider(),
-          selected_strategy(),
-          start_year
-        )
-      })
-
       shiny::validate(
         shiny::need(
           !is.null(procedures_prepared()) && nrow(procedures_prepared()) > 0,
           "No procedures to display."
         )
       )
-
-      entable_procedures(procedures_prepared())
+      procedures_prepared() |> entable_procedures()
     })
   })
 }
