@@ -19,6 +19,11 @@ app_server <- function(input, output, session) {
     "procedures",
     data_version
   )
+  diagnoses_data <- azkit::read_azure_parquet(
+    inputs_container,
+    "diagnoses",
+    data_version
+  )
 
   # Lookups ----
   providers_lookup <- jsonlite::read_json(
@@ -39,6 +44,10 @@ app_server <- function(input, output, session) {
   )
   procedures_lookup <- readr::read_csv(
     app_sys("app", "data", "procedures.csv"),
+    col_types = "c"
+  )
+  diagnoses_lookup <- readr::read_csv(
+    app_sys("app", "data", "diagnoses.csv"),
     col_types = "c"
   )
 
@@ -69,6 +78,14 @@ app_server <- function(input, output, session) {
     "mod_table_procedures",
     procedures_data,
     procedures_lookup,
+    selected_provider,
+    selected_strategy,
+    start_year
+  )
+  mod_table_diagnoses_server(
+    "mod_table_diagnoses",
+    diagnoses_data,
+    diagnoses_lookup,
     selected_provider,
     selected_strategy,
     start_year

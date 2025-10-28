@@ -24,7 +24,8 @@ app_ui <- function(request) {
     bslib::layout_column_wrap(
       mod_show_strategy_text_ui("mod_show_strategy_text"),
       mod_plot_rates_ui("mod_plot_rates"),
-      mod_table_procedures_ui("mod_table_procedures")
+      mod_table_procedures_ui("mod_table_procedures"),
+      mod_table_diagnoses_ui("mod_table_diagnoses")
     )
   )
 }

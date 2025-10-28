@@ -45,3 +45,54 @@ prepare_procedures_data <- function(
 
   procedures_prepared
 }
+
+#' Prepare Data for Diagnoses Table
+#' @param diagnoses A data.frame. Annual diagnosis counts by provider and
+#'     strategy.
+#' @param diagnoses_lookup A data.frame. Type, code and description for
+#'     diagnoses
+#' @param provider Character. Provider code, e.g. `"RCF"`.
+#' @param strategy Character. Strategy variable name, e.g.
+#'     `"alcohol_partially_attributable_acute"`.
+#' @param start_year Integer. Baseline year in the form `202324`.
+#' @return A data.frame.
+#' @export
+prepare_diagnoses_data <- function(
+  diagnoses,
+  diagnoses_lookup,
+  provider,
+  strategy,
+  start_year
+) {
+  diagnoses_prepared <- diagnoses |>
+    dplyr::filter(
+      .data$provider == .env$provider,
+      .data$strategy == .env$strategy,
+      .data$fyear == .env$start_year
+    ) |>
+    dplyr::inner_join(
+      diagnoses_lookup,
+      by = c("diagnosis" = "diagnosis_code")
+    ) |>
+    tidyr::replace_na(list(
+      description = "Unknown/Invalid Diagnosis Code"
+    )) |>
+    dplyr::select("diagnosis_description", "n", "pcnt")
+
+  n_total <- sum(diagnoses_prepared[["n"]])
+  pcnt_total <- sum(diagnoses_prepared[["pcnt"]])
+
+  # if we need to include an 'other' row
+  if (pcnt_total < 1) {
+    diagnoses_prepared <- dplyr::bind_rows(
+      diagnoses_prepared,
+      tibble::tibble(
+        diagnosis_description = "Other",
+        n = n_total * (1 - pcnt_total) / pcnt_total,
+        pcnt = 1 - pcnt_total
+      )
+    )
+  }
+
+  diagnoses_prepared
+}
