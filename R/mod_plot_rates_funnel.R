@@ -6,8 +6,7 @@ mod_plot_rates_funnel_ui <- function(id) {
   bslib::card(
     bslib::card_header("Rates Funnel"),
     bslib::card_body(shiny::plotOutput(ns("rates_funnel_plot"))),
-    full_screen = TRUE,
-    fill = FALSE
+    full_screen = TRUE
   )
 }
 

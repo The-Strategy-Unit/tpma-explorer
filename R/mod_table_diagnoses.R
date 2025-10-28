@@ -4,10 +4,10 @@
 mod_table_diagnoses_ui <- function(id) {
   ns <- shiny::NS(id)
   bslib::card(
-    bslib::card_header("Diagnoses"),
+    bslib::card_header("Diagnoses summary"),
     bslib::card_body(gt::gt_output(ns("diagnoses_table"))),
-    full_screen = TRUE,
-    fill = FALSE
+    fill = FALSE,
+    full_screen = TRUE
   )
 }
 

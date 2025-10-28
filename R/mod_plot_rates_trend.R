@@ -6,8 +6,7 @@ mod_plot_rates_trend_ui <- function(id) {
   bslib::card(
     bslib::card_header("Rates Trend"),
     bslib::card_body(shiny::plotOutput(ns("rates_trend_plot"))),
-    full_screen = TRUE,
-    fill = FALSE
+    full_screen = TRUE
   )
 }
 

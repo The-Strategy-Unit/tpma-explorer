@@ -4,10 +4,10 @@
 mod_table_procedures_ui <- function(id) {
   ns <- shiny::NS(id)
   bslib::card(
-    bslib::card_header("Procedures"),
+    bslib::card_header("Procedures summary"),
     bslib::card_body(gt::gt_output(ns("procedures_table"))),
-    full_screen = TRUE,
-    fill = FALSE
+    fill = FALSE,
+    full_screen = TRUE
   )
 }
 
