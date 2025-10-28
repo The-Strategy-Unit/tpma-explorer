@@ -53,7 +53,7 @@ mod_table_procedures_server <- function(
           "No procedures to display."
         )
       )
-      procedures_prepared() |> entable_procedures()
+      procedures_prepared() |> entable_encounters()
     })
   })
 }

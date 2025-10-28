@@ -53,7 +53,7 @@ mod_table_diagnoses_server <- function(
           "No diagnoses to display."
         )
       )
-      diagnoses_prepared() |> entable_diagnoses()
+      diagnoses_prepared() |> entable_encounters()
     })
   })
 }

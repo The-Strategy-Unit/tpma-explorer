@@ -1,73 +1,22 @@
-#' Create 'gt' Summary Table of Procedures
-#' @param procedures_prepared A data.frame.
+#' Create 'gt' Summary Table of Procedures or Diagnoses
+#' @param encounters_prepared A data.frame. Data for procedures or diagnoses
+#'     ('encounters') that's been processed with [prepare_procedures_data] or
+#'     [prepare_diagnoses_data].
 #' @return A 'gt' table.
 #' @export
-entable_procedures <- function(procedures_prepared) {
-  procedures_prepared |>
-    gt::gt("procedure_description") |>
-    gt::cols_label(
-      "procedure_description" = "Procedure",
-      "n" = "Count of Activity (spells)",
-      "pcnt" = "% of Total Activity"
-    ) |>
-    gt::tab_stubhead("Procedure") |>
-    gt::fmt_number(
-      c("n"),
-      decimals = 0,
-      use_seps = TRUE
-    ) |>
-    gt::fmt_percent(
-      c("pcnt"),
-      decimals = 1
-    ) |>
-    gt::grand_summary_rows(
-      columns = "n",
-      fns = list(Total = ~ sum(.)),
-      fmt = list(
-        ~ gt::fmt_number(., decimals = 0, use_seps = TRUE)
-      )
-    ) |>
-    gt::tab_style(
-      style = list(
-        gt::cell_fill(color = "#EFEFEF"),
-        gt::cell_text(weight = "bold")
-      ),
-      locations = list(
-        gt::cells_column_labels(),
-        gt::cells_stubhead(),
-        gt::cells_grand_summary(),
-        gt::cells_stub_grand_summary()
-      )
-    ) |>
-    gt::tab_style(
-      style = list(
-        gt::cell_fill(color = "#FBFBFB"),
-        gt::cell_text(weight = "bold")
-      ),
-      locations = list(
-        gt::cells_body(
-          rows = .data[["procedure_description"]] == "Other"
-        ),
-        gt::cells_stub(
-          rows = .data[["procedure_description"]] == "Other"
-        )
-      )
-    )
-}
+entable_encounters <- function(encounters_prepared) {
+  encounter_description <- names(encounters_prepared)[1]
+  encounter_type <- stringr::str_remove(encounter_description, "_description")
+  encounter_type_title <- stringr::str_to_title(encounter_type)
 
-#' Create 'gt' Summary Table of Diagnoses
-#' @param diagnoses_prepared A data.frame.
-#' @return A 'gt' table.
-#' @export
-entable_diagnoses <- function(diagnoses_prepared) {
-  diagnoses_prepared |>
-    gt::gt("diagnosis_description") |>
+  encounters_prepared |>
+    gt::gt(encounter_description) |>
     gt::cols_label(
-      "diagnosis_description" = "Diagnosis",
+      !!rlang::sym(encounter_description) := encounter_type_title,
       "n" = "Count of Activity (spells)",
       "pcnt" = "% of Total Activity"
     ) |>
-    gt::tab_stubhead("Diagnosis") |>
+    gt::tab_stubhead(encounter_type_title) |>
     gt::fmt_number(
       c("n"),
       decimals = 0,
@@ -103,10 +52,10 @@ entable_diagnoses <- function(diagnoses_prepared) {
       ),
       locations = list(
         gt::cells_body(
-          rows = .data$diagnosis_description == "Other"
+          rows = .data[[encounter_description]] == "Other"
         ),
         gt::cells_stub(
-          rows = .data$diagnosis_description == "Other"
+          rows = .data[[encounter_description]] == "Other"
         )
       )
     )
