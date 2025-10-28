@@ -4,6 +4,7 @@
 app_ui <- function(request) {
   bslib::page_sidebar(
     title = "Explore TPMA data (in development)",
+    fillable = FALSE, # allow page scroll
 
     sidebar = bslib::sidebar(
       mod_select_provider_ui("mod_select_provider"),
@@ -23,8 +24,19 @@ app_ui <- function(request) {
 
     bslib::layout_columns(
       col_widths = c(3, 9),
+      fill = FALSE,
+      fillable = FALSE,
       mod_show_strategy_text_ui("mod_show_strategy_text"),
-      mod_plot_rates_ui("mod_plot_rates")
+      bslib::layout_column_wrap(
+        width = 1,
+        gap = "0.8rem",
+        mod_plot_rates_ui("mod_plot_rates"),
+        bslib::layout_column_wrap(
+          width = 1 / 2,
+          mod_table_procedures_ui("mod_table_procedures"),
+          mod_table_diagnoses_ui("mod_table_diagnoses")
+        )
+      )
     )
   )
 }
