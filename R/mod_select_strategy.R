@@ -5,7 +5,7 @@ mod_select_strategy_ui <- function(id) {
   ns <- shiny::NS(id)
   shiny::selectInput(
     ns("strategy_select"),
-    "Choose a strategy:",
+    "Choose a type of potentially-mitigatable activity (TPMA):",
     choices = NULL
   )
 }
