@@ -19,6 +19,7 @@ Imports:
     ggplot2,
     ggrepel,
     glue,
+    gt,
     jsonlite,
     markdown,
     purrr,
@@ -27,6 +28,7 @@ Imports:
     scales,
     shiny,
     stringr,
+    tibble,
     tidyr,
     tidyselect,
     withr

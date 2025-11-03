@@ -2,9 +2,28 @@
 #' @param input,output,session Internal parameters for 'shiny'.
 #' @noRd
 app_server <- function(input, output, session) {
+  # Env variables ----
+  inputs_container_name <- Sys.getenv("AZ_CONTAINER_INPUTS")
+  data_version <- Sys.getenv("DATA_VERSION")
+  start_year <- Sys.getenv("START_YEAR") |> as.numeric()
+
   # Data ----
-  container <- azkit::get_container(Sys.getenv("AZ_CONTAINER_INPUTS"))
-  rates_data <- azkit::read_azure_parquet(container, "rates", "dev")
+  inputs_container <- azkit::get_container(inputs_container_name)
+  rates_data <- azkit::read_azure_parquet(
+    inputs_container,
+    "rates",
+    data_version
+  )
+  procedures_data <- azkit::read_azure_parquet(
+    inputs_container,
+    "procedures",
+    data_version
+  )
+  diagnoses_data <- azkit::read_azure_parquet(
+    inputs_container,
+    "diagnoses",
+    data_version
+  )
 
   # Lookups ----
   providers_lookup <- jsonlite::read_json(
@@ -21,6 +40,14 @@ app_server <- function(input, output, session) {
   )
   peers_lookup <- readr::read_csv(
     app_sys("app", "data", "peers.csv"),
+    col_types = "c"
+  )
+  procedures_lookup <- readr::read_csv(
+    app_sys("app", "data", "procedures.csv"),
+    col_types = "c"
+  )
+  diagnoses_lookup <- readr::read_csv(
+    app_sys("app", "data", "diagnoses.csv"),
     col_types = "c"
   )
 
@@ -46,5 +73,21 @@ app_server <- function(input, output, session) {
     peers_lookup,
     selected_provider,
     selected_strategy
+  )
+  mod_table_procedures_server(
+    "mod_table_procedures",
+    procedures_data,
+    procedures_lookup,
+    selected_provider,
+    selected_strategy,
+    start_year
+  )
+  mod_table_diagnoses_server(
+    "mod_table_diagnoses",
+    diagnoses_data,
+    diagnoses_lookup,
+    selected_provider,
+    selected_strategy,
+    start_year
   )
 }

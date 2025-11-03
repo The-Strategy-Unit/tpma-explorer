@@ -7,8 +7,8 @@
 fetch_strategy_text(strategy, descriptions_lookup)
 }
 \arguments{
-\item{strategy}{Character. The variable name for a strategy, e.g.
-\code{"discharged_no_treatment_adult_ambulance"}.}
+\item{strategy}{Character. Strategy variable name, e.g.
+\code{"alcohol_partially_attributable_acute"}.}
 
 \item{descriptions_lookup}{Character. The names of the available Markdown
 description files.}

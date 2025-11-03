@@ -1,5 +1,5 @@
 #' Find the Peers for a Given Provider
-#' @param provider Character. Provider code, e.g. `"RCX"`.
+#' @param provider Character. Provider code, e.g. `"RCF"`.
 #' @param peers A data.frame. A row per provider-peer pair.
 #' @return Character vector of peers for given `provider`.
 #' @export
@@ -13,9 +13,9 @@ isolate_provider_peers <- function(provider, peers) {
 
 #' Generate Rates Baseline Data
 #' @param rates A data.frame.
-#' @param provider Character. Provider code, e.g. `"RCX"`.
+#' @param provider Character. Provider code, e.g. `"RCF"`.
 #' @param peers Character. A vector of peers for given `provider`.
-#' @param strategy Character.  TPMA variable name, e.g.
+#' @param strategy Character. Strategy variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
 #' @param start_year Integer. Baseline year in the form `202324`.
 #' @return A data.frame.

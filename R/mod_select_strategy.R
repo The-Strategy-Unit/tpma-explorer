@@ -5,14 +5,14 @@ mod_select_strategy_ui <- function(id) {
   ns <- shiny::NS(id)
   shiny::selectInput(
     ns("strategy_select"),
-    "Choose a strategy:",
+    "Choose a type of potentially-mitigatable activity (TPMA):",
     choices = NULL
   )
 }
 
 #' Select Strategy Server
 #' @param id Internal parameter for `shiny`.
-#' @param strategies A named list. Names are TPMA variable names (e.g.
+#' @param strategies A named list. Names are strategy variable names (e.g.
 #'     `"alcohol_partially_attributable_acute"`) and their values are the
 #'     corresponding human-readable names and codes (e.g.
 #'     `"Alcohol Related Admissions (Acute Conditions - Partially Attributable)
