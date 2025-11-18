@@ -1,4 +1,4 @@
-#' Plot Age-Sex Pyramid Trend UI
+#' Plot Age-Sex Pyramid UI
 #' @param id,input,output,session Internal parameters for `shiny`.
 #' @noRd
 mod_plot_age_sex_pyramid_ui <- function(id) {
@@ -12,7 +12,9 @@ mod_plot_age_sex_pyramid_ui <- function(id) {
 
 #' Plot Age-Sex Pyramid Server
 #' @param id Internal parameter for `shiny`.
-#' @param age_sex_data A data.frame.
+#' @param age_sex_data A data.frame. Age-sex data read from Azure and processed
+#'     with [prepare_age_sex_data]. Counts for each strategy split by provider,
+#'     year, age group and sex.
 #' @param selected_provider Character. Provider code, e.g. `"RCF"`.
 #' @param selected_strategy Character. Strategy variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
