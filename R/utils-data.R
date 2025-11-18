@@ -4,7 +4,10 @@
 #' @return A data.frame.
 #' @export
 prepare_age_sex_data <- function(age_sex_data) {
-  age_fct <- age_sex_data[["age_group"]] |> unique() |> sort()
+  age_fct <- age_sex_data[["age_group"]] |> # nolint: object_usage_linter.
+    unique() |>
+    sort()
+
   age_sex_data |>
     dplyr::mutate(
       age_group = factor(

@@ -17,7 +17,9 @@ mod_plot_age_sex_pyramid_ui <- function(id) {
 #' @param selected_strategy Character. Strategy variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
 #' @noRd
+# nolint start: object_length_linter.
 mod_plot_age_sex_pyramid_server <- function(
+  # nolint end
   id,
   age_sex_data,
   selected_provider,
