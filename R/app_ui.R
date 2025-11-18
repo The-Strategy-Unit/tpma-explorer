@@ -36,7 +36,11 @@ app_ui <- function(request) {
           mod_table_procedures_ui("mod_table_procedures"),
           mod_table_diagnoses_ui("mod_table_diagnoses")
         ),
-        mod_plot_age_sex_pyramid_ui("mod_plot_age_sex_pyramid"),
+        bslib::layout_column_wrap(
+          width = 1 / 2,
+          mod_plot_age_sex_pyramid_ui("mod_plot_age_sex_pyramid"),
+          mod_plot_nee_ui("mod_plot_nee")
+        ),
       )
     )
   )

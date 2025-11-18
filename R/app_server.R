@@ -30,6 +30,10 @@ app_server <- function(input, output, session) {
     data_version
   ) |>
     prepare_age_sex_data()
+  nee_data <- readr::read_csv(
+    app_sys("app", "data", "nee_table.csv"),
+    col_types = "cddd"
+  )
 
   # Lookups ----
   providers_lookup <- jsonlite::read_json(
@@ -102,5 +106,10 @@ app_server <- function(input, output, session) {
     selected_provider,
     selected_strategy,
     start_year
+  )
+  mod_plot_nee_server(
+    "mod_plot_nee",
+    nee_data,
+    selected_strategy
   )
 }
