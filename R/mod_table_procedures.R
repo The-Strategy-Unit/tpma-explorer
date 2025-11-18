@@ -13,8 +13,8 @@ mod_table_procedures_ui <- function(id) {
 
 #' Procedures Table Server
 #' @param id Internal parameter for `shiny`.
-#' @param procedures A data.frame. Annual procedure counts by provider and
-#'     strategy.
+#' @param procedures_data A data.frame. Procedure data read in from Azure.
+#'     Annual procedure counts by provider and strategy.
 #' @param procedures_lookup A data.frame. Type, code and description for
 #'     procedures.
 #' @param selected_provider Character. Provider code, e.g. `"RCF"`.
@@ -24,7 +24,7 @@ mod_table_procedures_ui <- function(id) {
 #' @noRd
 mod_table_procedures_server <- function(
   id,
-  procedures,
+  procedures_data,
   procedures_lookup,
   selected_provider,
   selected_strategy,
@@ -32,13 +32,13 @@ mod_table_procedures_server <- function(
 ) {
   shiny::moduleServer(id, function(input, output, session) {
     procedures_prepared <- shiny::reactive({
-      shiny::req(procedures)
+      shiny::req(procedures_data)
       shiny::req(selected_provider())
       shiny::req(selected_strategy())
       shiny::req(start_year)
 
       prepare_procedures_data(
-        procedures,
+        procedures_data,
         procedures_lookup,
         selected_provider(),
         selected_strategy(),

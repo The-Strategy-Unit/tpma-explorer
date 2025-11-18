@@ -13,8 +13,8 @@ mod_table_diagnoses_ui <- function(id) {
 
 #' Diagnoses Table Server
 #' @param id Internal parameter for `shiny`.
-#' @param diagnoses A data.frame. Annual diagnosis counts by provider and
-#'     strategy.
+#' @param diagnoses_data A data.frame. Diagnosis data read in from Azure. Annual
+#'     diagnosis counts by provider and strategy.
 #' @param diagnosis_lookup A data.frame. Type, code and description for
 #'     diagnoses.
 #' @param selected_provider Character. Provider code, e.g. `"RCF"`.
@@ -24,7 +24,7 @@ mod_table_diagnoses_ui <- function(id) {
 #' @noRd
 mod_table_diagnoses_server <- function(
   id,
-  diagnoses,
+  diagnoses_data,
   diagnoses_lookup,
   selected_provider,
   selected_strategy,
@@ -32,13 +32,13 @@ mod_table_diagnoses_server <- function(
 ) {
   shiny::moduleServer(id, function(input, output, session) {
     diagnoses_prepared <- shiny::reactive({
-      shiny::req(diagnoses)
+      shiny::req(diagnoses_data)
       shiny::req(selected_provider())
       shiny::req(selected_strategy())
       shiny::req(start_year)
 
       prepare_diagnoses_data(
-        diagnoses,
+        diagnoses_data,
         diagnoses_lookup,
         selected_provider(),
         selected_strategy(),

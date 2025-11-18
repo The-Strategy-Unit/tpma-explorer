@@ -7,9 +7,9 @@
 entable_encounters(encounters_prepared)
 }
 \arguments{
-\item{encounters_prepared}{A data.frame. Data for procedures or diagnoses
-('encounters') that's been processed with \link{prepare_procedures_data} or
-\link{prepare_diagnoses_data}.}
+\item{encounters_prepared}{A data.frame. Procedures or diagnoses
+('encounters') data read from Azure and processed with
+\link{prepare_procedures_data} or \link{prepare_diagnoses_data}.}
 }
 \value{
 A 'gt' table.
