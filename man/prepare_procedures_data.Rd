@@ -13,6 +13,9 @@ prepare_procedures_data(
 )
 }
 \arguments{
+\item{procedures_data}{A data.frame. Procedure data read in from Azure.
+Annual procedure counts by provider and strategy.}
+
 \item{procedures_lookup}{A data.frame. Type, code and description for
 procedures.}
 
@@ -22,9 +25,6 @@ procedures.}
 \code{"alcohol_partially_attributable_acute"}.}
 
 \item{start_year}{Integer. Baseline year in the form \code{202324}.}
-
-\item{procedures}{A data.frame. Procedure data read in from Azure. Annual
-procedure counts by provider and strategy.}
 }
 \value{
 A data.frame.

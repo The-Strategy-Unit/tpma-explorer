@@ -4,8 +4,9 @@
 ^\.vscode$
 ^app\.R$
 ^CODEOWNERS$
-^tpma-explorer\.Rproj$
+^deploy\.R$
 ^dev$
 ^LICENSE\.md$
 ^README\.md$
 ^rsconnect$
+^tpma-explorer\.Rproj$

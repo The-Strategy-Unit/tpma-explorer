@@ -19,5 +19,10 @@ Useful links:
 \author{
 \strong{Maintainer}: Matt Dray \email{matt.dray@nhs.net}
 
+Authors:
+\itemize{
+  \item Tom Jemmett \email{thomas.jemmett@nhs.net}
+}
+
 }
 \keyword{internal}

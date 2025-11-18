@@ -1,6 +1,6 @@
 #' Prepare Data for Procedures Table
-#' @param procedures A data.frame. Procedure data read in from Azure. Annual
-#'     procedure counts by provider and strategy.
+#' @param procedures_data A data.frame. Procedure data read in from Azure.
+#'     Annual procedure counts by provider and strategy.
 #' @param procedures_lookup A data.frame. Type, code and description for
 #'     procedures.
 #' @param provider Character. Provider code, e.g. `"RCF"`.
