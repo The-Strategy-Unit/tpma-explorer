@@ -1,7 +1,6 @@
 #' Plot Rates Trend Over Time
-#' @param rates_df A data.frame. Must contain columns given by `fyear_col` and
-#'     `rate_col`. Pre-filtered for a given provider and strategy. One row per
-#'     financial year.
+#' @param rates_trend_data A data.frame. Rates data read in from Azure, filtered
+#'     for a given provider and strategy, and arranged by year.
 #' @param baseline_year Numeric. In the form `202324`.
 #' @param x_axis_title Character. Title for the x-axis.
 #' @param y_axis_title Character. Title for the y-axis.
@@ -9,13 +8,13 @@
 #' @return A 'ggplot2' object.
 #' @export
 plot_rates_trend <- function(
-  rates_df,
+  rates_trend_data,
   baseline_year = 202324,
   x_axis_title = "Financial year",
   y_axis_title = "Rate",
   y_axis_limits
 ) {
-  rates_df |>
+  rates_trend_data |>
     ggplot2::ggplot(
       ggplot2::aes(as.factor(.data[["fyear"]]), .data[["rate"]], group = 1)
     ) +
@@ -35,7 +34,10 @@ plot_rates_trend <- function(
 }
 
 #' Plot Rates Funnel with Peers
-#' @param rates_funnel_data A data.frame.
+#' @param rates_funnel_data A data.frame. Rates data read in from Azure and
+#'     processed with [generate_rates_baseline_data] to filter for provider,
+#'     strategy and year, followed by [generate_rates_funnel_data] to generate
+#'     values for funnel structure.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
 #' @param x_axis_title Character. Title for the x-axis.
 #' @return A 'ggplot2' object.
@@ -75,12 +77,14 @@ plot_rates_funnel <- function(rates_funnel_data, y_axis_limits, x_axis_title) {
 }
 
 #' Plot Rates Boxplot with Peers
-#' @param trend_data A data.frame.
+#' @param rates_box_data A data.frame. Rates data read in from Azure and
+#'     processed with [generate_rates_baseline_data] to filter for provider,
+#'     strategy and year.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
 #' @return A 'ggplot2' object.
 #' @export
-plot_rates_box <- function(trend_data, y_axis_limits) {
-  trend_data |>
+plot_rates_box <- function(rates_box_data, y_axis_limits) {
+  rates_box_data |>
     ggplot2::ggplot(ggplot2::aes(x = "", y = .data$rate)) +
     ggplot2::geom_boxplot(alpha = 0.2, outlier.shape = NA) +
     ggbeeswarm::geom_quasirandom(ggplot2::aes(colour = .data$is_peer)) +
@@ -122,9 +126,9 @@ theme_rates <- function(has_y_axis = TRUE) {
 }
 
 #' Plot Age-Sex Pyramid
-#' @param age_sex_data A data.frame. Read from Azure and processed with
-#'     [prepare_age_sex_data]. Counts for each strategy split by provider, year,
-#'     age group and sex.
+#' @param age_sex_data A data.frame. Age-sex data read from Azure and processed
+#'     with [prepare_age_sex_data]. Counts for each strategy split by provider,
+#'     year, age group and sex.
 #' @return A 'ggplot2' object.
 #' @export
 plot_age_sex_pyramid <- function(age_sex_data) {

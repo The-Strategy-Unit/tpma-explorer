@@ -7,7 +7,10 @@
 plot_rates_funnel(rates_funnel_data, y_axis_limits, x_axis_title)
 }
 \arguments{
-\item{rates_funnel_data}{A data.frame.}
+\item{rates_funnel_data}{A data.frame. Rates data read in from Azure and
+processed with \link{generate_rates_baseline_data} to filter for provider,
+strategy and year, followed by \link{generate_rates_funnel_data} to generate
+values for funnel structure.}
 
 \item{y_axis_limits}{Numeric vector. Min and max values for the y axis.}
 

@@ -7,9 +7,9 @@
 plot_age_sex_pyramid(age_sex_data)
 }
 \arguments{
-\item{age_sex_data}{A data.frame. Read from Azure and processed with
-\link{prepare_age_sex_data}. Counts for each strategy split by provider, year,
-age group and sex.}
+\item{age_sex_data}{A data.frame. Age-sex data read from Azure and processed
+with \link{prepare_age_sex_data}. Counts for each strategy split by provider,
+year, age group and sex.}
 }
 \value{
 A 'ggplot2' object.

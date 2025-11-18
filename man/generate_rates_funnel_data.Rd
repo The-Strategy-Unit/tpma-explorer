@@ -7,8 +7,8 @@
 generate_rates_funnel_data(rates_baseline_data)
 }
 \arguments{
-\item{rates_baseline_data}{A data.frame. Output created by
-\link{generate_rates_baseline_data}.}
+\item{rates_baseline_data}{A data.frame. Rates data read in from Azure and
+processed \link{generate_rates_baseline_data}.}
 }
 \value{
 A data.frame.

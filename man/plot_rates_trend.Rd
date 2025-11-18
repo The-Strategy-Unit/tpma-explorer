@@ -5,7 +5,7 @@
 \title{Plot Rates Trend Over Time}
 \usage{
 plot_rates_trend(
-  rates_df,
+  rates_trend_data,
   baseline_year = 202324,
   x_axis_title = "Financial year",
   y_axis_title = "Rate",
@@ -13,9 +13,8 @@ plot_rates_trend(
 )
 }
 \arguments{
-\item{rates_df}{A data.frame. Must contain columns given by \code{fyear_col} and
-\code{rate_col}. Pre-filtered for a given provider and strategy. One row per
-financial year.}
+\item{rates_trend_data}{A data.frame. Rates data read in from Azure, filtered
+for a given provider and strategy, and arranged by year.}
 
 \item{baseline_year}{Numeric. In the form \code{202324}.}
 
