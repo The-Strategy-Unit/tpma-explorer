@@ -24,6 +24,12 @@ app_server <- function(input, output, session) {
     "diagnoses",
     data_version
   )
+  age_sex_data <- azkit::read_azure_parquet(
+    inputs_container,
+    "age_sex",
+    data_version
+  ) |>
+    prepare_age_sex_data()
 
   # Lookups ----
   providers_lookup <- jsonlite::read_json(
@@ -86,6 +92,13 @@ app_server <- function(input, output, session) {
     "mod_table_diagnoses",
     diagnoses_data,
     diagnoses_lookup,
+    selected_provider,
+    selected_strategy,
+    start_year
+  )
+  mod_plot_age_sex_pyramid_server(
+    "mod_plot_age_sex_pyramid",
+    age_sex_data,
     selected_provider,
     selected_strategy,
     start_year
