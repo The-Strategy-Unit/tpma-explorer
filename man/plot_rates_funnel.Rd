@@ -11,7 +11,7 @@ plot_rates_funnel(rates_funnel_data, y_axis_limits, x_axis_title)
 
 \item{y_axis_limits}{Numeric vector. Min and max values for the y axis.}
 
-\item{x_axis_title}{Character.}
+\item{x_axis_title}{Character. Title for the x-axis.}
 }
 \value{
 A 'ggplot2' object.

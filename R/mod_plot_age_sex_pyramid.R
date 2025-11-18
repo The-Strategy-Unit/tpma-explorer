@@ -31,7 +31,7 @@ mod_plot_age_sex_pyramid_server <- function(
       shiny::req(selected_strategy())
       shiny::req(start_year)
 
-      age_data <- age_sex_data |>
+      age_sex_filtered <- age_sex_data |>
         dplyr::filter(
           .data$provider == selected_provider(),
           .data$strategy == selected_strategy(),
@@ -39,11 +39,11 @@ mod_plot_age_sex_pyramid_server <- function(
         )
 
       shiny::validate(shiny::need(
-        nrow(age_data) > 0,
+        nrow(age_sex_filtered) > 0,
         "No data available for these selections."
       ))
 
-      plot_age_sex_pyramid(age_data)
+      plot_age_sex_pyramid(age_sex_filtered)
     })
   })
 }

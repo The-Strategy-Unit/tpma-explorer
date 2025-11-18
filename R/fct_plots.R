@@ -3,8 +3,8 @@
 #'     `rate_col`. Pre-filtered for a given provider and strategy. One row per
 #'     financial year.
 #' @param baseline_year Numeric. In the form `202324`.
-#' @param x_axis_title Character.
-#' @param y_axis_title Character.
+#' @param x_axis_title Character. Title for the x-axis.
+#' @param y_axis_title Character. Title for the y-axis.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
 #' @return A 'ggplot2' object.
 #' @export
@@ -37,7 +37,7 @@ plot_rates_trend <- function(
 #' Plot Rates Funnel with Peers
 #' @param rates_funnel_data A data.frame.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
-#' @param x_axis_title Character.
+#' @param x_axis_title Character. Title for the x-axis.
 #' @return A 'ggplot2' object.
 #' @export
 plot_rates_funnel <- function(rates_funnel_data, y_axis_limits, x_axis_title) {
@@ -122,11 +122,13 @@ theme_rates <- function(has_y_axis = TRUE) {
 }
 
 #' Plot Age-Sex Pyramid
-#' @param age_data A data.frame.
+#' @param age_sex_data A data.frame. Read from Azure and processed with
+#'     [prepare_age_sex_data]. Counts for each strategy split by provider, year,
+#'     age group and sex.
 #' @return A 'ggplot2' object.
 #' @export
-plot_age_sex_pyramid <- function(age_data) {
-  age_data |>
+plot_age_sex_pyramid <- function(age_sex_data) {
+  age_sex_data |>
     ggplot2::ggplot(
       ggplot2::aes(
         .data[["n"]],

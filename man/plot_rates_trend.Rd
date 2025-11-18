@@ -19,9 +19,9 @@ financial year.}
 
 \item{baseline_year}{Numeric. In the form \code{202324}.}
 
-\item{x_axis_title}{Character.}
+\item{x_axis_title}{Character. Title for the x-axis.}
 
-\item{y_axis_title}{Character.}
+\item{y_axis_title}{Character. Title for the y-axis.}
 
 \item{y_axis_limits}{Numeric vector. Min and max values for the y axis.}
 }
