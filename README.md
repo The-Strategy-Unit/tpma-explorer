@@ -10,9 +10,9 @@ The app is [deployed to Posit Connect](https://connect.strategyunitwm.nhs.uk/tpm
 
 To run the app, you must:
 
-* create an `.Renviron file from the `.Renviron.example` template
-* run `app.R` to launch the app locally for development purposes
-* run `deploy.R` to deploy the app to Posit Connect when ready
+* create an `.Renviron` file from the `.Renviron.example` template
+* run `dev/app.R` to launch the app locally for development purposes
+* run `dev/deploy.R` to deploy the app to Posit Connect when ready
 
 The app is made with [Shiny](https://shiny.posit.co/) and is an R package following [the nolem approach](https://github.com/StatsRhian/nolem). In `R/`:
 
