@@ -156,3 +156,38 @@ plot_age_sex_pyramid <- function(age_sex_data) {
       panel.background = ggplot2::element_blank()
     )
 }
+
+#' Plot National Elicitation Exercise (NEE) Interval
+#' @param nee_data A data.frame. Mean, p10 and p90 predictions for each of the
+#'     strategies that were part of the National Elicitation Exercise (NEE),
+#'     filtered for the user's selected strategy.
+#' @return A 'ggplot2' object.
+#' @export
+plot_nee <- function(nee_data) {
+  nee_data |>
+    ggplot2::ggplot() +
+    ggplot2::geom_segment(
+      ggplot2::aes(
+        y = 1,
+        yend = 1,
+        x = .data[["percentile10"]],
+        xend = .data[["percentile90"]]
+      ),
+      size = 2
+    ) +
+    ggplot2::geom_point(
+      ggplot2::aes(y = 1, x = mean),
+      size = 5,
+      colour = "#f9bf14"
+    ) +
+    ggplot2::xlim(0, 100) +
+    ggplot2::xlab(
+      "80% prediction interval"
+    ) +
+    ggplot2::theme_minimal() +
+    ggplot2::theme(
+      axis.title.y = ggplot2::element_blank(),
+      axis.text.y = ggplot2::element_blank(),
+      axis.ticks.y = ggplot2::element_blank()
+    )
+}
