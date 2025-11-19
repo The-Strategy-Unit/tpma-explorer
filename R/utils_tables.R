@@ -1,6 +1,6 @@
 #' Prepare Data for Procedures Table
-#' @param procedures A data.frame. Annual procedure counts by provider and
-#'     strategy.
+#' @param procedures_data A data.frame. Procedure data read in from Azure.
+#'     Annual procedure counts by provider and strategy.
 #' @param procedures_lookup A data.frame. Type, code and description for
 #'     procedures.
 #' @param provider Character. Provider code, e.g. `"RCF"`.
@@ -10,13 +10,13 @@
 #' @return A data.frame.
 #' @export
 prepare_procedures_data <- function(
-  procedures,
+  procedures_data,
   procedures_lookup,
   provider,
   strategy,
   start_year
 ) {
-  procedures_prepared <- procedures |>
+  procedures_prepared <- procedures_data |>
     dplyr::filter(
       .data$provider == .env$provider,
       .data$strategy == .env$strategy,
@@ -47,8 +47,8 @@ prepare_procedures_data <- function(
 }
 
 #' Prepare Data for Diagnoses Table
-#' @param diagnoses A data.frame. Annual diagnosis counts by provider and
-#'     strategy.
+#' @param diagnoses_data A data.frame. Diagnosis data read in from Azure. Annual
+#'     diagnosis counts by provider and strategy.
 #' @param diagnoses_lookup A data.frame. Type, code and description for
 #'     diagnoses
 #' @param provider Character. Provider code, e.g. `"RCF"`.
@@ -58,13 +58,13 @@ prepare_procedures_data <- function(
 #' @return A data.frame.
 #' @export
 prepare_diagnoses_data <- function(
-  diagnoses,
+  diagnoses_data,
   diagnoses_lookup,
   provider,
   strategy,
   start_year
 ) {
-  diagnoses_prepared <- diagnoses |>
+  diagnoses_prepared <- diagnoses_data |>
     dplyr::filter(
       .data$provider == .env$provider,
       .data$strategy == .env$strategy,

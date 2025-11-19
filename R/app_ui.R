@@ -35,7 +35,8 @@ app_ui <- function(request) {
           width = 1 / 2,
           mod_table_procedures_ui("mod_table_procedures"),
           mod_table_diagnoses_ui("mod_table_diagnoses")
-        )
+        ),
+        mod_plot_age_sex_pyramid_ui("mod_plot_age_sex_pyramid"),
       )
     )
   )

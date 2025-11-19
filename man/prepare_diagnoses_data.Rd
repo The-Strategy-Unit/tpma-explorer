@@ -5,7 +5,7 @@
 \title{Prepare Data for Diagnoses Table}
 \usage{
 prepare_diagnoses_data(
-  diagnoses,
+  diagnoses_data,
   diagnoses_lookup,
   provider,
   strategy,
@@ -13,8 +13,8 @@ prepare_diagnoses_data(
 )
 }
 \arguments{
-\item{diagnoses}{A data.frame. Annual diagnosis counts by provider and
-strategy.}
+\item{diagnoses_data}{A data.frame. Diagnosis data read in from Azure. Annual
+diagnosis counts by provider and strategy.}
 
 \item{diagnoses_lookup}{A data.frame. Type, code and description for
 diagnoses}

@@ -12,7 +12,7 @@ isolate_provider_peers <- function(provider, peers) {
 }
 
 #' Generate Rates Baseline Data
-#' @param rates A data.frame.
+#' @param rates A data.frame. Rates data read from Azure.
 #' @param provider Character. Provider code, e.g. `"RCF"`.
 #' @param peers Character. A vector of peers for given `provider`.
 #' @param strategy Character. Strategy variable name, e.g.
@@ -44,8 +44,8 @@ generate_rates_baseline_data <- function(
 }
 
 #' Generate Data for the Funnel Plot
-#' @param rates_baseline_data A data.frame. Output created by
-#'     [generate_rates_baseline_data].
+#' @param rates_baseline_data A data.frame. Rates data read in from Azure and
+#'     processed [generate_rates_baseline_data].
 #' @return A data.frame.
 #' @export
 generate_rates_funnel_data <- function(rates_baseline_data) {

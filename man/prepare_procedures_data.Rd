@@ -5,7 +5,7 @@
 \title{Prepare Data for Procedures Table}
 \usage{
 prepare_procedures_data(
-  procedures,
+  procedures_data,
   procedures_lookup,
   provider,
   strategy,
@@ -13,8 +13,8 @@ prepare_procedures_data(
 )
 }
 \arguments{
-\item{procedures}{A data.frame. Annual procedure counts by provider and
-strategy.}
+\item{procedures_data}{A data.frame. Procedure data read in from Azure.
+Annual procedure counts by provider and strategy.}
 
 \item{procedures_lookup}{A data.frame. Type, code and description for
 procedures.}

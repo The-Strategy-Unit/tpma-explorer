@@ -6,4 +6,16 @@ An app to explore data for Types of Potentially-Mitigatable Activity (TPMAs).
 
 The app is [deployed to Posit Connect](https://connect.strategyunitwm.nhs.uk/tpma-explorer/) (login and permissions required).
 
-The app is made with [Shiny](https://shiny.posit.co/) and is an R package following [the nolem approach](https://github.com/StatsRhian/nolem).
+## For developers
+
+To run the app, you must:
+
+* create an `.Renviron` file from the `.Renviron.example` template
+* run `dev/app.R` to launch the app locally for development purposes
+* run `dev/deploy.R` to deploy the app to Posit Connect when ready
+
+The app is made with [Shiny](https://shiny.posit.co/) and is an R package following [the nolem approach](https://github.com/StatsRhian/nolem). In `R/`:
+
+* Shiny modules (server and UI components) are stored in `mod_*.R` scripts
+* functions to help prepare data are in `utils_*.R` scripts
+* logic for user facing outputs (plots, tables) are in `fct_*.R` scripts

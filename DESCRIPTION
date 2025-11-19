@@ -1,10 +1,12 @@
 Package: tpma.explorer
 Title: Explore TPMA Data
 Version: 0.1.0.9000
-Authors@R:
-    person("Matt", "Dray", , "matt.dray@nhs.net", role = c("aut", "cre"))
-Description: A Shiny-app-in-a-package to explore data related to
-    Types of Potentially Mitigatable Activity (TPMAs).
+Authors@R: c(
+    person("Matt", "Dray", , "matt.dray@nhs.net", role = c("aut", "cre")),
+    person("Tom", "Jemmett", , "thomas.jemmett@nhs.net", role = "aut")
+  )
+Description: A Shiny-app-in-a-package to explore data related to Types of
+    Potentially Mitigatable Activity (TPMAs).
 License: MIT + file LICENSE
 URL: https://github.com/The-Strategy-Unit/tpma-explorer
 BugReports: https://github.com/The-Strategy-Unit/tpma-explorer/issues
@@ -15,6 +17,7 @@ Imports:
     bsicons,
     bslib,
     dplyr,
+    forcats,
     ggbeeswarm,
     ggplot2,
     ggrepel,

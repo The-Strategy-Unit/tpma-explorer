@@ -1,7 +1,7 @@
 #' Create 'gt' Summary Table of Procedures or Diagnoses
-#' @param encounters_prepared A data.frame. Data for procedures or diagnoses
-#'     ('encounters') that's been processed with [prepare_procedures_data] or
-#'     [prepare_diagnoses_data].
+#' @param encounters_prepared A data.frame. Procedures or diagnoses
+#'     ('encounters') data read from Azure and processed with
+#'     [prepare_procedures_data] or [prepare_diagnoses_data].
 #' @return A 'gt' table.
 #' @export
 entable_encounters <- function(encounters_prepared) {

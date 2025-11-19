@@ -7,7 +7,7 @@
 generate_rates_baseline_data(rates, provider, peers, strategy, start_year)
 }
 \arguments{
-\item{rates}{A data.frame.}
+\item{rates}{A data.frame. Rates data read from Azure.}
 
 \item{provider}{Character. Provider code, e.g. \code{"RCF"}.}
 
