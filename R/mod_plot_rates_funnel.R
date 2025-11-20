@@ -21,7 +21,8 @@ mod_plot_rates_funnel_server <- function(
   id,
   rates,
   peers_lookup,
-  y_axis_limits
+  y_axis_limits,
+  x_axis_title
 ) {
   shiny::moduleServer(id, function(input, output, session) {
     output$rates_funnel_plot <- shiny::renderPlot({
@@ -33,7 +34,7 @@ mod_plot_rates_funnel_server <- function(
       plot_rates_funnel(
         rates,
         y_axis_limits(),
-        x_axis_title = "Denominator" # TODO: make this dynamic
+        x_axis_title = x_axis_title
       )
     })
   })

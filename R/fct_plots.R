@@ -12,7 +12,7 @@ plot_rates_trend <- function(
   baseline_year,
   y_axis_limits,
   x_axis_title = "Financial year",
-  y_axis_title = "Denominator"
+  y_axis_title
 ) {
   rates_trend_data |>
     ggplot2::ggplot(

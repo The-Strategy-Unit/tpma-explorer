@@ -33,6 +33,8 @@ mod_plot_rates_server <- function(
   baseline_year
 ) {
   shiny::moduleServer(id, function(input, output, session) {
+    #  Prepare data ----
+
     rates_trend_data <- shiny::reactive({
       shiny::req(rates)
       shiny::req(selected_provider())
@@ -70,6 +72,7 @@ mod_plot_rates_server <- function(
       rates_baseline_data() |> generate_rates_funnel_data()
     })
 
+    # Prepare variables ----
     y_axis_limits <- shiny::reactive({
       shiny::req(rates_trend_data())
       shiny::req(rates_funnel_data())
@@ -81,18 +84,24 @@ mod_plot_rates_server <- function(
       )) |>
         pmax(0)
     })
+    # TODO: make dynamic with config
+    x_axis_title <- "Denominator"
+    y_axis_title <- "Rate"
 
+    # Declare modules ----
     mod_plot_rates_trend_server(
       "mod_plot_rates_trend",
       rates_trend_data,
       y_axis_limits,
+      y_axis_title,
       baseline_year
     )
     mod_plot_rates_funnel_server(
       "mod_plot_rates_funnel",
       rates_funnel_data,
       peers_lookup,
-      y_axis_limits
+      y_axis_limits,
+      x_axis_title
     )
     mod_plot_rates_box_server(
       "mod_plot_rates_box",

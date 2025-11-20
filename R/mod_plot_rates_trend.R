@@ -15,12 +15,14 @@ mod_plot_rates_trend_ui <- function(id) {
 #' @param rates A data.frame. Annual rate values for combinations of provider
 #'     and strategy.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
+#' @param y_axis_title Character. Title for the y-axis.
 #' @param baseline_year Integer. Baseline year in the form `202324`.
 #' @noRd
 mod_plot_rates_trend_server <- function(
   id,
   rates,
   y_axis_limits,
+  y_axis_title,
   baseline_year
 ) {
   shiny::moduleServer(id, function(input, output, session) {
@@ -33,7 +35,8 @@ mod_plot_rates_trend_server <- function(
       plot_rates_trend(
         rates,
         baseline_year,
-        y_axis_limits()
+        y_axis_limits(),
+        y_axis_title = y_axis_title
       )
     })
   })
