@@ -2,17 +2,17 @@
 #' @param rates_trend_data A data.frame. Rates data read in from Azure, filtered
 #'     for a given provider and strategy, and arranged by year.
 #' @param baseline_year Numeric. In the form `202324`.
+#' @param y_axis_limits Numeric vector. Min and max values for the y axis.
 #' @param x_axis_title Character. Title for the x-axis.
 #' @param y_axis_title Character. Title for the y-axis.
-#' @param y_axis_limits Numeric vector. Min and max values for the y axis.
 #' @return A 'ggplot2' object.
 #' @export
 plot_rates_trend <- function(
   rates_trend_data,
   baseline_year = 202324,
+  y_axis_limits,
   x_axis_title = "Financial year",
-  y_axis_title = "Rate",
-  y_axis_limits
+  y_axis_title = "Rate"
 ) {
   rates_trend_data |>
     ggplot2::ggplot(
