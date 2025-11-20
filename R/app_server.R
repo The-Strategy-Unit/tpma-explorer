@@ -5,7 +5,7 @@ app_server <- function(input, output, session) {
   # Env variables ----
   inputs_container_name <- Sys.getenv("AZ_CONTAINER_INPUTS")
   data_version <- Sys.getenv("DATA_VERSION")
-  start_year <- Sys.getenv("START_YEAR") |> as.numeric()
+  baseline_year <- Sys.getenv("BASELINE_YEAR") |> as.numeric()
 
   # Data ----
   inputs_container <- azkit::get_container(inputs_container_name)
@@ -83,7 +83,7 @@ app_server <- function(input, output, session) {
     peers_lookup,
     selected_provider,
     selected_strategy,
-    start_year
+    baseline_year
   )
   mod_table_procedures_server(
     "mod_table_procedures",
@@ -91,7 +91,7 @@ app_server <- function(input, output, session) {
     procedures_lookup,
     selected_provider,
     selected_strategy,
-    start_year
+    baseline_year
   )
   mod_table_diagnoses_server(
     "mod_table_diagnoses",
@@ -99,14 +99,14 @@ app_server <- function(input, output, session) {
     diagnoses_lookup,
     selected_provider,
     selected_strategy,
-    start_year
+    baseline_year
   )
   mod_plot_age_sex_pyramid_server(
     "mod_plot_age_sex_pyramid",
     age_sex_data,
     selected_provider,
     selected_strategy,
-    start_year
+    baseline_year
   )
   mod_plot_nee_server(
     "mod_plot_nee",

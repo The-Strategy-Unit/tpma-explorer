@@ -20,7 +20,7 @@ mod_table_procedures_ui <- function(id) {
 #' @param selected_provider Character. Provider code, e.g. `"RCF"`.
 #' @param selected_strategy Character. Strategy variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
-#' @param start_year Integer. Baseline year in the form `202324`.
+#' @param baseline_year Integer. Baseline year in the form `202324`.
 #' @noRd
 mod_table_procedures_server <- function(
   id,
@@ -28,21 +28,21 @@ mod_table_procedures_server <- function(
   procedures_lookup,
   selected_provider,
   selected_strategy,
-  start_year
+  baseline_year
 ) {
   shiny::moduleServer(id, function(input, output, session) {
     procedures_prepared <- shiny::reactive({
       shiny::req(procedures_data)
       shiny::req(selected_provider())
       shiny::req(selected_strategy())
-      shiny::req(start_year)
+      shiny::req(baseline_year)
 
       prepare_procedures_data(
         procedures_data,
         procedures_lookup,
         selected_provider(),
         selected_strategy(),
-        start_year
+        baseline_year
       )
     })
 

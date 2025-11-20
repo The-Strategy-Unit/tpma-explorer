@@ -6,7 +6,7 @@
 #' @param provider Character. Provider code, e.g. `"RCF"`.
 #' @param strategy Character. Strategy variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
-#' @param start_year Integer. Baseline year in the form `202324`.
+#' @param baseline_year Integer. Baseline year in the form `202324`.
 #' @return A data.frame.
 #' @export
 prepare_procedures_data <- function(
@@ -14,13 +14,13 @@ prepare_procedures_data <- function(
   procedures_lookup,
   provider,
   strategy,
-  start_year
+  baseline_year
 ) {
   procedures_prepared <- procedures_data |>
     dplyr::filter(
       .data$provider == .env$provider,
       .data$strategy == .env$strategy,
-      .data$fyear == .env$start_year
+      .data$fyear == .env$baseline_year
     ) |>
     dplyr::left_join(procedures_lookup, by = c("procedure_code" = "code")) |>
     tidyr::replace_na(list(
@@ -54,7 +54,7 @@ prepare_procedures_data <- function(
 #' @param provider Character. Provider code, e.g. `"RCF"`.
 #' @param strategy Character. Strategy variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
-#' @param start_year Integer. Baseline year in the form `202324`.
+#' @param baseline_year Integer. Baseline year in the form `202324`.
 #' @return A data.frame.
 #' @export
 prepare_diagnoses_data <- function(
@@ -62,13 +62,13 @@ prepare_diagnoses_data <- function(
   diagnoses_lookup,
   provider,
   strategy,
-  start_year
+  baseline_year
 ) {
   diagnoses_prepared <- diagnoses_data |>
     dplyr::filter(
       .data$provider == .env$provider,
       .data$strategy == .env$strategy,
-      .data$fyear == .env$start_year
+      .data$fyear == .env$baseline_year
     ) |>
     dplyr::inner_join(
       diagnoses_lookup,

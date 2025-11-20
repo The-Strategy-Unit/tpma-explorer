@@ -18,6 +18,7 @@ mod_plot_age_sex_pyramid_ui <- function(id) {
 #' @param selected_provider Character. Provider code, e.g. `"RCF"`.
 #' @param selected_strategy Character. Strategy variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
+#' @param baseline_year Integer. Baseline year in the form `202324`.
 #' @noRd
 # nolint start: object_length_linter.
 mod_plot_age_sex_pyramid_server <- function(
@@ -26,20 +27,20 @@ mod_plot_age_sex_pyramid_server <- function(
   age_sex_data,
   selected_provider,
   selected_strategy,
-  start_year
+  baseline_year
 ) {
   shiny::moduleServer(id, function(input, output, session) {
     output$age_sex_pyramid <- shiny::renderPlot({
       shiny::req(age_sex_data)
       shiny::req(selected_provider())
       shiny::req(selected_strategy())
-      shiny::req(start_year)
+      shiny::req(baseline_year)
 
       age_sex_filtered <- age_sex_data |>
         dplyr::filter(
           .data$provider == selected_provider(),
           .data$strategy == selected_strategy(),
-          .data$fyear == .env$start_year
+          .data$fyear == .env$baseline_year
         )
 
       shiny::validate(shiny::need(
