@@ -82,7 +82,8 @@ app_server <- function(input, output, session) {
     rates_data,
     peers_lookup,
     selected_provider,
-    selected_strategy
+    selected_strategy,
+    start_year
   )
   mod_table_procedures_server(
     "mod_table_procedures",

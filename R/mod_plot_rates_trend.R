@@ -15,11 +15,13 @@ mod_plot_rates_trend_ui <- function(id) {
 #' @param rates A data.frame. Annual rate values for combinations of provider
 #'     and strategy.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
+#' @param baseline_year Integer. Baseline year in the form `202324`.
 #' @noRd
 mod_plot_rates_trend_server <- function(
   id,
   rates,
-  y_axis_limits
+  y_axis_limits,
+  baseline_year
 ) {
   shiny::moduleServer(id, function(input, output, session) {
     output$rates_trend_plot <- shiny::renderPlot({
@@ -28,7 +30,11 @@ mod_plot_rates_trend_server <- function(
         nrow(rates) > 0,
         "No data available for these selections."
       ))
-      plot_rates_trend(rates, y_axis_limits = y_axis_limits())
+      plot_rates_trend(
+        rates,
+        baseline_year,
+        y_axis_limits()
+      )
     })
   })
 }

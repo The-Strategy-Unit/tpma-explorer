@@ -3,7 +3,7 @@
 #' @noRd
 mod_plot_rates_ui <- function(id) {
   ns <- shiny::NS(id)
-  # these plots share a y axis, so don't use layout_column_wrap()
+  # Rates plots share a y-axis, so don't wrap
   bslib::layout_columns(
     col_widths = c(5, 5, 2),
     fill = FALSE,
@@ -22,13 +22,15 @@ mod_plot_rates_ui <- function(id) {
 #' @param selected_provider Character. Provider code, e.g. `"RCF"`.
 #' @param selected_strategy Character. Strategy variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
+#' @param baseline_year Integer. Baseline year in the form `202324`.
 #' @noRd
 mod_plot_rates_server <- function(
   id,
   rates,
   peers_lookup,
   selected_provider,
-  selected_strategy
+  selected_strategy,
+  baseline_year
 ) {
   shiny::moduleServer(id, function(input, output, session) {
     rates_trend_data <- shiny::reactive({
@@ -59,7 +61,7 @@ mod_plot_rates_server <- function(
           selected_provider(),
           provider_peers,
           selected_strategy(),
-          start_year = "202324"
+          baseline_year
         )
     })
 
@@ -83,7 +85,8 @@ mod_plot_rates_server <- function(
     mod_plot_rates_trend_server(
       "mod_plot_rates_trend",
       rates_trend_data,
-      y_axis_limits
+      y_axis_limits,
+      baseline_year
     )
     mod_plot_rates_funnel_server(
       "mod_plot_rates_funnel",

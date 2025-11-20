@@ -6,23 +6,23 @@
 \usage{
 plot_rates_trend(
   rates_trend_data,
-  baseline_year = 202324,
+  baseline_year,
+  y_axis_limits,
   x_axis_title = "Financial year",
-  y_axis_title = "Rate",
-  y_axis_limits
+  y_axis_title = "Denominator"
 )
 }
 \arguments{
 \item{rates_trend_data}{A data.frame. Rates data read in from Azure, filtered
 for a given provider and strategy, and arranged by year.}
 
-\item{baseline_year}{Numeric. In the form \code{202324}.}
+\item{baseline_year}{Integer. Baseline year in the form \code{202324}.}
+
+\item{y_axis_limits}{Numeric vector. Min and max values for the y axis.}
 
 \item{x_axis_title}{Character. Title for the x-axis.}
 
 \item{y_axis_title}{Character. Title for the y-axis.}
-
-\item{y_axis_limits}{Numeric vector. Min and max values for the y axis.}
 }
 \value{
 A 'ggplot2' object.
