@@ -83,24 +83,18 @@ mod_plot_rates_server <- function(
     mod_plot_rates_trend_server(
       "mod_plot_rates_trend",
       rates_trend_data,
-      selected_provider,
-      selected_strategy,
       y_axis_limits
     )
     mod_plot_rates_funnel_server(
       "mod_plot_rates_funnel",
       rates_funnel_data,
       peers_lookup,
-      selected_provider,
-      selected_strategy,
       y_axis_limits
     )
     mod_plot_rates_box_server(
       "mod_plot_rates_box",
       rates_baseline_data,
       peers_lookup,
-      selected_provider,
-      selected_strategy,
       y_axis_limits
     )
   })

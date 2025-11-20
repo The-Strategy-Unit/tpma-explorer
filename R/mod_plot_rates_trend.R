@@ -14,16 +14,11 @@ mod_plot_rates_trend_ui <- function(id) {
 #' @param id Internal parameter for `shiny`.
 #' @param rates A data.frame. Annual rate values for combinations of provider
 #'     and strategy.
-#' @param selected_provider Character. Provider code, e.g. `"RCF"`.
-#' @param selected_strategy Character. Strategy variable name, e.g.
-#'     `"alcohol_partially_attributable_acute"`.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
 #' @noRd
 mod_plot_rates_trend_server <- function(
   id,
   rates,
-  selected_provider,
-  selected_strategy,
   y_axis_limits
 ) {
   shiny::moduleServer(id, function(input, output, session) {
