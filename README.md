@@ -11,6 +11,7 @@ The app is [deployed to Posit Connect](https://connect.strategyunitwm.nhs.uk/tpm
 To run the app, you must:
 
 * create an `.Renviron` file from the `.Renviron.example` template
+* run `devtools::install_deps(dependencies = TRUE)` to install required dependencies from the `DESCRIPTION`
 * run `dev/app.R` to launch the app locally for development purposes
 * run `dev/deploy.R` to deploy the app to Posit Connect when ready
 
