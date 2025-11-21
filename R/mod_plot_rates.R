@@ -18,6 +18,9 @@ mod_plot_rates_ui <- function(id) {
 #' @param id Internal parameter for `shiny`.
 #' @param rates A data.frame. Annual rate values for combinations of provider
 #'     and strategy.
+#' @param strategies_config List. Configuration for strategies from the
+#'     `"mitigators_config"` element of `golem-config.yml`, read in with
+#'     [get_golem_config].
 #' @param peers_lookup A data.frame. A row per provider-peer pair.
 #' @param selected_provider Character. Provider code, e.g. `"RCF"`.
 #' @param selected_strategy Character. Strategy variable name, e.g.
@@ -27,6 +30,7 @@ mod_plot_rates_ui <- function(id) {
 mod_plot_rates_server <- function(
   id,
   rates,
+  strategies_config,
   peers_lookup,
   selected_provider,
   selected_strategy,
@@ -73,6 +77,7 @@ mod_plot_rates_server <- function(
     })
 
     # Prepare variables ----
+
     y_axis_limits <- shiny::reactive({
       shiny::req(rates_trend_data())
       shiny::req(rates_funnel_data())
@@ -84,9 +89,28 @@ mod_plot_rates_server <- function(
       )) |>
         pmax(0)
     })
-    # TODO: make dynamic with config
-    x_axis_title <- "Denominator"
-    y_axis_title <- "Rate"
+
+    strategy_config <- shiny::reactive({
+      shiny::req(strategies_config)
+      shiny::req(selected_strategy())
+
+      strategy_group_lookup <- strategies_config |> make_strategy_group_lookup()
+
+      strategy_group <- strategy_group_lookup |>
+        dplyr::filter(.data$strategy == selected_strategy()) |>
+        dplyr::pull("group")
+
+      strategies_config[[strategy_group]]
+    })
+
+    y_axis_title <- shiny::reactive({
+      shiny::req(strategy_config())
+      strategy_config()[["y_axis_title"]]
+    })
+    funnel_x_title <- shiny::reactive({
+      shiny::req(strategy_config())
+      strategy_config()[["funnel_x_title"]]
+    })
 
     # Declare modules ----
     mod_plot_rates_trend_server(
@@ -101,7 +125,7 @@ mod_plot_rates_server <- function(
       rates_funnel_data,
       peers_lookup,
       y_axis_limits,
-      x_axis_title
+      funnel_x_title
     )
     mod_plot_rates_box_server(
       "mod_plot_rates_box",

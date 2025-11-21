@@ -32,11 +32,14 @@ mod_plot_rates_trend_server <- function(
         nrow(rates) > 0,
         "No data available for these selections."
       ))
+      shiny::req(y_axis_limits())
+      shiny::req(y_axis_title())
+
       plot_rates_trend(
         rates,
         baseline_year,
         y_axis_limits(),
-        y_axis_title = y_axis_title
+        y_axis_title = y_axis_title()
       )
     })
   })

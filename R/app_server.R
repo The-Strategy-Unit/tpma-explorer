@@ -61,6 +61,9 @@ app_server <- function(input, output, session) {
     col_types = "c"
   )
 
+  # Config ----
+  strategies_config <- get_golem_config("mitigators_config")
+
   # User inputs ----
   selected_provider <- mod_select_provider_server(
     "mod_select_provider",
@@ -80,6 +83,7 @@ app_server <- function(input, output, session) {
   mod_plot_rates_server(
     "mod_plot_rates",
     rates_data,
+    strategies_config,
     peers_lookup,
     selected_provider,
     selected_strategy,

@@ -16,6 +16,7 @@ mod_plot_rates_funnel_ui <- function(id) {
 #'     and strategy
 #' @param peers_lookup A data.frame. A row per provider-peer pair.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
+#' @param x_axis_title Character. Title for the x-axis.
 #' @noRd
 mod_plot_rates_funnel_server <- function(
   id,
@@ -31,10 +32,13 @@ mod_plot_rates_funnel_server <- function(
         nrow(rates) > 0,
         "No data available for these selections."
       ))
+      shiny::req(y_axis_limits())
+      shiny::req(x_axis_title())
+
       plot_rates_funnel(
         rates,
         y_axis_limits(),
-        x_axis_title = x_axis_title
+        x_axis_title = x_axis_title()
       )
     })
   })
