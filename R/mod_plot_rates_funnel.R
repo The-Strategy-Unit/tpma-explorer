@@ -15,18 +15,15 @@ mod_plot_rates_funnel_ui <- function(id) {
 #' @param rates A data.frame. Annual rate values for combinations of provider
 #'     and strategy
 #' @param peers_lookup A data.frame. A row per provider-peer pair.
-#' @param selected_provider Character. Provider code, e.g. `"RCF"`.
-#' @param selected_strategy Character. Strategy variable name, e.g.
-#'     `"alcohol_partially_attributable_acute"`.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
+#' @param x_axis_title Character. Title for the x-axis.
 #' @noRd
 mod_plot_rates_funnel_server <- function(
   id,
   rates,
   peers_lookup,
-  selected_provider,
-  selected_strategy,
-  y_axis_limits
+  y_axis_limits,
+  x_axis_title
 ) {
   shiny::moduleServer(id, function(input, output, session) {
     output$rates_funnel_plot <- shiny::renderPlot({
@@ -35,10 +32,13 @@ mod_plot_rates_funnel_server <- function(
         nrow(rates) > 0,
         "No data available for these selections."
       ))
+      shiny::req(y_axis_limits())
+      shiny::req(x_axis_title())
+
       plot_rates_funnel(
         rates,
         y_axis_limits(),
-        x_axis_title = "Denominator" # TODO: make this dynamic
+        x_axis_title = x_axis_title()
       )
     })
   })

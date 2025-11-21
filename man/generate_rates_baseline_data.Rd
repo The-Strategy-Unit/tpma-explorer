@@ -4,7 +4,7 @@
 \alias{generate_rates_baseline_data}
 \title{Generate Rates Baseline Data}
 \usage{
-generate_rates_baseline_data(rates, provider, peers, strategy, start_year)
+generate_rates_baseline_data(rates, provider, peers, strategy, baseline_year)
 }
 \arguments{
 \item{rates}{A data.frame. Rates data read from Azure.}
@@ -16,7 +16,7 @@ generate_rates_baseline_data(rates, provider, peers, strategy, start_year)
 \item{strategy}{Character. Strategy variable name, e.g.
 \code{"alcohol_partially_attributable_acute"}.}
 
-\item{start_year}{Integer. Baseline year in the form \code{202324}.}
+\item{baseline_year}{Integer. Baseline year in the form \code{202324}.}
 }
 \value{
 A data.frame.
