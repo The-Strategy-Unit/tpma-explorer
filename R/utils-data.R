@@ -36,3 +36,44 @@ prepare_age_sex_data <- function(age_sex_data) {
       )
     )
 }
+
+#' Read NHP Inputs App Config
+#' @param value Value to retrieve from the config file.
+#' @param config GOLEM_CONFIG_ACTIVE value. If unset, R_CONFIG_ACTIVE.
+#'     If unset, "default".
+#' @param use_parent Logical, scan the parent directory for config file.
+#' @param file Location of the config file
+#' @export
+get_golem_config <- function(
+  value,
+  config = Sys.getenv(
+    "GOLEM_CONFIG_ACTIVE",
+    Sys.getenv(
+      "R_CONFIG_ACTIVE",
+      "default"
+    )
+  ),
+  use_parent = TRUE,
+  file = app_sys("golem-config.yml")
+) {
+  config::get(
+    value = value,
+    config = config,
+    file = file,
+    use_parent = use_parent
+  )
+}
+
+#' Create a Simple Lookup of Strategies to Strategy Groups
+#' @param strategies_config List. Configuration for strategies from the
+#'     `"mitigators_config"` element of `golem-config.yml`, read in with
+#'     [get_golem_config].
+#' @export
+make_strategy_group_lookup <- function(strategies_config) {
+  strategies_config |>
+    purrr::map(\(strategy_group) {
+      strategy_group |> purrr::pluck("strategy_subset") |> names()
+    }) |>
+    tibble::enframe(name = "group", value = "strategy") |>
+    tidyr::unnest_longer("strategy")
+}
