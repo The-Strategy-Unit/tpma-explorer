@@ -4,8 +4,8 @@ rsconnect::deployApp(
   server = "connect.strategyunitwm.nhs.uk",
   appId = 200,
   appFiles = c(
-    "R/",
-    "inst/",
+    "R",
+    "inst",
     "NAMESPACE",
     "DESCRIPTION",
     "app.R"

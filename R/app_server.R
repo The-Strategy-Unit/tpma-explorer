@@ -8,7 +8,7 @@ app_server <- function(input, output, session) {
   baseline_year <- Sys.getenv("BASELINE_YEAR") |> as.numeric()
 
   # Data ----
-  inputs_container <- azkit::get_container(inputs_container_name)
+  inputs_container <- get_container(container_name = inputs_container_name)
   rates_data <- azkit::read_azure_parquet(
     inputs_container,
     "rates",

@@ -1,4 +1,9 @@
+# To run app locally and in deployment
 AZ_CONTAINER_INPUTS=
 AZ_STORAGE_EP=
-DATA_VERSION=
+AZ_SUPPORT_CONTAINER=
 BASELINE_YEAR=
+DATA_VERSION=
+# To run app locally
+AZ_APP_ID=
+AZ_TENANT_ID=
