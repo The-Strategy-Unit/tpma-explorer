@@ -5,10 +5,10 @@ app_server <- function(input, output, session) {
   # Env variables ----
   inputs_container_name <- Sys.getenv("AZ_CONTAINER_INPUTS")
   data_version <- Sys.getenv("DATA_VERSION")
-  start_year <- Sys.getenv("START_YEAR") |> as.numeric()
+  baseline_year <- Sys.getenv("BASELINE_YEAR") |> as.numeric()
 
   # Data ----
-  inputs_container <- azkit::get_container(inputs_container_name)
+  inputs_container <- get_container(container_name = inputs_container_name)
   rates_data <- azkit::read_azure_parquet(
     inputs_container,
     "rates",
@@ -61,6 +61,9 @@ app_server <- function(input, output, session) {
     col_types = "c"
   )
 
+  # Config ----
+  strategies_config <- get_golem_config("mitigators_config")
+
   # User inputs ----
   selected_provider <- mod_select_provider_server(
     "mod_select_provider",
@@ -80,9 +83,11 @@ app_server <- function(input, output, session) {
   mod_plot_rates_server(
     "mod_plot_rates",
     rates_data,
+    strategies_config,
     peers_lookup,
     selected_provider,
-    selected_strategy
+    selected_strategy,
+    baseline_year
   )
   mod_table_procedures_server(
     "mod_table_procedures",
@@ -90,7 +95,7 @@ app_server <- function(input, output, session) {
     procedures_lookup,
     selected_provider,
     selected_strategy,
-    start_year
+    baseline_year
   )
   mod_table_diagnoses_server(
     "mod_table_diagnoses",
@@ -98,14 +103,14 @@ app_server <- function(input, output, session) {
     diagnoses_lookup,
     selected_provider,
     selected_strategy,
-    start_year
+    baseline_year
   )
   mod_plot_age_sex_pyramid_server(
     "mod_plot_age_sex_pyramid",
     age_sex_data,
     selected_provider,
     selected_strategy,
-    start_year
+    baseline_year
   )
   mod_plot_nee_server(
     "mod_plot_nee",
