@@ -63,10 +63,12 @@ app_server <- function(input, output, session) {
 
   # Config ----
   strategies_config <- get_golem_config("mitigators_config")
+  geographies <- c("NHP schemes", "Local Authorities")
 
   # User inputs ----
   selected_provider <- mod_select_provider_server(
     "mod_select_provider",
+    geographies,
     providers_lookup
   )
   selected_strategy <- mod_select_strategy_server(
