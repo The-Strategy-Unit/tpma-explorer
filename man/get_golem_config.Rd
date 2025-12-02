@@ -21,6 +21,9 @@ If unset, "default".}
 
 \item{file}{Location of the config file}
 }
+\value{
+A list.
+}
 \description{
 Read NHP Inputs App Config
 }

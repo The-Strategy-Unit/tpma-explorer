@@ -11,6 +11,9 @@ make_strategy_group_lookup(strategies_config)
 \code{"mitigators_config"} element of \code{golem-config.yml}, read in with
 \link{get_golem_config}.}
 }
+\value{
+A data.frame.
+}
 \description{
 Create a Simple Lookup of Strategies to Strategy Groups
 }
