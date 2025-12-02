@@ -40,11 +40,11 @@ mod_plot_rates_server <- function(
     #  Prepare data ----
 
     rates_trend_data <- shiny::reactive({
-      shiny::req(rates)
+      shiny::req(rates())
       shiny::req(selected_provider())
       shiny::req(selected_strategy())
 
-      rates |>
+      rates() |>
         dplyr::filter(
           .data$provider == selected_provider(),
           .data$strategy == selected_strategy()
@@ -53,7 +53,7 @@ mod_plot_rates_server <- function(
     })
 
     rates_baseline_data <- shiny::reactive({
-      shiny::req(rates)
+      shiny::req(rates())
       shiny::req(peers_lookup)
       shiny::req(selected_provider())
       shiny::req(selected_strategy())
@@ -62,7 +62,7 @@ mod_plot_rates_server <- function(
         selected_provider(),
         peers_lookup
       )
-      rates |>
+      rates() |>
         generate_rates_baseline_data(
           selected_provider(),
           provider_peers,

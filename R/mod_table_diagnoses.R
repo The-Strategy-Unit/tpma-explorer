@@ -32,13 +32,13 @@ mod_table_diagnoses_server <- function(
 ) {
   shiny::moduleServer(id, function(input, output, session) {
     diagnoses_prepared <- shiny::reactive({
-      shiny::req(diagnoses_data)
+      shiny::req(diagnoses_data())
       shiny::req(selected_provider())
       shiny::req(selected_strategy())
       shiny::req(baseline_year)
 
       prepare_diagnoses_data(
-        diagnoses_data,
+        diagnoses_data(),
         diagnoses_lookup,
         selected_provider(),
         selected_strategy(),

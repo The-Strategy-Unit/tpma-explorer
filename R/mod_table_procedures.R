@@ -32,13 +32,13 @@ mod_table_procedures_server <- function(
 ) {
   shiny::moduleServer(id, function(input, output, session) {
     procedures_prepared <- shiny::reactive({
-      shiny::req(procedures_data)
+      shiny::req(procedures_data())
       shiny::req(selected_provider())
       shiny::req(selected_strategy())
       shiny::req(baseline_year)
 
       prepare_procedures_data(
-        procedures_data,
+        procedures_data(),
         procedures_lookup,
         selected_provider(),
         selected_strategy(),
