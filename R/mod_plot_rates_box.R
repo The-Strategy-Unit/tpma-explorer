@@ -14,15 +14,9 @@ mod_plot_rates_box_ui <- function(id) {
 #' @param id Internal parameter for `shiny`.
 #' @param rates A data.frame. Annual rate values for combinations of provider
 #'     and strategy.
-#' @param peers_lookup A data.frame. A row per provider-peer pair.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
 #' @noRd
-mod_plot_rates_box_server <- function(
-  id,
-  rates,
-  peers_lookup,
-  y_axis_limits
-) {
+mod_plot_rates_box_server <- function(id, rates, y_axis_limits) {
   shiny::moduleServer(id, function(input, output, session) {
     output$rates_box_plot <- shiny::renderPlot({
       rates <- rates()

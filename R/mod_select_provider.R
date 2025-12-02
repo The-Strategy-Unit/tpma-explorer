@@ -22,10 +22,10 @@ mod_select_provider_server <- function(id, selected_geography, providers) {
   shiny::moduleServer(id, function(input, output, session) {
     shiny::observe({
       shiny::req(selected_geography())
-      shiny::req(providers)
+      shiny::req(providers())
 
       if (selected_geography() == "nhp") {
-        provider_choices <- purrr::set_names(names(providers), providers)
+        provider_choices <- purrr::set_names(names(providers()), providers())
         shiny::updateSelectInput(
           session,
           "provider_select",
@@ -35,11 +35,12 @@ mod_select_provider_server <- function(id, selected_geography, providers) {
       }
       # TODO: correct logic when LA is selected
       if (selected_geography() == "la") {
+        provider_choices <- purrr::set_names(names(providers()), providers())
         shiny::updateSelectInput(
           session,
           "provider_select",
           label = "Choose a local authority:",
-          choices = NULL
+          choices = provider_choices
         )
       }
     })

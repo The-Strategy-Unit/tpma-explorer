@@ -3,19 +3,18 @@
 #' @noRd
 app_server <- function(input, output, session) {
   # Variables ----
-  geographies <- c("nhp", "la")
+  geographies <- c(
+    "New Hospital Programme (NHP)" = "nhp",
+    "Local authority (LA)" = "la"
+  )
+  data_types <- c("age_sex", "diagnoses", "procedures", "rates")
   baseline_year <- Sys.getenv("BASELINE_YEAR") |> as.numeric()
 
   # Data ----
-
   inputs_container <- get_container(
     container_name = Sys.getenv("AZ_CONTAINER_INPUTS")
   )
-  inputs_data <- get_all_geo_data(
-    inputs_container,
-    geographies,
-    data_type = c("age_sex", "diagnoses", "procedures", "rates")
-  )
+  inputs_data <- get_all_geo_data(inputs_container, geographies, data_types)
   age_sex_data <- shiny::reactive({
     shiny::req(selected_geography())
     inputs_data[[selected_geography()]][["age_sex"]] |>
@@ -33,7 +32,6 @@ app_server <- function(input, output, session) {
     shiny::req(selected_geography())
     inputs_data[[selected_geography()]][["rates"]]
   })
-
   nee_data <- readr::read_csv(
     app_sys("app", "data", "nee_table.csv"),
     col_types = "cddd"
@@ -59,16 +57,40 @@ app_server <- function(input, output, session) {
   )
 
   # Lookups ----
-  # TODO: conditionally select based on geography
-  # TODO: add files for LA versions of these files
-  peers_lookup <- readr::read_csv(
-    app_sys("app", "data", "peers.csv"),
-    col_types = "c"
-  )
-  providers_lookup <- jsonlite::read_json(
-    app_sys("app", "data", "datasets.json"),
+  # TODO: read lookups into single object, as per providers
+  nhp_providers_lookup <- jsonlite::read_json(
+    app_sys("app", "data", "nhp-datasets.json"),
     simplify_vector = TRUE
   )
+  la_providers_lookup <- jsonlite::read_json(
+    app_sys("app", "data", "la-datasets.json"),
+    simplify_vector = TRUE
+  )
+  nhp_peers_lookup <- readr::read_csv(
+    app_sys("app", "data", "nhp-peers.csv"),
+    col_types = "c"
+  )
+  la_peers_lookup <- readr::read_csv(
+    app_sys("app", "data", "la-peers.csv"),
+    col_types = "c"
+  )
+  # TODO: make reactives in similar style to providers
+  providers_lookup <- shiny::reactive({
+    shiny::req(selected_geography())
+    shiny::req(nhp_providers_lookup)
+    shiny::req(la_providers_lookup)
+    if (selected_geography() == "nhp") {
+      nhp_providers_lookup
+    } else {
+      la_providers_lookup
+    }
+  })
+  peers_lookup <- shiny::reactive({
+    shiny::req(selected_geography())
+    shiny::req(nhp_peers_lookup)
+    shiny::req(la_peers_lookup)
+    if (selected_geography() == "nhp") nhp_peers_lookup else la_peers_lookup
+  })
 
   # User inputs ----
   selected_geography <- mod_select_geography_server(

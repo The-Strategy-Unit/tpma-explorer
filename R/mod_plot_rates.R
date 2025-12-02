@@ -54,13 +54,13 @@ mod_plot_rates_server <- function(
 
     rates_baseline_data <- shiny::reactive({
       shiny::req(rates())
-      shiny::req(peers_lookup)
+      shiny::req(peers_lookup())
       shiny::req(selected_provider())
       shiny::req(selected_strategy())
 
       provider_peers <- isolate_provider_peers(
         selected_provider(),
-        peers_lookup
+        peers_lookup()
       )
       rates() |>
         generate_rates_baseline_data(
@@ -123,14 +123,12 @@ mod_plot_rates_server <- function(
     mod_plot_rates_funnel_server(
       "mod_plot_rates_funnel",
       rates_funnel_data,
-      peers_lookup,
       y_axis_limits,
       funnel_x_title
     )
     mod_plot_rates_box_server(
       "mod_plot_rates_box",
       rates_baseline_data,
-      peers_lookup,
       y_axis_limits
     )
   })

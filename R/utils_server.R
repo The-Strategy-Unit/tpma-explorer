@@ -22,11 +22,13 @@ get_all_geo_data <- function(inputs_container, geographies, data_types) {
           } else {
             Sys.getenv("DATA_VERSION")
           }
+          col_renames <- c(provider = "resladst_ons")
           azkit::read_azure_parquet(
             inputs_container,
             data_type,
             container_dir
-          )
+          ) |>
+            dplyr::rename(dplyr::any_of(col_renames)) # standardise
         }
       ) |>
         purrr::set_names(data_types)
