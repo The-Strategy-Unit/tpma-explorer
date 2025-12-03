@@ -7,6 +7,7 @@ app_ui <- function(request) {
     fillable = FALSE, # allow page scroll
 
     sidebar = bslib::sidebar(
+      mod_select_geography_ui("mod_select_geography"),
       mod_select_provider_ui("mod_select_provider"),
       mod_select_strategy_ui("mod_select_strategy"),
     ),

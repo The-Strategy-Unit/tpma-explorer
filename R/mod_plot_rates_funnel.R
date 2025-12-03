@@ -14,14 +14,12 @@ mod_plot_rates_funnel_ui <- function(id) {
 #' @param id Internal parameter for `shiny`.
 #' @param rates A data.frame. Annual rate values for combinations of provider
 #'     and strategy
-#' @param peers_lookup A data.frame. A row per provider-peer pair.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
 #' @param x_axis_title Character. Title for the x-axis.
 #' @noRd
 mod_plot_rates_funnel_server <- function(
   id,
   rates,
-  peers_lookup,
   y_axis_limits,
   x_axis_title
 ) {

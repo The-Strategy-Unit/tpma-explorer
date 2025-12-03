@@ -4,9 +4,11 @@
 ^\.vscode$
 ^app\.R$
 ^CODEOWNERS$
+^data-raw$
 ^deploy\.R$
 ^dev$
 ^LICENSE\.md$
+^\.lintr$
 ^README\.md$
 ^rsconnect$
 ^tpma-explorer\.Rproj$

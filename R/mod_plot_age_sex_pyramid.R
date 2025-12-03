@@ -31,12 +31,12 @@ mod_plot_age_sex_pyramid_server <- function(
 ) {
   shiny::moduleServer(id, function(input, output, session) {
     output$age_sex_pyramid <- shiny::renderPlot({
-      shiny::req(age_sex_data)
+      shiny::req(age_sex_data())
       shiny::req(selected_provider())
       shiny::req(selected_strategy())
       shiny::req(baseline_year)
 
-      age_sex_filtered <- age_sex_data |>
+      age_sex_filtered <- age_sex_data() |>
         dplyr::filter(
           .data$provider == selected_provider(),
           .data$strategy == selected_strategy(),

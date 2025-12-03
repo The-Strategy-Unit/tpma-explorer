@@ -43,6 +43,7 @@ prepare_age_sex_data <- function(age_sex_data) {
 #'     If unset, "default".
 #' @param use_parent Logical, scan the parent directory for config file.
 #' @param file Location of the config file
+#' @return A list.
 #' @export
 get_golem_config <- function(
   value,
@@ -68,6 +69,7 @@ get_golem_config <- function(
 #' @param strategies_config List. Configuration for strategies from the
 #'     `"mitigators_config"` element of `golem-config.yml`, read in with
 #'     [get_golem_config].
+#' @return A data.frame.
 #' @export
 make_strategy_group_lookup <- function(strategies_config) {
   strategies_config |>

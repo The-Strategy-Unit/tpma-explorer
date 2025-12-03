@@ -2,71 +2,104 @@
 #' @param input,output,session Internal parameters for 'shiny'.
 #' @noRd
 app_server <- function(input, output, session) {
-  # Env variables ----
-  inputs_container_name <- Sys.getenv("AZ_CONTAINER_INPUTS")
-  data_version <- Sys.getenv("DATA_VERSION")
+  # Variables ----
+  geographies <- c(
+    "New Hospital Programme (NHP)" = "nhp",
+    "Local authority (LA)" = "la"
+  )
+  data_types <- c("age_sex", "diagnoses", "procedures", "rates")
   baseline_year <- Sys.getenv("BASELINE_YEAR") |> as.numeric()
 
   # Data ----
-  inputs_container <- get_container(container_name = inputs_container_name)
-  rates_data <- azkit::read_azure_parquet(
-    inputs_container,
-    "rates",
-    data_version
+  inputs_container <- get_container(
+    container_name = Sys.getenv("AZ_CONTAINER_INPUTS")
   )
-  procedures_data <- azkit::read_azure_parquet(
-    inputs_container,
-    "procedures",
-    data_version
-  )
-  diagnoses_data <- azkit::read_azure_parquet(
-    inputs_container,
-    "diagnoses",
-    data_version
-  )
-  age_sex_data <- azkit::read_azure_parquet(
-    inputs_container,
-    "age_sex",
-    data_version
-  ) |>
-    prepare_age_sex_data()
+  inputs_data <- get_all_geo_data(inputs_container, geographies, data_types)
+  age_sex_data <- shiny::reactive({
+    shiny::req(selected_geography())
+    inputs_data[[selected_geography()]][["age_sex"]] |>
+      prepare_age_sex_data()
+  })
+  diagnoses_data <- shiny::reactive({
+    shiny::req(selected_geography())
+    inputs_data[[selected_geography()]][["diagnoses"]]
+  })
+  procedures_data <- shiny::reactive({
+    shiny::req(selected_geography())
+    inputs_data[[selected_geography()]][["procedures"]]
+  })
+  rates_data <- shiny::reactive({
+    shiny::req(selected_geography())
+    inputs_data[[selected_geography()]][["rates"]]
+  })
   nee_data <- readr::read_csv(
     app_sys("app", "data", "nee_table.csv"),
     col_types = "cddd"
   )
 
-  # Lookups ----
-  providers_lookup <- jsonlite::read_json(
-    app_sys("app", "data", "datasets.json"),
-    simplify_vector = TRUE
-  )
-  strategies_lookup <- jsonlite::read_json(
-    app_sys("app", "data", "mitigators.json"),
-    simplify_vector = TRUE
-  )
+  # Lookups (general) ----
   descriptions_lookup <- jsonlite::read_json(
     app_sys("app", "data", "descriptions.json"),
     simplifyVector = TRUE
   )
-  peers_lookup <- readr::read_csv(
-    app_sys("app", "data", "peers.csv"),
+  diagnoses_lookup <- readr::read_csv(
+    app_sys("app", "data", "diagnoses.csv"),
     col_types = "c"
   )
   procedures_lookup <- readr::read_csv(
     app_sys("app", "data", "procedures.csv"),
     col_types = "c"
   )
-  diagnoses_lookup <- readr::read_csv(
-    app_sys("app", "data", "diagnoses.csv"),
-    col_types = "c"
+  strategies_config <- get_golem_config("mitigators_config")
+  strategies_lookup <- jsonlite::read_json(
+    app_sys("app", "data", "mitigators.json"),
+    simplify_vector = TRUE
   )
 
-  # Config ----
-  strategies_config <- get_golem_config("mitigators_config")
+  # Lookups ----
+  # TODO: read lookups into single object, as per providers
+  nhp_providers_lookup <- jsonlite::read_json(
+    app_sys("app", "data", "nhp-datasets.json"),
+    simplify_vector = TRUE
+  )
+  la_providers_lookup <- jsonlite::read_json(
+    app_sys("app", "data", "la-datasets.json"),
+    simplify_vector = TRUE
+  )
+  nhp_peers_lookup <- readr::read_csv(
+    app_sys("app", "data", "nhp-peers.csv"),
+    col_types = "c"
+  )
+  la_peers_lookup <- readr::read_csv(
+    app_sys("app", "data", "la-peers.csv"),
+    col_types = "c"
+  )
+  # TODO: make reactives in similar style to providers
+  providers_lookup <- shiny::reactive({
+    shiny::req(selected_geography())
+    shiny::req(nhp_providers_lookup)
+    shiny::req(la_providers_lookup)
+    if (selected_geography() == "nhp") {
+      nhp_providers_lookup
+    } else {
+      la_providers_lookup
+    }
+  })
+  peers_lookup <- shiny::reactive({
+    shiny::req(selected_geography())
+    shiny::req(nhp_peers_lookup)
+    shiny::req(la_peers_lookup)
+    if (selected_geography() == "nhp") nhp_peers_lookup else la_peers_lookup
+  })
 
   # User inputs ----
+  selected_geography <- mod_select_geography_server(
+    "mod_select_geography",
+    geographies
+  )
   selected_provider <- mod_select_provider_server(
     "mod_select_provider",
+    selected_geography,
     providers_lookup
   )
   selected_strategy <- mod_select_strategy_server(
