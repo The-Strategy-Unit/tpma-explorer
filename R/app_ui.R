@@ -8,8 +8,8 @@ app_ui <- function(request) {
 
     sidebar = bslib::sidebar(
       bslib::accordion(
-        id = "sidebar-accordion",
-        open = TRUE,
+        id = "sidebar_accordion",
+        open = FALSE,
         multiple = TRUE,
         bslib::accordion_panel(
           title = "Statistical units",
@@ -21,6 +21,14 @@ app_ui <- function(request) {
           title = "Types of potentially mitigatable activity (TPMAs)",
           icon = bsicons::bs_icon("hospital"),
           mod_select_strategy_ui("mod_select_strategy")
+        ),
+        bslib::accordion_panel(
+          title = "Bookmark",
+          icon = bsicons::bs_icon("bookmark"),
+          shiny::p(
+            "Bookmark this application's state and get a URL for sharing."
+          ),
+          shiny::bookmarkButton(label = "Copy URL")
         )
       )
     ),

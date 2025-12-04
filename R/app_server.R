@@ -107,6 +107,13 @@ app_server <- function(input, output, session) {
     strategies_lookup
   )
 
+  # Open UI accordion ----
+  shiny::observe({
+    shiny::req(selected_provider())
+    shiny::req(selected_strategy())
+    bslib::accordion_panel_open(id = "sidebar_accordion", values = TRUE)
+  })
+
   # Modules ----
   mod_show_strategy_text_server(
     "mod_show_strategy_text",
