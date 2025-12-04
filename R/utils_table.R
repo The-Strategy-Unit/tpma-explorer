@@ -16,12 +16,17 @@ prepare_procedures_data <- function(
   strategy,
   baseline_year
 ) {
-  procedures_prepared <- procedures_data |>
+  procedures_filtered <- procedures_data |>
     dplyr::filter(
       .data$provider == .env$provider,
       .data$strategy == .env$strategy,
       .data$fyear == .env$baseline_year
-    ) |>
+    )
+  if (nrow(procedures_filtered) == 0) {
+    return(NULL)
+  }
+
+  procedures_prepared <- procedures_filtered |>
     dplyr::left_join(procedures_lookup, by = c("procedure_code" = "code")) |>
     tidyr::replace_na(list(
       description = "Unknown/Invalid Procedure Code"
@@ -64,12 +69,17 @@ prepare_diagnoses_data <- function(
   strategy,
   baseline_year
 ) {
-  diagnoses_prepared <- diagnoses_data |>
+  diagnoses_filtered <- diagnoses_data |>
     dplyr::filter(
       .data$provider == .env$provider,
       .data$strategy == .env$strategy,
       .data$fyear == .env$baseline_year
-    ) |>
+    )
+  if (nrow(diagnoses_filtered) == 0) {
+    return(NULL)
+  }
+
+  diagnoses_prepared <- diagnoses_filtered |>
     dplyr::inner_join(
       diagnoses_lookup,
       by = c("diagnosis" = "diagnosis_code")
