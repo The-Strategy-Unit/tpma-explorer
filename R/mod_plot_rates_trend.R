@@ -5,7 +5,11 @@ mod_plot_rates_trend_ui <- function(id) {
   ns <- shiny::NS(id)
   bslib::card(
     bslib::card_header("Rates Trend"),
-    bslib::card_body(shiny::plotOutput(ns("rates_trend_plot"))),
+    bslib::card_body(
+      shinycssloaders::withSpinner(
+        shiny::plotOutput(ns("rates_trend_plot"))
+      )
+    ),
     full_screen = TRUE
   )
 }

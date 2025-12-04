@@ -7,7 +7,7 @@ mod_plot_nee_ui <- function(id) {
     bslib::card_header("National Elicitation Exercise (NEE) estimate"),
     bslib::card_body(
       shiny::p("2039/40 horizon. Mean represented as a point."),
-      shiny::plotOutput(ns("nee"))
+      shinycssloaders::withSpinner(shiny::plotOutput(ns("nee")))
     ),
     full_screen = TRUE
   )

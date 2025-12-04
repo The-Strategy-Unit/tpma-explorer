@@ -5,7 +5,11 @@ mod_table_diagnoses_ui <- function(id) {
   ns <- shiny::NS(id)
   bslib::card(
     bslib::card_header("Diagnoses summary"),
-    bslib::card_body(gt::gt_output(ns("diagnoses_table"))),
+    bslib::card_body(
+      shinycssloaders::withSpinner(
+        gt::gt_output(ns("diagnoses_table"))
+      )
+    ),
     fill = FALSE,
     full_screen = TRUE
   )

@@ -5,7 +5,11 @@ mod_show_strategy_text_ui <- function(id) {
   ns <- shiny::NS(id)
   bslib::card(
     bslib::card_header("Description"),
-    bslib::card_body(shiny::htmlOutput(ns("strategy_text")))
+    bslib::card_body(
+      shinycssloaders::withSpinner(
+        shiny::htmlOutput(ns("strategy_text"))
+      )
+    )
   )
 }
 
