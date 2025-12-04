@@ -3,13 +3,26 @@
 #' @noRd
 app_ui <- function(request) {
   bslib::page_sidebar(
-    title = "Explore TPMA data (in development)",
+    title = "Explore potentially-mitigatable activity data (in development)",
     fillable = FALSE, # allow page scroll
 
     sidebar = bslib::sidebar(
-      mod_select_geography_ui("mod_select_geography"),
-      mod_select_provider_ui("mod_select_provider"),
-      mod_select_strategy_ui("mod_select_strategy"),
+      bslib::accordion(
+        id = "sidebar-accordion",
+        open = TRUE,
+        multiple = TRUE,
+        bslib::accordion_panel(
+          title = "Statistical units",
+          icon = bsicons::bs_icon("pin-map"),
+          mod_select_geography_ui("mod_select_geography"),
+          mod_select_provider_ui("mod_select_provider"),
+        ),
+        bslib::accordion_panel(
+          title = "Types of potentially mitigatable activity (TPMAs)",
+          icon = bsicons::bs_icon("hospital"),
+          mod_select_strategy_ui("mod_select_strategy")
+        )
+      )
     ),
 
     bslib::card(

@@ -28,7 +28,7 @@ entable_encounters <- function(encounters_prepared) {
     ) |>
     gt::sub_missing(
       columns = c("n", "pcnt"),
-      missing_text = "—"
+      missing_text = "Suppressed"
     ) |>
     gt::grand_summary_rows(
       columns = "n",

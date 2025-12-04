@@ -4,8 +4,8 @@
 app_server <- function(input, output, session) {
   # Variables ----
   geographies <- c(
-    "New Hospital Programme (NHP)" = "nhp",
-    "Local authority (LA)" = "la"
+    "New Hospital Programme (NHP) schemes" = "nhp",
+    "Local authorities (LAs)" = "la"
   )
   data_types <- c("age_sex", "diagnoses", "procedures", "rates")
   baseline_year <- Sys.getenv("BASELINE_YEAR") |> as.numeric()

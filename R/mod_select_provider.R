@@ -29,7 +29,7 @@ mod_select_provider_server <- function(id, selected_geography, providers) {
       provider_label <- switch(
         selected_geography(),
         "nhp" = "Choose an NHP scheme:",
-        "la" = "Choose a local authority:"
+        "la" = "Choose an LA:"
       )
 
       shiny::updateSelectInput(
