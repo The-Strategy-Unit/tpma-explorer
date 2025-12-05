@@ -173,7 +173,7 @@ plot_nee <- function(nee_data) {
         x = .data[["percentile10"]],
         xend = .data[["percentile90"]]
       ),
-      size = 2
+      linewidth = 2
     ) +
     ggplot2::geom_point(
       ggplot2::aes(y = 1, x = mean),

@@ -5,7 +5,11 @@ mod_plot_rates_box_ui <- function(id) {
   ns <- shiny::NS(id)
   bslib::card(
     bslib::card_header("Rates Box"),
-    bslib::card_body(shiny::plotOutput(ns("rates_box_plot"))),
+    bslib::card_body(
+      shinycssloaders::withSpinner(
+        shiny::plotOutput(ns("rates_box_plot"))
+      )
+    ),
     full_screen = TRUE
   )
 }

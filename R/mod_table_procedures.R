@@ -5,7 +5,11 @@ mod_table_procedures_ui <- function(id) {
   ns <- shiny::NS(id)
   bslib::card(
     bslib::card_header("Procedures summary"),
-    bslib::card_body(gt::gt_output(ns("procedures_table"))),
+    bslib::card_body(
+      shinycssloaders::withSpinner(
+        gt::gt_output(ns("procedures_table"))
+      )
+    ),
     fill = FALSE,
     full_screen = TRUE
   )

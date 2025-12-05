@@ -18,13 +18,17 @@ entable_encounters <- function(encounters_prepared) {
     ) |>
     gt::tab_stubhead(encounter_type_title) |>
     gt::fmt_number(
-      c("n"),
+      columns = "n",
       decimals = 0,
       use_seps = TRUE
     ) |>
     gt::fmt_percent(
-      c("pcnt"),
+      columns = "pcnt",
       decimals = 1
+    ) |>
+    gt::sub_missing(
+      columns = c("n", "pcnt"),
+      missing_text = "Suppressed"
     ) |>
     gt::grand_summary_rows(
       columns = "n",

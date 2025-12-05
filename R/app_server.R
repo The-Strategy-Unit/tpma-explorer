@@ -4,8 +4,8 @@
 app_server <- function(input, output, session) {
   # Variables ----
   geographies <- c(
-    "New Hospital Programme (NHP)" = "nhp",
-    "Local authority (LA)" = "la"
+    "New Hospital Programme (NHP) schemes" = "nhp",
+    "Local authorities (LAs)" = "la"
   )
   data_types <- c("age_sex", "diagnoses", "procedures", "rates")
   baseline_year <- Sys.getenv("BASELINE_YEAR") |> as.numeric()
@@ -106,6 +106,13 @@ app_server <- function(input, output, session) {
     "mod_select_strategy",
     strategies_lookup
   )
+
+  # Open UI accordion ----
+  shiny::observe({
+    shiny::req(selected_provider())
+    shiny::req(selected_strategy())
+    bslib::accordion_panel_open(id = "sidebar_accordion", values = TRUE)
+  })
 
   # Modules ----
   mod_show_strategy_text_server(

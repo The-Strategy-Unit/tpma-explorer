@@ -21,6 +21,7 @@ names_lkup <- purrr::map(
   }
 ) |>
   unlist() |>
+  sort() |> # alphabetise by name
   as.list() |>
   purrr::keep_at(\(la) stringr::str_detect(la, "^E")) # keep England only
 

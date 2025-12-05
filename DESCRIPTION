@@ -33,6 +33,7 @@ Imports:
     rlang,
     scales,
     shiny,
+    shinycssloaders,
     stringr,
     tibble,
     tidyr,
