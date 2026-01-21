@@ -29,7 +29,7 @@ mod_show_strategy_text_server <- function(
       selected_strategy() |>
         fetch_strategy_text(descriptions_lookup) |>
         convert_md_to_html()
-    })
-  }) |>
-    shiny::bindCache(selected_strategy(), cache = cache)
+    }) |>
+      shiny::bindCache(selected_strategy(), cache = cache)
+  })
 }
