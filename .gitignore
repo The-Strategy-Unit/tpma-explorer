@@ -253,3 +253,5 @@ poetry.toml
 pyrightconfig.json
 
 /.quarto/
+
+.cache/

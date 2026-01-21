@@ -2,6 +2,12 @@
 #' @param input,output,session Internal parameters for 'shiny'.
 #' @noRd
 app_server <- function(input, output, session) {
+  cache <- cachem::cache_disk(".cache")
+  inputs_data_fn <- memoise::memoise(
+    get_all_geo_data,
+    cache = cache
+  )
+
   # Variables ----
   geographies <- c(
     "New Hospital Programme (NHP) schemes" = "nhp",
@@ -11,10 +17,7 @@ app_server <- function(input, output, session) {
   baseline_year <- Sys.getenv("BASELINE_YEAR") |> as.numeric()
 
   # Data ----
-  inputs_container <- get_container(
-    container_name = Sys.getenv("AZ_CONTAINER_INPUTS")
-  )
-  inputs_data <- get_all_geo_data(inputs_container, geographies, data_types)
+  inputs_data <- inputs_data_fn(geographies, data_types)
   age_sex_data <- shiny::reactive({
     sg <- shiny::req(selected_geography())
     inputs_data[[sg]][["age_sex"]] |>

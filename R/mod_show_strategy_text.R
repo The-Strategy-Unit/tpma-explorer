@@ -21,6 +21,7 @@ mod_show_strategy_text_server <- function(
   descriptions_lookup,
   selected_strategy
 ) {
+  cache <- cachem::cache_disk(".cache")
   shiny::moduleServer(id, function(input, output, session) {
     output$strategy_text <- shiny::renderText({
       shiny::req(selected_strategy())
@@ -29,5 +30,6 @@ mod_show_strategy_text_server <- function(
         fetch_strategy_text(descriptions_lookup) |>
         convert_md_to_html()
     })
-  })
+  }) |>
+    shiny::bindCache(selected_strategy(), cache = cache)
 }

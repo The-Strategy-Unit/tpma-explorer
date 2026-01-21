@@ -1,7 +1,4 @@
 #' Read Inputs Datasets for All Geographies
-#' @param inputs_container A blob_container/storage_container list. The
-#'     object containing the connection to the Azure container hosting the
-#'     datasets named by `data_types`.
 #' @param geographies Character. The geography level for which the user wants to
 #'     select a provider.
 #' @param data_types Character. A vector of filenames (without filetypes) for
@@ -10,7 +7,11 @@
 #' @return A list. One element for each of the `geographies`, with subelements
 #'     that are dataframes of each one of the `data_types`.
 #' @export
-get_all_geo_data <- function(inputs_container, geographies, data_types) {
+get_all_geo_data <- function(geographies, data_types) {
+  inputs_container <- get_container(
+    container_name = Sys.getenv("AZ_CONTAINER_INPUTS")
+  )
+
   purrr::map(
     geographies,
     \(geography) {
