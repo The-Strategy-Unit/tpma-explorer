@@ -5,6 +5,7 @@
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
 #' @param x_axis_title Character. Title for the x-axis.
 #' @param y_axis_title Character. Title for the y-axis.
+#' @param y_labels A function. Function to format y-axis labels.
 #' @return A 'ggplot2' object.
 #' @export
 plot_rates_trend <- function(
@@ -12,7 +13,8 @@ plot_rates_trend <- function(
   baseline_year,
   y_axis_limits,
   x_axis_title = "Financial year",
-  y_axis_title
+  y_axis_title,
+  y_labels
 ) {
   rates_trend_data |>
     ggplot2::ggplot(
@@ -23,8 +25,7 @@ plot_rates_trend <- function(
       data = \(.x) dplyr::filter(.x, .data[["fyear"]] == baseline_year),
       colour = "red"
     ) +
-    # TODO: add labels = number_format to scale_y_continuous
-    ggplot2::scale_y_continuous(name = y_axis_title) +
+    ggplot2::scale_y_continuous(name = y_axis_title, labels = y_labels) +
     ggplot2::coord_cartesian(ylim = y_axis_limits) +
     ggplot2::scale_x_discrete(
       labels = \(.x) stringr::str_replace(.x, "^(\\d{4})(\\d{2})$", "\\1/\\2")
