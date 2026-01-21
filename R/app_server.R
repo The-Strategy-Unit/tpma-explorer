@@ -16,17 +16,17 @@ app_server <- function(input, output, session) {
   )
   inputs_data <- get_all_geo_data(inputs_container, geographies, data_types)
   age_sex_data <- shiny::reactive({
-    shiny::req(selected_geography())
-    inputs_data[[selected_geography()]][["age_sex"]] |>
+    sg <- shiny::req(selected_geography())
+    inputs_data[[sg]][["age_sex"]] |>
       prepare_age_sex_data()
   })
   diagnoses_data <- shiny::reactive({
-    shiny::req(selected_geography())
-    inputs_data[[selected_geography()]][["diagnoses"]]
+    sg <- shiny::req(selected_geography())
+    inputs_data[[sg]][["diagnoses"]]
   })
   procedures_data <- shiny::reactive({
-    shiny::req(selected_geography())
-    inputs_data[[selected_geography()]][["procedures"]]
+    sg <- shiny::req(selected_geography())
+    inputs_data[[sg]][["procedures"]]
   })
   rates_data <- shiny::reactive({
     sg <- shiny::req(selected_geography())
