@@ -18,12 +18,15 @@ mod_plot_rates_funnel_ui <- function(id) {
 #' @param id Internal parameter for `shiny`.
 #' @param rates A data.frame. Annual rate values for combinations of provider
 #'     and strategy
+#' @param funnel_calculations A list. Output from [uprime_calculations] used to
+#'     plot U-Prime lines.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
 #' @param x_axis_title Character. Title for the x-axis.
 #' @noRd
 mod_plot_rates_funnel_server <- function(
   id,
   rates,
+  funnel_calculations,
   y_axis_limits,
   x_axis_title
 ) {
@@ -39,6 +42,7 @@ mod_plot_rates_funnel_server <- function(
 
       plot_rates_funnel(
         rates,
+        funnel_calculations(),
         y_axis_limits(),
         x_axis_title = x_axis_title()
       )

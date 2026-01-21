@@ -71,6 +71,12 @@ mod_plot_rates_server <- function(
         )
     })
 
+    rates_funnel_calculations <- shiny::reactive({
+      df <- shiny::req(rates_baseline_data())
+
+      uprime_calculations(df)
+    })
+
     rates_funnel_data <- shiny::reactive({
       shiny::req(rates_baseline_data())
       rates_baseline_data() |> generate_rates_funnel_data()
@@ -79,15 +85,19 @@ mod_plot_rates_server <- function(
     # Prepare variables ----
 
     y_axis_limits <- shiny::reactive({
-      shiny::req(rates_trend_data())
-      shiny::req(rates_funnel_data())
-      range(c(
-        rates_trend_data()[["rate"]],
-        rates_funnel_data()[["rate"]],
-        rates_funnel_data()[["lower3"]],
-        rates_funnel_data()[["upper3"]]
-      )) |>
-        pmax(0)
+      td_rate <- shiny::req(rates_trend_data())$rate
+
+      bd <- shiny::req(rates_baseline_data())
+      bd$z <- rates_funnel_calculations()$z_i
+
+      fd_rate <- bd |>
+        dplyr::filter(
+          .data$denominator >= 0.05 * max(.data$denominator),
+          abs(.data$z) < 4
+        ) |>
+        dplyr::pull("rate")
+
+      c(0, max(c(td_rate, fd_rate)))
     })
 
     strategy_config <- shiny::reactive({
@@ -127,7 +137,8 @@ mod_plot_rates_server <- function(
     )
     mod_plot_rates_funnel_server(
       "mod_plot_rates_funnel",
-      rates_funnel_data,
+      rates_baseline_data,
+      rates_funnel_calculations,
       y_axis_limits,
       funnel_x_title
     )

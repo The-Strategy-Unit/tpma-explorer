@@ -39,28 +39,48 @@ plot_rates_trend <- function(
 #'     processed with [generate_rates_baseline_data] to filter for provider,
 #'     strategy and year, followed by [generate_rates_funnel_data] to generate
 #'     values for funnel structure.
+#' @param funnel_calculations A list. Output from [uprime_calculations] used to
+#'     plot U-Prime lines.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
 #' @param x_axis_title Character. Title for the x-axis.
 #' @return A 'ggplot2' object.
 #' @export
-plot_rates_funnel <- function(rates_funnel_data, y_axis_limits, x_axis_title) {
-  lines_data <- rates_funnel_data |>
-    dplyr::select(
-      "denominator",
-      tidyselect::matches("^(lower|upper)"),
-      "mean"
-    ) |>
-    tidyr::pivot_longer(-"denominator", values_to = "rate")
-
+plot_rates_funnel <- function(
+  rates_funnel_data,
+  funnel_calculations,
+  y_axis_limits,
+  x_axis_title
+) {
   rates_funnel_data |>
     ggplot2::ggplot(ggplot2::aes(.data$denominator, .data$rate)) +
-    ggplot2::geom_line(
-      data = lines_data,
-      ggplot2::aes(group = .data$name),
-      linetype = "dashed",
-      na.rm = TRUE
+    ggplot2::geom_hline(
+      yintercept = funnel_calculations$cl,
+      linetype = "dashed"
     ) +
-    ggplot2::geom_point(ggplot2::aes(colour = .data$is_peer)) +
+    ggplot2::geom_function(
+      fun = funnel_calculations$lcl2,
+      colour = "orange",
+      linetype = "dashed"
+    ) +
+    ggplot2::geom_function(
+      fun = funnel_calculations$ucl2,
+      colour = "orange",
+      linetype = "dashed"
+    ) +
+    ggplot2::geom_function(
+      fun = funnel_calculations$lcl3,
+      colour = "red",
+      linetype = "dashed"
+    ) +
+    ggplot2::geom_function(
+      fun = funnel_calculations$ucl3,
+      colour = "red",
+      linetype = "dashed"
+    ) +
+    ggplot2::geom_point(ggplot2::aes(
+      colour = .data$is_peer,
+      alpha = .data$is_peer
+    )) +
     ggrepel::geom_text_repel(
       data = dplyr::filter(rates_funnel_data, !is.na(.data$is_peer)),
       ggplot2::aes(label = .data$provider, colour = .data$is_peer),
@@ -68,7 +88,11 @@ plot_rates_funnel <- function(rates_funnel_data, y_axis_limits, x_axis_title) {
     ) +
     ggplot2::scale_colour_manual(
       values = c("TRUE" = "black", "FALSE" = "red"),
-      na.value = "lightgrey"
+      na.value = "black"
+    ) +
+    ggplot2::scale_alpha_manual(
+      values = c("TRUE" = 1, "FALSE" = 1),
+      na.value = 0.2
     ) +
     ggplot2::theme(legend.position = "none") +
     ggplot2::scale_x_continuous(labels = scales::comma_format()) +
@@ -88,10 +112,17 @@ plot_rates_box <- function(rates_box_data, y_axis_limits) {
   rates_box_data |>
     ggplot2::ggplot(ggplot2::aes(x = "", y = .data$rate)) +
     ggplot2::geom_boxplot(alpha = 0.2, outlier.shape = NA) +
-    ggbeeswarm::geom_quasirandom(ggplot2::aes(colour = .data$is_peer)) +
+    ggbeeswarm::geom_quasirandom(ggplot2::aes(
+      colour = .data$is_peer,
+      alpha = .data$is_peer
+    )) +
     ggplot2::scale_colour_manual(
       values = c("TRUE" = "black", "FALSE" = "red"),
-      na.value = "lightgrey"
+      na.value = "black"
+    ) +
+    ggplot2::scale_alpha_manual(
+      values = c("TRUE" = 1, "FALSE" = 1),
+      na.value = 0.2
     ) +
     ggplot2::coord_cartesian(ylim = y_axis_limits) +
     ggplot2::labs(x = "") +
