@@ -44,7 +44,7 @@ app_server <- function(input, output, session) {
       )
 
     df |>
-      dplyr::filter(.data$provider != "national") |>
+      dplyr::filter(!.data$provider %in% c("national", "unknown")) |>
       dplyr::inner_join(
         national,
         by = c("strategy", "fyear")
