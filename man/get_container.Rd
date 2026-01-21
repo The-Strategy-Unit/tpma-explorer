@@ -5,21 +5,19 @@
 \title{Get Azure Container}
 \usage{
 get_container(
-  tenant = Sys.getenv("AZ_TENANT_ID"),
-  app_id = Sys.getenv("AZ_APP_ID"),
   ep_uri = Sys.getenv("AZ_STORAGE_EP"),
   container_name = Sys.getenv("AZ_CONTAINER_INPUTS")
 )
 }
 \arguments{
-\item{tenant}{Character. Tenant ID.}
-
-\item{app_id}{Character. App ID.}
-
 \item{ep_uri}{Character. Endpoint URI.}
 
 \item{container_name}{Character. The name of the blob/storage container that
 hosts files you want to read.}
+
+\item{tenant}{Character. Tenant ID.}
+
+\item{app_id}{Character. App ID.}
 }
 \value{
 A blob_container/storage_container list.

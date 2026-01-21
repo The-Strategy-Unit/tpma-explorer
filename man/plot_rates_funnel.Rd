@@ -4,13 +4,18 @@
 \alias{plot_rates_funnel}
 \title{Plot Rates Funnel with Peers}
 \usage{
-plot_rates_funnel(rates_funnel_data, y_axis_limits, x_axis_title)
+plot_rates_funnel(
+  rates_funnel_data,
+  funnel_calculations,
+  y_axis_limits,
+  x_axis_title
+)
 }
 \arguments{
-\item{rates_funnel_data}{A data.frame. Rates data read in from Azure and
-processed with \link{generate_rates_baseline_data} to filter for provider,
-strategy and year, followed by \link{generate_rates_funnel_data} to generate
-values for funnel structure.}
+\item{rates_funnel_data}{A data.frame. Rates data read in from Azure.}
+
+\item{funnel_calculations}{A list. Output from \link{uprime_calculations} used to
+plot U-Prime lines.}
 
 \item{y_axis_limits}{Numeric vector. Min and max values for the y axis.}
 

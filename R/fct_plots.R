@@ -35,10 +35,7 @@ plot_rates_trend <- function(
 }
 
 #' Plot Rates Funnel with Peers
-#' @param rates_funnel_data A data.frame. Rates data read in from Azure and
-#'     processed with [generate_rates_baseline_data] to filter for provider,
-#'     strategy and year, followed by [generate_rates_funnel_data] to generate
-#'     values for funnel structure.
+#' @param rates_funnel_data A data.frame. Rates data read in from Azure.
 #' @param funnel_calculations A list. Output from [uprime_calculations] used to
 #'     plot U-Prime lines.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
