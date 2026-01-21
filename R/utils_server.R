@@ -17,12 +17,22 @@ get_all_geo_data <- function(inputs_container, geographies, data_types) {
       purrr::map(
         data_types,
         \(data_type) {
-          container_dir <- if (geography == "la") {
-            "local_authorities"
-          } else {
-            Sys.getenv("DATA_VERSION")
-          }
-          col_renames <- c(provider = "resladst_ons")
+          geography_folder <- switch(
+            geography,
+            "nhp" = "provider",
+            "la" = "lad23cd"
+          )
+
+          stopifnot(
+            "Unknown geography" = !is.null(geography_folder)
+          )
+
+          container_dir <- file.path(
+            Sys.getenv("DATA_VERSION"),
+            geography_folder
+          )
+
+          col_renames <- c(provider = "lad23cd")
           azkit::read_azure_parquet(
             inputs_container,
             data_type,

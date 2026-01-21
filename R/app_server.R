@@ -29,8 +29,25 @@ app_server <- function(input, output, session) {
     inputs_data[[selected_geography()]][["procedures"]]
   })
   rates_data <- shiny::reactive({
-    shiny::req(selected_geography())
-    inputs_data[[selected_geography()]][["rates"]]
+    sg <- shiny::req(selected_geography())
+    df <- inputs_data[[sg]][["rates"]]
+
+    national <- df |>
+      dplyr::filter(.data$provider == "national") |>
+      dplyr::select(
+        "strategy",
+        "fyear",
+        national_rate = "std_rate"
+      )
+
+    df |>
+      dplyr::filter(.data$provider != "national") |>
+      dplyr::inner_join(
+        national,
+        by = c("strategy", "fyear")
+      ) |>
+      dplyr::rename(rate = "std_rate") |>
+      dplyr::select(-"crude_rate")
   })
   nee_data <- readr::read_csv(
     app_sys("app", "data", "nee_table.csv"),
