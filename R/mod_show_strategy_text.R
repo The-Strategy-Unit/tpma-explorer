@@ -19,9 +19,9 @@ mod_show_strategy_text_ui <- function(id) {
 mod_show_strategy_text_server <- function(
   id,
   descriptions_lookup,
-  selected_strategy
+  selected_strategy,
+  cache
 ) {
-  cache <- cachem::cache_disk(".cache")
   shiny::moduleServer(id, function(input, output, session) {
     output$strategy_text <- shiny::renderText({
       shiny::req(selected_strategy())

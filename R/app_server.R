@@ -138,7 +138,8 @@ app_server <- function(input, output, session) {
   mod_show_strategy_text_server(
     "mod_show_strategy_text",
     descriptions_lookup,
-    selected_strategy
+    selected_strategy,
+    cache
   )
   mod_plot_rates_server(
     "mod_plot_rates",
