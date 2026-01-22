@@ -19,7 +19,8 @@ mod_show_strategy_text_ui <- function(id) {
 mod_show_strategy_text_server <- function(
   id,
   descriptions_lookup,
-  selected_strategy
+  selected_strategy,
+  cache
 ) {
   shiny::moduleServer(id, function(input, output, session) {
     output$strategy_text <- shiny::renderText({
@@ -28,6 +29,7 @@ mod_show_strategy_text_server <- function(
       selected_strategy() |>
         fetch_strategy_text(descriptions_lookup) |>
         convert_md_to_html()
-    })
+    }) |>
+      shiny::bindCache(selected_strategy(), cache = cache)
   })
 }

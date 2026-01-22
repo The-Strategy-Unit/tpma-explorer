@@ -2,6 +2,12 @@
 #' @param input,output,session Internal parameters for 'shiny'.
 #' @noRd
 app_server <- function(input, output, session) {
+  cache <- cachem::cache_disk(".cache")
+  inputs_data_fn <- memoise::memoise(
+    get_all_geo_data,
+    cache = cache
+  )
+
   # Variables ----
   geographies <- c(
     "New Hospital Programme (NHP) schemes" = "nhp",
@@ -11,26 +17,40 @@ app_server <- function(input, output, session) {
   baseline_year <- Sys.getenv("BASELINE_YEAR") |> as.numeric()
 
   # Data ----
-  inputs_container <- get_container(
-    container_name = Sys.getenv("AZ_CONTAINER_INPUTS")
-  )
-  inputs_data <- get_all_geo_data(inputs_container, geographies, data_types)
+  inputs_data <- inputs_data_fn(geographies, data_types)
   age_sex_data <- shiny::reactive({
-    shiny::req(selected_geography())
-    inputs_data[[selected_geography()]][["age_sex"]] |>
+    sg <- shiny::req(selected_geography())
+    inputs_data[[sg]][["age_sex"]] |>
       prepare_age_sex_data()
   })
   diagnoses_data <- shiny::reactive({
-    shiny::req(selected_geography())
-    inputs_data[[selected_geography()]][["diagnoses"]]
+    sg <- shiny::req(selected_geography())
+    inputs_data[[sg]][["diagnoses"]]
   })
   procedures_data <- shiny::reactive({
-    shiny::req(selected_geography())
-    inputs_data[[selected_geography()]][["procedures"]]
+    sg <- shiny::req(selected_geography())
+    inputs_data[[sg]][["procedures"]]
   })
   rates_data <- shiny::reactive({
-    shiny::req(selected_geography())
-    inputs_data[[selected_geography()]][["rates"]]
+    sg <- shiny::req(selected_geography())
+    df <- inputs_data[[sg]][["rates"]]
+
+    national <- df |>
+      dplyr::filter(.data$provider == "national") |>
+      dplyr::select(
+        "strategy",
+        "fyear",
+        national_rate = "std_rate"
+      )
+
+    df |>
+      dplyr::filter(!.data$provider %in% c("national", "unknown")) |>
+      dplyr::inner_join(
+        national,
+        by = c("strategy", "fyear")
+      ) |>
+      dplyr::rename(rate = "std_rate") |>
+      dplyr::select(-"crude_rate")
   })
   nee_data <- readr::read_csv(
     app_sys("app", "data", "nee_table.csv"),
@@ -118,7 +138,8 @@ app_server <- function(input, output, session) {
   mod_show_strategy_text_server(
     "mod_show_strategy_text",
     descriptions_lookup,
-    selected_strategy
+    selected_strategy,
+    cache
   )
   mod_plot_rates_server(
     "mod_plot_rates",

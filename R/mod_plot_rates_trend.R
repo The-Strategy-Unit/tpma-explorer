@@ -20,6 +20,7 @@ mod_plot_rates_trend_ui <- function(id) {
 #'     and strategy.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
 #' @param y_axis_title Character. Title for the y-axis.
+#' @param y_labels Function. Function to format y-axis labels.
 #' @param baseline_year Integer. Baseline year in the form `202324`.
 #' @noRd
 mod_plot_rates_trend_server <- function(
@@ -27,6 +28,7 @@ mod_plot_rates_trend_server <- function(
   rates,
   y_axis_limits,
   y_axis_title,
+  y_labels,
   baseline_year
 ) {
   shiny::moduleServer(id, function(input, output, session) {
@@ -42,7 +44,8 @@ mod_plot_rates_trend_server <- function(
         rates(),
         baseline_year,
         y_axis_limits(),
-        y_axis_title = y_axis_title()
+        y_axis_title = y_axis_title(),
+        y_labels = y_labels()
       )
     })
   })
