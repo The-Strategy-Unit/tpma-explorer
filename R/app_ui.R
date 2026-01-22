@@ -19,8 +19,8 @@ app_ui <- function(request) {
           bsicons::bs_icon("exclamation-triangle"),
           "Warning"
         ),
-        "This application is in development and its output has not been verified.
-      The information presented here should not be relied on as fact."
+        "This app is in development and its output has not been verified.",
+        "The information presented here should not be relied on as fact."
       ),
 
       bslib::layout_columns(

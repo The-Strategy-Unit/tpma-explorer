@@ -4,7 +4,14 @@
 mod_table_diagnoses_ui <- function(id) {
   ns <- shiny::NS(id)
   bslib::card(
-    bslib::card_header("Diagnoses summary"),
+    bslib::card_header(
+      "Diagnoses summary",
+      bslib::tooltip(
+        bsicons::bs_icon("question-circle"),
+        md_file_to_html("app", "text", "card-info-diagnoses.md"),
+        placement = "right"
+      )
+    ),
     bslib::card_body(
       shinycssloaders::withSpinner(
         gt::gt_output(ns("diagnoses_table"))

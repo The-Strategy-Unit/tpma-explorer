@@ -4,7 +4,14 @@
 mod_plot_age_sex_pyramid_ui <- function(id) {
   ns <- shiny::NS(id)
   bslib::card(
-    bslib::card_header("Age-sex pyramid"),
+    bslib::card_header(
+      "Age-sex pyramid",
+      bslib::tooltip(
+        bsicons::bs_icon("question-circle"),
+        md_file_to_html("app", "text", "card-info-pyramid.md"),
+        placement = "right"
+      )
+    ),
     bslib::card_body(
       shinycssloaders::withSpinner(
         shiny::plotOutput(ns("age_sex_pyramid"))

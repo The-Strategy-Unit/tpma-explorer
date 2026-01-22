@@ -4,7 +4,14 @@
 mod_plot_rates_box_ui <- function(id) {
   ns <- shiny::NS(id)
   bslib::card(
-    bslib::card_header("Rates Box"),
+    bslib::card_header(
+      "Rates Box",
+      bslib::tooltip(
+        bsicons::bs_icon("question-circle"),
+        md_file_to_html("app", "text", "card-info-box.md"),
+        placement = "right"
+      )
+    ),
     bslib::card_body(
       shinycssloaders::withSpinner(
         shiny::plotOutput(ns("rates_box_plot"))
