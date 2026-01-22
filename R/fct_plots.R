@@ -48,6 +48,10 @@ plot_rates_funnel <- function(
   y_axis_limits,
   x_axis_title
 ) {
+  cl2_colour <- "black"
+  cl3_colour <- "black"
+  line_type <- "dashed"
+  
   rates_funnel_data |>
     ggplot2::ggplot(ggplot2::aes(.data$denominator, .data$rate)) +
     ggplot2::geom_hline(
