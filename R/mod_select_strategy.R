@@ -6,7 +6,7 @@ mod_select_strategy_ui <- function(id) {
   shiny::tagList(
     shiny::selectInput(
       ns("strategy_category_select"),
-      "Choose an activity type:",
+      "Filter by activity type:",
       choices = c(
         "Inpatients" = "ip",
         "Outpatients" = "op",

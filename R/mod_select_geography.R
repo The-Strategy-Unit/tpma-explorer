@@ -5,7 +5,7 @@ mod_select_geography_ui <- function(id) {
   ns <- shiny::NS(id)
   shiny::selectInput(
     ns("geography_select"),
-    "Choose a geographic unit:",
+    "Filter by geography:",
     choices = NULL
   )
 }

@@ -52,7 +52,7 @@ app_ui <- function(request) {
         href = Sys.getenv("FEEDBACK_FORM_URL"),
         target = "_blank",
         class = "nav-link",
-        shiny::icon("comment-dots"),
+        bsicons::bs_icon("chat-dots"),
         "Give feedback"
       )
     ),
@@ -63,8 +63,8 @@ app_ui <- function(request) {
         open = FALSE,
         multiple = TRUE,
         bslib::accordion_panel(
-          title = "Statistical units",
-          icon = bsicons::bs_icon("pin-map"),
+          title = "Datasets",
+          icon = bsicons::bs_icon("table"),
           mod_select_geography_ui("mod_select_geography"),
           mod_select_provider_ui("mod_select_provider"),
         ),
