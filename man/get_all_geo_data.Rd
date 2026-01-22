@@ -4,13 +4,9 @@
 \alias{get_all_geo_data}
 \title{Read Inputs Datasets for All Geographies}
 \usage{
-get_all_geo_data(inputs_container, geographies, data_types)
+get_all_geo_data(geographies, data_types)
 }
 \arguments{
-\item{inputs_container}{A blob_container/storage_container list. The
-object containing the connection to the Azure container hosting the
-datasets named by \code{data_types}.}
-
 \item{geographies}{Character. The geography level for which the user wants to
 select a provider.}
 

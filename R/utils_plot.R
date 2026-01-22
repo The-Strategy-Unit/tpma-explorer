@@ -39,27 +39,33 @@ generate_rates_baseline_data <- function(
         .default = NA # if scheme is neither focal nor a peer
       )
     ) |>
-    dplyr::filter(!is.na(.data$is_peer)) |> # only focal scheme and peers
     dplyr::arrange(dplyr::desc(.data$is_peer)) # to plot focal scheme last
 }
 
-#' Generate Data for the Funnel Plot
-#' @param rates_baseline_data A data.frame. Rates data read in from Azure and
+#' Generate Function to Calculate U-Prime values
+#' @param df A data.frame. Rates data read in from Azure and
 #'     processed [generate_rates_baseline_data].
-#' @return A data.frame.
+#' @return A list containing items to produce a U-Prime funnel chart.
 #' @export
-generate_rates_funnel_data <- function(rates_baseline_data) {
-  rates_baseline_data |>
-    dplyr::mutate(
-      mean = rates_baseline_data$national_rate,
-      sdev_pop_i = sqrt(abs(.data$mean) / .data$denominator),
-      z = (.data$rate - .data$mean) / .data$sdev_pop_i,
-      sigz = stats::sd(.data$z, na.rm = TRUE),
-      cl2 = 2 * .data$sdev_pop_i * .data$sigz,
-      cl3 = 3 * .data$sdev_pop_i * .data$sigz,
-      lower2 = .data$mean - .data$cl2,
-      lower3 = .data$mean - .data$cl3,
-      upper2 = .data$mean + .data$cl2,
-      upper3 = .data$mean + .data$cl3
-    )
+uprime_calculations <- function(df) {
+  df <- dplyr::arrange(df, .data$denominator)
+
+  cl <- df$national_rate[[1]] # centre line
+  stdev <- sqrt(cl / df$denominator)
+  z_i <- (df$rate - cl) / stdev
+  mr <- abs(diff(z_i)) # moving range
+  ulmr <- 3.267 * mean(mr, na.rm = TRUE) # upper-limit of moving range
+  amr <- mean(mr[mr < ulmr], na.rm = TRUE) # average moving range
+  sigma_z <- amr / 1.128
+  sd_fn <- \(x) sqrt(cl / x) * sigma_z
+  cl_fn <- \(s) \(x) cl + s * sd_fn(x)
+
+  list(
+    cl = cl,
+    z_i = (df$rate - cl) / sd_fn(df$denominator),
+    lcl3 = cl_fn(-3), # lower control limit
+    ucl3 = cl_fn(3), # upper control limit
+    lcl2 = cl_fn(-2),
+    ucl2 = cl_fn(2)
+  )
 }

@@ -9,7 +9,8 @@ plot_rates_trend(
   baseline_year,
   y_axis_limits,
   x_axis_title = "Financial year",
-  y_axis_title
+  y_axis_title,
+  y_labels
 )
 }
 \arguments{
@@ -23,6 +24,8 @@ for a given provider and strategy, and arranged by year.}
 \item{x_axis_title}{Character. Title for the x-axis.}
 
 \item{y_axis_title}{Character. Title for the y-axis.}
+
+\item{y_labels}{A function. Function to format y-axis labels.}
 }
 \value{
 A 'ggplot2' object.
