@@ -50,33 +50,33 @@ plot_rates_funnel <- function(
 ) {
   cl2_colour <- "black"
   cl3_colour <- "black"
-  line_type <- "dashed"
+  cl_line_type <- "dashed"
 
   rates_funnel_data |>
     ggplot2::ggplot(ggplot2::aes(.data$denominator, .data$rate)) +
     ggplot2::geom_hline(
       yintercept = funnel_calculations$cl,
-      linetype = "dashed"
+      linetype = cl_line_type
     ) +
     ggplot2::geom_function(
       fun = funnel_calculations$lcl2,
       colour = cl2_colour,
-      linetype = "dashed"
+      linetype = cl_line_type
     ) +
     ggplot2::geom_function(
       fun = funnel_calculations$ucl2,
       colour = cl2_colour,
-      linetype = "dashed"
+      linetype = cl_line_type
     ) +
     ggplot2::geom_function(
       fun = funnel_calculations$lcl3,
       colour = cl3_colour,
-      linetype = "dashed"
+      linetype = cl_line_type
     ) +
     ggplot2::geom_function(
       fun = funnel_calculations$ucl3,
       colour = cl3_colour,
-      linetype = "dashed"
+      linetype = cl_line_type
     ) +
     ggplot2::geom_point(ggplot2::aes(
       colour = .data$is_peer,
