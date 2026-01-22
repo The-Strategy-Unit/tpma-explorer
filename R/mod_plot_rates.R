@@ -77,11 +77,6 @@ mod_plot_rates_server <- function(
       uprime_calculations(df)
     })
 
-    rates_funnel_data <- shiny::reactive({
-      shiny::req(rates_baseline_data())
-      rates_baseline_data() |> generate_rates_funnel_data()
-    })
-
     # Prepare variables ----
 
     y_axis_limits <- shiny::reactive({
