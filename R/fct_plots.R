@@ -48,35 +48,48 @@ plot_rates_funnel <- function(
   y_axis_limits,
   x_axis_title
 ) {
-  cl2_colour <- "black"
-  cl3_colour <- "black"
   cl_line_type <- "dashed"
+  cl_colour <- "black"
+
+  cl2_line_type <- "dashed"
+  cl2_colour <- "black"
+
+  cl3_line_type <- "dashed"
+  cl3_colour <- "black"
+
+  plot_x_range <- c(0, max(rates_funnel_data$denominator) * 1.05)
+  function_x_range <- plot_x_range * 1.2
 
   rates_funnel_data |>
     ggplot2::ggplot(ggplot2::aes(.data$denominator, .data$rate)) +
     ggplot2::geom_hline(
       yintercept = funnel_calculations$cl,
+      colour = cl_colour,
       linetype = cl_line_type
     ) +
     ggplot2::geom_function(
       fun = funnel_calculations$lcl2,
       colour = cl2_colour,
-      linetype = cl_line_type
+      linetype = cl2_line_type,
+      xlim = function_x_range
     ) +
     ggplot2::geom_function(
       fun = funnel_calculations$ucl2,
       colour = cl2_colour,
-      linetype = cl_line_type
+      linetype = cl2_line_type,
+      xlim = function_x_range
     ) +
     ggplot2::geom_function(
       fun = funnel_calculations$lcl3,
       colour = cl3_colour,
-      linetype = cl_line_type
+      linetype = cl3_line_type,
+      xlim = function_x_range
     ) +
     ggplot2::geom_function(
       fun = funnel_calculations$ucl3,
       colour = cl3_colour,
-      linetype = cl_line_type
+      linetype = cl3_line_type,
+      xlim = function_x_range
     ) +
     ggplot2::geom_point(ggplot2::aes(
       colour = .data$is_peer,
@@ -97,7 +110,7 @@ plot_rates_funnel <- function(
     ) +
     ggplot2::theme(legend.position = "none") +
     ggplot2::scale_x_continuous(labels = scales::comma_format()) +
-    ggplot2::coord_cartesian(ylim = y_axis_limits) +
+    ggplot2::coord_cartesian(xlim = plot_x_range, ylim = y_axis_limits) +
     ggplot2::labs(x = x_axis_title) +
     theme_rates(has_y_axis = FALSE)
 }
