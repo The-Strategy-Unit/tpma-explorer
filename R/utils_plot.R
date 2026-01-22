@@ -43,7 +43,7 @@ generate_rates_baseline_data <- function(
 }
 
 #' Generate Function to Calculate U-Prime values
-#' @param rates_baseline_data A data.frame. Rates data read in from Azure and
+#' @param df A data.frame. Rates data read in from Azure and
 #'     processed [generate_rates_baseline_data].
 #' @return A list containing items to produce a U-Prime funnel chart.
 #' @export
