@@ -107,6 +107,10 @@ mod_plot_rates_server <- function(
       shiny::req(strategy_config())
       strategy_config()[["y_axis_title"]]
     })
+    y_labels <- shiny::reactive({
+      shiny::req(strategy_config())
+      strategy_config()[["number_type"]]
+    })
     funnel_x_title <- shiny::reactive({
       shiny::req(strategy_config())
       strategy_config()[["funnel_x_title"]]
@@ -118,6 +122,7 @@ mod_plot_rates_server <- function(
       rates_trend_data,
       y_axis_limits,
       y_axis_title,
+      y_labels,
       baseline_year
     )
     mod_plot_rates_funnel_server(
