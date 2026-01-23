@@ -86,7 +86,7 @@ app_ui <- function(request) {
 
     bslib::nav_item(
       class = "ms-auto", # push to far-right
-      tags$a(
+      shiny::tags$a(
         href = Sys.getenv("FEEDBACK_FORM_URL"),
         target = "_blank",
         class = "nav-link",

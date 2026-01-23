@@ -81,7 +81,8 @@ make_strategy_group_lookup <- function(strategies_config) {
 }
 
 #' Read an Markdown File and Convert to HTML
-#' @param ... Character. Path to Markdown file. Passed to [app_sys].
+#' @param ... Character vectors. Construct a path to a Markdown file (like
+#'     [file.path]).
 #' @return A data.frame.
 #' @export
 md_file_to_html <- function(...) {
