@@ -79,3 +79,16 @@ make_strategy_group_lookup <- function(strategies_config) {
     tibble::enframe(name = "group", value = "strategy") |>
     tidyr::unnest_longer("strategy")
 }
+
+#' Read an Markdown File and Convert to HTML
+#' @param ... Character vectors. Construct a path to a Markdown file (like
+#'     [file.path]).
+#' @return A data.frame.
+#' @export
+md_file_to_html <- function(...) {
+  file <- app_sys(...)
+  if (!file.exists(file)) {
+    return(NULL)
+  }
+  shiny::HTML(markdown::mark_html(file, output = FALSE, template = FALSE))
+}

@@ -4,7 +4,14 @@
 mod_table_procedures_ui <- function(id) {
   ns <- shiny::NS(id)
   bslib::card(
-    bslib::card_header("Procedures summary"),
+    bslib::card_header(
+      "Procedures summary",
+      bslib::tooltip(
+        bsicons::bs_icon("info-circle"),
+        md_file_to_html("app", "text", "viz-procedures.md"),
+        placement = "right"
+      )
+    ),
     bslib::card_body(
       shinycssloaders::withSpinner(
         gt::gt_output(ns("procedures_table"))

@@ -10,7 +10,7 @@ app_server <- function(input, output, session) {
 
   # Variables ----
   geographies <- c(
-    "New Hospital Programme (NHP) schemes" = "nhp",
+    "NHS provider trusts" = "nhp",
     "Local authorities (LAs)" = "la"
   )
   data_types <- c("age_sex", "diagnoses", "procedures", "rates")

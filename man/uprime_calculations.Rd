@@ -7,7 +7,7 @@
 uprime_calculations(df)
 }
 \arguments{
-\item{rates_baseline_data}{A data.frame. Rates data read in from Azure and
+\item{df}{A data.frame. Rates data read in from Azure and
 processed \link{generate_rates_baseline_data}.}
 }
 \value{
