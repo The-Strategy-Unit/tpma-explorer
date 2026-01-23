@@ -7,8 +7,8 @@ mod_plot_age_sex_pyramid_ui <- function(id) {
     bslib::card_header(
       "Age-sex pyramid",
       bslib::tooltip(
-        bsicons::bs_icon("question-circle"),
-        md_file_to_html("app", "text", "card-info-pyramid.md"),
+        bsicons::bs_icon("info-circle"),
+        md_file_to_html("app", "text", "viz-pyramid.md"),
         placement = "right"
       )
     ),

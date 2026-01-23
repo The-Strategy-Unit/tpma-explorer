@@ -7,8 +7,8 @@ mod_table_procedures_ui <- function(id) {
     bslib::card_header(
       "Procedures summary",
       bslib::tooltip(
-        bsicons::bs_icon("question-circle"),
-        md_file_to_html("app", "text", "card-info-procedures.md"),
+        bsicons::bs_icon("info-circle"),
+        md_file_to_html("app", "text", "viz-procedures.md"),
         placement = "right"
       )
     ),

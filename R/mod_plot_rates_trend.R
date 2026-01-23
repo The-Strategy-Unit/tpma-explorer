@@ -7,8 +7,8 @@ mod_plot_rates_trend_ui <- function(id) {
     bslib::card_header(
       "Rates Trend",
       bslib::tooltip(
-        bsicons::bs_icon("question-circle"),
-        md_file_to_html("app", "text", "card-info-trend.md"),
+        bsicons::bs_icon("info-circle"),
+        md_file_to_html("app", "text", "viz-trend.md"),
         placement = "right"
       )
     ),

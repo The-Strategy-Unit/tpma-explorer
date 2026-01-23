@@ -7,8 +7,8 @@ mod_table_diagnoses_ui <- function(id) {
     bslib::card_header(
       "Diagnoses summary",
       bslib::tooltip(
-        bsicons::bs_icon("question-circle"),
-        md_file_to_html("app", "text", "card-info-diagnoses.md"),
+        bsicons::bs_icon("info-circle"),
+        md_file_to_html("app", "text", "viz-diagnoses.md"),
         placement = "right"
       )
     ),

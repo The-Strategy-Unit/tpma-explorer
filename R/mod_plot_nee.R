@@ -7,8 +7,8 @@ mod_plot_nee_ui <- function(id) {
     bslib::card_header(
       "National Elicitation Exercise (NEE) estimate",
       bslib::tooltip(
-        bsicons::bs_icon("question-circle"),
-        md_file_to_html("app", "text", "card-info-nee.md"),
+        bsicons::bs_icon("info-circle"),
+        md_file_to_html("app", "text", "viz-nee.md"),
         placement = "right"
       )
     ),

@@ -4,13 +4,13 @@
 app_ui <- function(request) {
   bslib::page_navbar(
     id = "page_navbar",
-    title = "Explore potentially-mitigatable activity data (in development)",
-    selected = "Data", # start with this panel open
+    title = "Explore potentially-mitigatable activity data",
+    selected = "Visualisations", # start with this panel open
     fillable = FALSE, # allow page scroll
 
     bslib::nav_panel(
-      id = "nav_panel_data",
-      title = "Data",
+      id = "nav_panel_viz",
+      title = "Visualisations",
 
       bslib::card(
         fill = FALSE,
@@ -42,6 +42,44 @@ app_ui <- function(request) {
             mod_plot_age_sex_pyramid_ui("mod_plot_age_sex_pyramid"),
             mod_plot_nee_ui("mod_plot_nee")
           ),
+        )
+      )
+    ),
+
+    bslib::nav_panel(
+      id = "nav_panel_info",
+      title = "Information",
+      bslib::layout_columns(
+        bslib::layout_columns(
+          col_widths = c(12, 12),
+          bslib::card(
+            id = "card_purpose",
+            bslib::card_header("Purpose"),
+            md_file_to_html("app", "text", "info-purpose.md")
+          ),
+          bslib::card(
+            id = "card_data",
+            bslib::card_header("Definitions"),
+            md_file_to_html("app", "text", "info-definitions.md")
+          ),
+          bslib::card(
+            id = "card_data",
+            bslib::card_header("Data"),
+            md_file_to_html("app", "text", "info-data.md")
+          )
+        ),
+        bslib::layout_columns(
+          col_widths = c(12, 12),
+          bslib::card(
+            id = "card_navigation",
+            bslib::card_header("Navigation"),
+            md_file_to_html("app", "text", "info-navigation.md")
+          ),
+          bslib::card(
+            id = "card_how_to_use",
+            bslib::card_header("Interface"),
+            md_file_to_html("app", "text", "info-interface.md")
+          )
         )
       )
     ),

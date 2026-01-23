@@ -7,8 +7,8 @@ mod_plot_rates_funnel_ui <- function(id) {
     bslib::card_header(
       "Rates Funnel",
       bslib::tooltip(
-        bsicons::bs_icon("question-circle"),
-        md_file_to_html("app", "text", "card-info-funnel.md"),
+        bsicons::bs_icon("info-circle"),
+        md_file_to_html("app", "text", "viz-funnel.md"),
         placement = "right"
       )
     ),
