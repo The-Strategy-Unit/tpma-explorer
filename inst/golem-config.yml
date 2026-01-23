@@ -30,7 +30,7 @@ default:
       y_axis_title: "Admissions per 1,000 population"
       x_axis_title: "Financial Year"
       number_type: !expr scales::comma_format(accuracy = 0.001, scale = 1000)
-      funnel_x_title: "Catchment Population of Trust"
+      funnel_x_title: "Catchment Population of Unit"
       funnel_number_type: !expr scales::comma_format()
       slider_scale: 1
       slider_step: 0.001
@@ -103,7 +103,7 @@ default:
       y_axis_title: "Admissions per 1,000 population"
       x_axis_title: "Financial Year"
       number_type: !expr scales::comma_format(accuracy = 0.001)
-      funnel_x_title: "Catchment Population of Trust"
+      funnel_x_title: "Catchment Population of Unit"
       funnel_number_type: !expr scales::comma_format()
       slider_scale: 100
       slider_step: 0.1
