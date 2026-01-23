@@ -5,7 +5,7 @@ mod_select_provider_ui <- function(id) {
   ns <- shiny::NS(id)
   shiny::selectInput(
     ns("provider_select"),
-    "Choose a provider:",
+    "Choose a statistical unit:",
     choices = NULL
   )
 }
@@ -28,7 +28,7 @@ mod_select_provider_server <- function(id, selected_geography, providers) {
 
       provider_label <- switch(
         selected_geography(),
-        "nhp" = "Choose an NHP scheme:",
+        "nhp" = "Choose a trust:",
         "la" = "Choose an LA:"
       )
 

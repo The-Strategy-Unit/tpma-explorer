@@ -107,7 +107,7 @@ app_ui <- function(request) {
           mod_select_provider_ui("mod_select_provider"),
         ),
         bslib::accordion_panel(
-          title = "Types of potentially mitigatable activity (TPMAs)",
+          title = "Types of Potentially Mitigatable Activity (TPMAs)",
           icon = bsicons::bs_icon("hospital"),
           mod_select_strategy_ui("mod_select_strategy")
         )
