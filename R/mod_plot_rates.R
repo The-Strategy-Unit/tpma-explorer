@@ -51,7 +51,8 @@ mod_plot_rates_server <- function(
         app_sys("app", "data", filename),
         col_types = "c"
       )
-    })
+    }) |>
+      shiny::bindCache(selected_geography())
 
     #  Prepare data ----
     rates_data <- shiny::reactive({
