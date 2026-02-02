@@ -36,7 +36,15 @@ app_server <- function(input, output, session) {
     "mod_select_strategy"
   )
   selected_year <- shiny::reactive({
-    Sys.getenv("BASELINE_YEAR") |> as.numeric()
+    year <- as.numeric(Sys.getenv("BASELINE_YEAR"))
+
+    if (is.na(year)) {
+      inputs_data()[["rates"]] |>
+        dplyr::pull(.data$fyear) |>
+        max()
+    } else {
+      year
+    }
   })
 
   # Open UI accordion ----
