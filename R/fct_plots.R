@@ -1,7 +1,7 @@
 #' Plot Rates Trend Over Time
 #' @param rates_trend_data A data.frame. Rates data read in from Azure, filtered
 #'     for a given provider and strategy, and arranged by year.
-#' @param baseline_year Integer. Baseline year in the form `202324`.
+#' @param selected_year Integer. Selected year in the form `202324`.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
 #' @param x_axis_title Character. Title for the x-axis.
 #' @param y_axis_title Character. Title for the y-axis.
@@ -10,7 +10,7 @@
 #' @export
 plot_rates_trend <- function(
   rates_trend_data,
-  baseline_year,
+  selected_year,
   y_axis_limits,
   x_axis_title = "Financial year",
   y_axis_title,
@@ -22,7 +22,7 @@ plot_rates_trend <- function(
     ) +
     ggplot2::geom_line() +
     ggplot2::geom_point(
-      data = \(.x) dplyr::filter(.x, .data[["fyear"]] == baseline_year),
+      data = \(.x) dplyr::filter(.x, .data[["fyear"]] == selected_year),
       colour = "red"
     ) +
     ggplot2::scale_y_continuous(name = y_axis_title, labels = y_labels) +

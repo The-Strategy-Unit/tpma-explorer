@@ -26,17 +26,17 @@ mod_table_procedures_ui <- function(id) {
 #' @param id Internal parameter for `shiny`.
 #' @param inputs_data A reactive. Contains a list with data.frames, which we can
 #'     extract the procedures data from.
-#' @param selected_provider Character. Provider code, e.g. `"RCF"`.
-#' @param selected_strategy Character. Strategy variable name, e.g.
+#' @param selected_provider Reactive. Provider code, e.g. `"RCF"`.
+#' @param selected_strategy Reactive. Strategy variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
-#' @param baseline_year Integer. Baseline year in the form `202324`.
+#' @param selected_year Reactive. Selected year in the form `202324`.
 #' @noRd
 mod_table_procedures_server <- function(
   id,
   inputs_data,
   selected_provider,
   selected_strategy,
-  baseline_year
+  selected_year
 ) {
   # load static data items
   procedures_lookup <- readr::read_csv(
@@ -51,17 +51,17 @@ mod_table_procedures_server <- function(
     })
 
     procedures_prepared <- shiny::reactive({
-      shiny::req(procedures_data())
-      shiny::req(selected_provider())
-      shiny::req(selected_strategy())
-      shiny::req(baseline_year)
+      df <- shiny::req(procedures_data())
+      provider <- shiny::req(selected_provider())
+      strategy <- shiny::req(selected_strategy())
+      year <- shiny::req(selected_year())
 
       prepare_procedures_data(
-        procedures_data(),
+        df,
         procedures_lookup,
-        selected_provider(),
-        selected_strategy(),
-        baseline_year
+        provider,
+        strategy,
+        year
       )
     })
 

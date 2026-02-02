@@ -25,10 +25,10 @@ mod_plot_age_sex_pyramid_ui <- function(id) {
 #' @param id Internal parameter for `shiny`.
 #' @param inputs_data A reactive. Contains a list with data.frames, which we can
 #'     extract the age-sex data from.
-#' @param selected_provider Character. Provider code, e.g. `"RCF"`.
-#' @param selected_strategy Character. Strategy variable name, e.g.
+#' @param selected_provider Reactive. Provider code, e.g. `"RCF"`.
+#' @param selected_strategy Reactive. Strategy variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
-#' @param baseline_year Integer. Baseline year in the form `202324`.
+#' @param selected_year Reactive. Selected year in the form `202324`.
 #' @noRd
 # nolint start: object_length_linter.
 mod_plot_age_sex_pyramid_server <- function(
@@ -37,18 +37,19 @@ mod_plot_age_sex_pyramid_server <- function(
   inputs_data,
   selected_provider,
   selected_strategy,
-  baseline_year
+  selected_year
 ) {
   shiny::moduleServer(id, function(input, output, session) {
     age_sex_data <- shiny::reactive({
-      prov <- shiny::req(selected_provider())
-      strat <- shiny::req(selected_strategy())
+      selected_provider <- shiny::req(selected_provider())
+      selected_strategy <- shiny::req(selected_strategy())
+      selected_year <- shiny::req(selected_year())
 
       inputs_data()[["age_sex"]] |>
         dplyr::filter(
-          .data$strategy == strat,
-          .data$fyear == baseline_year,
-          .data$provider == prov
+          .data$provider == selected_provider,
+          .data$strategy == selected_strategy,
+          .data$fyear == selected_year
         ) |>
         prepare_age_sex_data()
     })

@@ -23,7 +23,7 @@ mod_plot_rates_ui <- function(id) {
 #' @param selected_provider Character. Provider code, e.g. `"RCF"`.
 #' @param selected_strategy Character. Strategy variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
-#' @param baseline_year Integer. Baseline year in the form `202324`.
+#' @param selected_year Integer. Selected year in the form `202324`.
 #' @noRd
 mod_plot_rates_server <- function(
   id,
@@ -31,7 +31,7 @@ mod_plot_rates_server <- function(
   selected_geography,
   selected_provider,
   selected_strategy,
-  baseline_year
+  selected_year
 ) {
   # load static data items
   strategies_config <- get_golem_config("mitigators_config")
@@ -103,7 +103,7 @@ mod_plot_rates_server <- function(
           selected_provider(),
           provider_peers,
           selected_strategy(),
-          baseline_year
+          selected_year()
         )
     })
 
@@ -164,7 +164,7 @@ mod_plot_rates_server <- function(
       y_axis_limits,
       y_axis_title,
       y_labels,
-      baseline_year
+      selected_year
     )
     mod_plot_rates_funnel_server(
       "mod_plot_rates_funnel",

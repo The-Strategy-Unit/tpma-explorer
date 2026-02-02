@@ -17,7 +17,7 @@ isolate_provider_peers <- function(provider, peers) {
 #' @param peers Character. A vector of peers for given `provider`.
 #' @param strategy Character. Strategy variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
-#' @param baseline_year Integer. Baseline year in the form `202324`.
+#' @param selected_year Integer. Baseline year in the form `202324`.
 #' @return A data.frame.
 #' @export
 generate_rates_baseline_data <- function(
@@ -25,12 +25,12 @@ generate_rates_baseline_data <- function(
   provider,
   peers,
   strategy,
-  baseline_year
+  selected_year
 ) {
   rates |>
     dplyr::filter(
       .data$strategy == .env$strategy,
-      .data$fyear == .env$baseline_year
+      .data$fyear == .env$selected_year
     ) |>
     dplyr::mutate(
       is_peer = dplyr::case_when(

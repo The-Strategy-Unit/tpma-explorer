@@ -14,7 +14,6 @@ app_server <- function(input, output, session) {
     "Local authorities (LAs)" = "la"
   )
   data_types <- c("age_sex", "diagnoses", "procedures", "rates")
-  baseline_year <- Sys.getenv("BASELINE_YEAR") |> as.numeric()
 
   # Data ----
   inputs_data_raw <- inputs_data_fn(geographies, data_types)
@@ -36,6 +35,9 @@ app_server <- function(input, output, session) {
   selected_strategy <- mod_select_strategy_server(
     "mod_select_strategy"
   )
+  selected_year <- shiny::reactive({
+    Sys.getenv("BASELINE_YEAR") |> as.numeric()
+  })
 
   # Open UI accordion ----
   shiny::observe({
@@ -56,28 +58,28 @@ app_server <- function(input, output, session) {
     selected_geography,
     selected_provider,
     selected_strategy,
-    baseline_year
+    selected_year
   )
   mod_table_procedures_server(
     "mod_table_procedures",
     inputs_data,
     selected_provider,
     selected_strategy,
-    baseline_year
+    selected_year
   )
   mod_table_diagnoses_server(
     "mod_table_diagnoses",
     inputs_data,
     selected_provider,
     selected_strategy,
-    baseline_year
+    selected_year
   )
   mod_plot_age_sex_pyramid_server(
     "mod_plot_age_sex_pyramid",
     inputs_data,
     selected_provider,
     selected_strategy,
-    baseline_year
+    selected_year
   )
   mod_plot_nee_server(
     "mod_plot_nee",
