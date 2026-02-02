@@ -24,7 +24,7 @@ mod_select_strategy_ui <- function(id) {
 #' Select Strategy Server
 #' @param id Internal parameter for `shiny`.
 #' @noRd
-mod_select_strategy_server <- function(id, strategies) {
+mod_select_strategy_server <- function(id) {
   # load static data items
   strategies <- jsonlite::read_json(
     app_sys("app", "data", "mitigators.json"),
