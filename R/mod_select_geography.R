@@ -16,6 +16,11 @@ mod_select_geography_ui <- function(id) {
 #'     select a provider.
 #' @noRd
 mod_select_geography_server <- function(id, geographies) {
+  geographies <- c(
+    "NHS provider trusts" = "nhp",
+    "Local authorities (LAs)" = "la"
+  )
+
   shiny::moduleServer(id, function(input, output, session) {
     shiny::observe({
       shiny::req(geographies)
