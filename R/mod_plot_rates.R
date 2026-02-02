@@ -16,12 +16,10 @@ mod_plot_rates_ui <- function(id) {
 
 #' Plot Rates Server
 #' @param id Internal parameter for `shiny`.
-#' @param rates A data.frame. Annual rate values for combinations of provider
-#'     and strategy.
-#' @param strategies_config List. Configuration for strategies from the
-#'     `"mitigators_config"` element of `golem-config.yml`, read in with
-#'     [get_golem_config].
-#' @param peers_lookup A data.frame. A row per provider-peer pair.
+#' @param inputs_data A reactive. Contains a list with data.frames, which we can
+#'     extract the diagnoses data from.
+#' @param selected_geography Character. Selected geography, either `"nhp"` or
+#'     `"la"`.
 #' @param selected_provider Character. Provider code, e.g. `"RCF"`.
 #' @param selected_strategy Character. Strategy variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
@@ -29,22 +27,60 @@ mod_plot_rates_ui <- function(id) {
 #' @noRd
 mod_plot_rates_server <- function(
   id,
-  rates,
-  strategies_config,
-  peers_lookup,
+  inputs_data,
+  selected_geography,
   selected_provider,
   selected_strategy,
   baseline_year
 ) {
+  # load static data items
+  strategies_config <- get_golem_config("mitigators_config")
+
+  # return the shiny module
   shiny::moduleServer(id, function(input, output, session) {
+    peers_lookup <- shiny::reactive({
+      filename <- switch(
+        selected_geography(),
+        "nhp" = "nhp-peers.csv",
+        "la" = "la-peers.csv"
+      )
+
+      shiny::req(filename)
+
+      readr::read_csv(
+        app_sys("app", "data", filename),
+        col_types = "c"
+      )
+    })
+
     #  Prepare data ----
+    rates_data <- shiny::reactive({
+      df <- inputs_data()[["rates"]]
+
+      national <- df |>
+        dplyr::filter(.data$provider == "national") |>
+        dplyr::select(
+          "strategy",
+          "fyear",
+          national_rate = "std_rate"
+        )
+
+      df |>
+        dplyr::filter(!.data$provider %in% c("national", "unknown")) |>
+        dplyr::inner_join(
+          national,
+          by = c("strategy", "fyear")
+        ) |>
+        dplyr::rename(rate = "std_rate") |>
+        dplyr::select(-"crude_rate")
+    })
 
     rates_trend_data <- shiny::reactive({
-      shiny::req(rates())
+      shiny::req(rates_data())
       shiny::req(selected_provider())
       shiny::req(selected_strategy())
 
-      rates() |>
+      rates_data() |>
         dplyr::filter(
           .data$provider == selected_provider(),
           .data$strategy == selected_strategy()
@@ -53,7 +89,7 @@ mod_plot_rates_server <- function(
     })
 
     rates_baseline_data <- shiny::reactive({
-      shiny::req(rates())
+      shiny::req(rates_data())
       shiny::req(peers_lookup())
       shiny::req(selected_provider())
       shiny::req(selected_strategy())
@@ -62,7 +98,7 @@ mod_plot_rates_server <- function(
         selected_provider(),
         peers_lookup()
       )
-      rates() |>
+      rates_data() |>
         generate_rates_baseline_data(
           selected_provider(),
           provider_peers,
