@@ -6,7 +6,7 @@
 #' @param provider Character. Provider code, e.g. `"RCF"`.
 #' @param strategy Character. Strategy variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
-#' @param baseline_year Integer. Baseline year in the form `202324`.
+#' @param selected_year Integer. Baseline year in the form `202324`.
 #' @return A data.frame.
 #' @export
 prepare_procedures_data <- function(
@@ -14,13 +14,13 @@ prepare_procedures_data <- function(
   procedures_lookup,
   provider,
   strategy,
-  baseline_year
+  selected_year
 ) {
   procedures_filtered <- procedures_data |>
     dplyr::filter(
       .data$provider == .env$provider,
       .data$strategy == .env$strategy,
-      .data$fyear == .env$baseline_year
+      .data$fyear == .env$selected_year
     )
   if (nrow(procedures_filtered) == 0) {
     return(NULL)
@@ -59,7 +59,7 @@ prepare_procedures_data <- function(
 #' @param provider Character. Provider code, e.g. `"RCF"`.
 #' @param strategy Character. Strategy variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
-#' @param baseline_year Integer. Baseline year in the form `202324`.
+#' @param selected_year Integer. Baseline year in the form `202324`.
 #' @return A data.frame.
 #' @export
 prepare_diagnoses_data <- function(
@@ -67,13 +67,13 @@ prepare_diagnoses_data <- function(
   diagnoses_lookup,
   provider,
   strategy,
-  baseline_year
+  selected_year
 ) {
   diagnoses_filtered <- diagnoses_data |>
     dplyr::filter(
       .data$provider == .env$provider,
       .data$strategy == .env$strategy,
-      .data$fyear == .env$baseline_year
+      .data$fyear == .env$selected_year
     )
   if (nrow(diagnoses_filtered) == 0) {
     return(NULL)

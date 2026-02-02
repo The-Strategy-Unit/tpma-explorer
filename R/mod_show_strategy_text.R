@@ -18,10 +18,15 @@ mod_show_strategy_text_ui <- function(id) {
 #' @noRd
 mod_show_strategy_text_server <- function(
   id,
-  descriptions_lookup,
-  selected_strategy,
-  cache
+  selected_strategy
 ) {
+  # load static data items
+  descriptions_lookup <- jsonlite::read_json(
+    app_sys("app", "data", "descriptions.json"),
+    simplifyVector = TRUE
+  )
+
+  # return the shiny module
   shiny::moduleServer(id, function(input, output, session) {
     output$strategy_text <- shiny::renderText({
       shiny::req(selected_strategy())
@@ -30,6 +35,6 @@ mod_show_strategy_text_server <- function(
         fetch_strategy_text(descriptions_lookup) |>
         convert_md_to_html()
     }) |>
-      shiny::bindCache(selected_strategy(), cache = cache)
+      shiny::bindCache(selected_strategy())
   })
 }

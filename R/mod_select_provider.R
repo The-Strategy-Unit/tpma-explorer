@@ -12,22 +12,35 @@ mod_select_provider_ui <- function(id) {
 
 #' Select Provider Server
 #' @param id Internal parameter for `shiny`.
-#' @param geographies Character. The geography level for which the user wants to
-#'     select a provider.
-#' @param providers A named list. Names are provider codes (e.g. `"RCF"`) and
-#'     their values are the corresponding human-readable names and codes (e.g.
-#'     `"Airedale NHS Foundation Trust (RCF)"`).
+#' @param selected_geography Reactive. Selected geography, either `"nhp"` or
+#'       `"la"`.
 #' @noRd
-mod_select_provider_server <- function(id, selected_geography, providers) {
+mod_select_provider_server <- function(id, selected_geography) {
   shiny::moduleServer(id, function(input, output, session) {
-    shiny::observe({
-      shiny::req(selected_geography())
-      shiny::req(providers())
+    providers <- shiny::reactive({
+      filename <- switch(
+        selected_geography(),
+        "nhp" = "nhp-datasets.json",
+        "la" = "la-datasets.json"
+      )
 
-      provider_choices <- purrr::set_names(names(providers()), providers())
+      shiny::req(filename)
+
+      jsonlite::read_json(
+        app_sys("app", "data", filename),
+        simplify_vector = TRUE
+      )
+    }) |>
+      shiny::bindEvent(selected_geography())
+
+    shiny::observe({
+      sg <- shiny::req(selected_geography())
+      providers <- shiny::req(providers())
+
+      provider_choices <- purrr::set_names(names(providers), providers)
 
       provider_label <- switch(
-        selected_geography(),
+        sg,
         "nhp" = "Choose a trust:",
         "la" = "Choose an LA:"
       )

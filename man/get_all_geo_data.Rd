@@ -4,19 +4,14 @@
 \alias{get_all_geo_data}
 \title{Read Inputs Datasets for All Geographies}
 \usage{
-get_all_geo_data(geographies, data_types)
+get_all_geo_data(geography)
 }
 \arguments{
-\item{geographies}{Character. The geography level for which the user wants to
-select a provider.}
-
-\item{data_types}{Character. A vector of filenames (without filetypes) for
-each of the inputs data files that you want to read from
-the \code{inputs_container}.}
+\item{geography}{Character. The geography level for which the user wants to
+select a provider. Either "nhp" or "la".}
 }
 \value{
-A list. One element for each of the \code{geographies}, with subelements
-that are dataframes of each one of the \code{data_types}.
+A list. One element for each dataframes of data.
 }
 \description{
 Read Inputs Datasets for All Geographies

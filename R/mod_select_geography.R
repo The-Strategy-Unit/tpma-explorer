@@ -12,10 +12,13 @@ mod_select_geography_ui <- function(id) {
 
 #' Select Geography Server
 #' @param id Internal parameter for `shiny`.
-#' @param geographies Character. The geography level for which the user wants to
-#'     select a provider.
 #' @noRd
-mod_select_geography_server <- function(id, geographies) {
+mod_select_geography_server <- function(id) {
+  geographies <- c(
+    "NHS provider trusts" = "nhp",
+    "Local authorities (LAs)" = "la"
+  )
+
   shiny::moduleServer(id, function(input, output, session) {
     shiny::observe({
       shiny::req(geographies)

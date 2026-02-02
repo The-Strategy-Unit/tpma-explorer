@@ -9,7 +9,7 @@ prepare_diagnoses_data(
   diagnoses_lookup,
   provider,
   strategy,
-  baseline_year
+  selected_year
 )
 }
 \arguments{
@@ -24,7 +24,7 @@ diagnoses}
 \item{strategy}{Character. Strategy variable name, e.g.
 \code{"alcohol_partially_attributable_acute"}.}
 
-\item{baseline_year}{Integer. Baseline year in the form \code{202324}.}
+\item{selected_year}{Integer. Baseline year in the form \code{202324}.}
 }
 \value{
 A data.frame.

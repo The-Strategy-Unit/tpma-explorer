@@ -24,36 +24,44 @@ mod_table_diagnoses_ui <- function(id) {
 
 #' Diagnoses Table Server
 #' @param id Internal parameter for `shiny`.
-#' @param diagnoses_data A data.frame. Diagnosis data read in from Azure. Annual
-#'     diagnosis counts by provider and strategy.
-#' @param diagnosis_lookup A data.frame. Type, code and description for
-#'     diagnoses.
-#' @param selected_provider Character. Provider code, e.g. `"RCF"`.
-#' @param selected_strategy Character. Strategy variable name, e.g.
+#' @param inputs_data A reactive. Contains a list with data.frames, which we can
+#'     extract the diagnoses data from.
+#' @param selected_provider Reactive. Provider code, e.g. `"RCF"`.
+#' @param selected_strategy Reactive. Strategy variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
-#' @param baseline_year Integer. Baseline year in the form `202324`.
+#' @param selected_year Reactive. Selected year in the form `202324`.
 #' @noRd
 mod_table_diagnoses_server <- function(
   id,
-  diagnoses_data,
-  diagnoses_lookup,
+  inputs_data,
   selected_provider,
   selected_strategy,
-  baseline_year
+  selected_year
 ) {
+  # load static data items
+  diagnoses_lookup <- readr::read_csv(
+    app_sys("app", "data", "diagnoses.csv"),
+    col_types = "c"
+  )
+
+  # return the shiny module
   shiny::moduleServer(id, function(input, output, session) {
+    diagnoses_data <- shiny::reactive({
+      inputs_data()[["diagnoses"]]
+    })
+
     diagnoses_prepared <- shiny::reactive({
-      shiny::req(diagnoses_data())
-      shiny::req(selected_provider())
-      shiny::req(selected_strategy())
-      shiny::req(baseline_year)
+      df <- shiny::req(diagnoses_data())
+      provider <- shiny::req(selected_provider())
+      strategy <- shiny::req(selected_strategy())
+      year <- shiny::req(selected_year())
 
       prepare_diagnoses_data(
-        diagnoses_data(),
+        df,
         diagnoses_lookup,
-        selected_provider(),
-        selected_strategy(),
-        baseline_year
+        provider,
+        strategy,
+        year
       )
     })
 

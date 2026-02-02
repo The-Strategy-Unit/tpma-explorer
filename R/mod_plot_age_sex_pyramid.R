@@ -23,43 +23,46 @@ mod_plot_age_sex_pyramid_ui <- function(id) {
 
 #' Plot Age-Sex Pyramid Server
 #' @param id Internal parameter for `shiny`.
-#' @param age_sex_data A data.frame. Age-sex data read from Azure and processed
-#'     with [prepare_age_sex_data]. Counts for each strategy split by provider,
-#'     year, age group and sex.
-#' @param selected_provider Character. Provider code, e.g. `"RCF"`.
-#' @param selected_strategy Character. Strategy variable name, e.g.
+#' @param inputs_data A reactive. Contains a list with data.frames, which we can
+#'     extract the age-sex data from.
+#' @param selected_provider Reactive. Provider code, e.g. `"RCF"`.
+#' @param selected_strategy Reactive. Strategy variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
-#' @param baseline_year Integer. Baseline year in the form `202324`.
+#' @param selected_year Reactive. Selected year in the form `202324`.
 #' @noRd
 # nolint start: object_length_linter.
 mod_plot_age_sex_pyramid_server <- function(
   # nolint end
   id,
-  age_sex_data,
+  inputs_data,
   selected_provider,
   selected_strategy,
-  baseline_year
+  selected_year
 ) {
   shiny::moduleServer(id, function(input, output, session) {
-    output$age_sex_pyramid <- shiny::renderPlot({
-      shiny::req(age_sex_data())
-      shiny::req(selected_provider())
-      shiny::req(selected_strategy())
-      shiny::req(baseline_year)
+    age_sex_data <- shiny::reactive({
+      selected_provider <- shiny::req(selected_provider())
+      selected_strategy <- shiny::req(selected_strategy())
+      selected_year <- shiny::req(selected_year())
 
-      age_sex_filtered <- age_sex_data() |>
+      inputs_data()[["age_sex"]] |>
         dplyr::filter(
-          .data$provider == selected_provider(),
-          .data$strategy == selected_strategy(),
-          .data$fyear == .env$baseline_year
-        )
+          .data$provider == selected_provider,
+          .data$strategy == selected_strategy,
+          .data$fyear == selected_year
+        ) |>
+        prepare_age_sex_data()
+    })
+
+    output$age_sex_pyramid <- shiny::renderPlot({
+      df <- shiny::req(age_sex_data())
 
       shiny::validate(shiny::need(
-        nrow(age_sex_filtered) > 0,
+        nrow(df) > 0,
         "No data available for these selections."
       ))
 
-      plot_age_sex_pyramid(age_sex_filtered)
+      plot_age_sex_pyramid(df)
     })
   })
 }
