@@ -28,7 +28,7 @@ mod_plot_rates_trend_ui <- function(id) {
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
 #' @param y_axis_title Character. Title for the y-axis.
 #' @param y_labels Function. Function to format y-axis labels.
-#' @param selected_year Reactive Selected year in the form `202324`.
+#' @param selected_year Reactive. Selected year in the form `202324`.
 #' @noRd
 mod_plot_rates_trend_server <- function(
   id,
