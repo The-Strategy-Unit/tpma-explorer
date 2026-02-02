@@ -17,7 +17,7 @@ mod_plot_rates_ui <- function(id) {
 #' Plot Rates Server
 #' @param id Internal parameter for `shiny`.
 #' @param inputs_data A reactive. Contains a list with data.frames, which we can
-#'     extract the diagnoses data from.
+#'     extract the rates data from.
 #' @param selected_geography Character. Selected geography, either `"nhp"` or
 #'     `"la"`.
 #' @param selected_provider Character. Provider code, e.g. `"RCF"`.
