@@ -21,46 +21,46 @@ mod_select_strategy_ui <- function(id) {
   )
 }
 
-#' Select Strategy Server
-#' @param id Internal parameter for `shiny`.
-#' @noRd
-mod_select_strategy_server <- function(id) {
-  # load static data items
+mod_select_strategy_get_strategies <- function() {
   strategies <- jsonlite::read_json(
     app_sys("app", "data", "mitigators.json"),
     simplify_vector = TRUE
   )
 
+  strategies |>
+    unlist() |>
+    tibble::enframe("strategy", "name") |>
+    dplyr::mutate(
+      category = stringr::str_extract(
+        .data$name,
+        "(?<= \\()(IP|OP|AE)(?=-(AA|EF))" # e.g. 'IP' in 'IP-AA-001'
+      ) |>
+        stringr::str_to_lower()
+    ) |>
+    dplyr::nest_by(.data$category) |>
+    tibble::deframe()
+}
+
+#' Select Strategy Server
+#' @param id Internal parameter for `shiny`.
+#' @noRd
+mod_select_strategy_server <- function(id) {
+  # load static data items
+  strategies <- mod_select_strategy_get_strategies()
+
   # return the shiny module
   shiny::moduleServer(id, function(input, output, session) {
-    shiny::req(strategies)
-
-    select_category <- shiny::reactive({
+    selected_category <- shiny::reactive({
       shiny::req(input$strategy_category_select)
       input$strategy_category_select
     })
 
     shiny::observe({
-      shiny::req(select_category())
+      category <- shiny::req(selected_category())
 
-      category_strategies <- strategies |>
-        unlist() |>
-        tibble::enframe("strategy", "name") |>
-        dplyr::mutate(
-          category = stringr::str_extract(
-            .data$name,
-            "(?<= \\()(IP|OP|AE)(?=-(AA|EF))" # e.g. 'IP' in 'IP-AA-001'
-          ) |>
-            stringr::str_to_lower()
-        ) |>
-        dplyr::filter(.data$category == select_category()) |>
-        dplyr::select("strategy", "name") |>
+      strategy_choices <- strategies[[category]] |>
+        dplyr::select("name", "strategy") |>
         tibble::deframe()
-
-      strategy_choices <- purrr::set_names(
-        names(category_strategies),
-        category_strategies
-      )
 
       shiny::updateSelectInput(
         session,
