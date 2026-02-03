@@ -50,7 +50,7 @@ test_that("rates_funnel_plot (with rows)", {
     .package = "shiny"
   )
 
-  sample_data = tibble::tibble(x = 1, y = 2)
+  sample_data <- tibble::tibble(x = 1, y = 2)
 
   # act
   shiny::testServer(
