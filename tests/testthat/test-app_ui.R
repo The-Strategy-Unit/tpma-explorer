@@ -18,7 +18,7 @@ test_that("ui", {
     "mod_select_strategy_ui" = mock("mod_select_strategy")
   )
 
-  do.call(testthat::local_mocked_bindings, c(mocks, .env = .env))
+  do.call(testthat::local_mocked_bindings, c(mocks))
 
   ui <- app_ui("request")
 
