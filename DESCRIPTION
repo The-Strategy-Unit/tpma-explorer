@@ -26,6 +26,7 @@ Imports:
     ggrepel,
     glue,
     gt,
+    httr2,
     jsonlite,
     markdown,
     purrr,
