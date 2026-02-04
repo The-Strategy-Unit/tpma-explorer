@@ -128,3 +128,30 @@ test_that("md_file_to_html reads valid file", {
   expect_called(m2, 1)
   expect_args(m2, 1, "content")
 })
+
+
+test_that("md_string_to_html", {
+  # arrange
+  m1 <- mock("content")
+  m2 <- mock("html")
+  local_mocked_bindings(
+    "mark_html" = m1,
+    .package = "markdown"
+  )
+  local_mocked_bindings(
+    "HTML" = m2,
+    .package = "shiny"
+  )
+
+  # act
+  actual <- md_string_to_html("text")
+
+  # assert
+  expect_equal(actual, "html")
+
+  expect_called(m1, 1)
+  expect_args(m1, 1, "text", output = FALSE, template = FALSE)
+
+  expect_called(m2, 1)
+  expect_args(m2, 1, "content")
+})

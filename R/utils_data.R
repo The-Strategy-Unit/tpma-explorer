@@ -85,7 +85,7 @@ make_strategy_group_lookup <- function(strategies_config) {
 #' Read an Markdown File and Convert to HTML
 #' @param ... Character vectors. Construct a path to a Markdown file (like
 #'     [file.path]).
-#' @return A data.frame.
+#' @return A shiny HTML object.
 #' @export
 md_file_to_html <- function(...) {
   file <- app_sys(...)
@@ -93,4 +93,12 @@ md_file_to_html <- function(...) {
     return(NULL)
   }
   shiny::HTML(markdown::mark_html(file, output = FALSE, template = FALSE))
+}
+
+#' Convert a Markdown String to HTML
+#' @param text Character string. Markdown text to convert to HTML.
+#' @return A shiny HTML object.
+#' @export
+md_string_to_html <- function(text) {
+  shiny::HTML(markdown::mark_html(text, output = FALSE, template = FALSE))
 }
