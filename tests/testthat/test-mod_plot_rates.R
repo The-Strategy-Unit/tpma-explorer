@@ -38,6 +38,7 @@ server_mod_plot_rates_server_tests <- function(.env = parent.frame()) {
   mocks
 }
 
+# nolint start
 inputs_data_sample <- list(
   "rates" = tibble::tribble(
     ~fyear , ~provider  , ~strategy    , ~crude_rate , ~std_rate ,
@@ -56,6 +57,7 @@ inputs_data_sample <- list(
     202324 , "national" , "Strategy B" ,          12 ,        11
   )
 )
+# nolint end
 
 test_that("ui", {
   # arrange

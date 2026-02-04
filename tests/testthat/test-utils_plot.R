@@ -3,6 +3,7 @@ library(testthat)
 
 test_that("isolate_provider_peers", {
   # arrange
+  # nolint start
   peers <- tibble::tribble(
     ~procode , ~peer ,
     "A"      , "B"   ,
@@ -10,6 +11,7 @@ test_that("isolate_provider_peers", {
     "B"      , "A"   ,
     "B"      , "C"
   )
+  # nolint end
   expected <- c("B", "C")
 
   # act
@@ -24,6 +26,7 @@ test_that("generate_rates_baseline_data", {
   m <- mock(c("B", "C"))
   local_mocked_bindings("isolate_provider_peers" = m)
 
+  # nolint start
   rates <- tibble::tribble(
     ~provider , ~fyear ,
     "A"       , 202223 ,
@@ -45,6 +48,7 @@ test_that("generate_rates_baseline_data", {
     "A"       , 202324 , FALSE    ,
     "D"       , 202324 , NA
   )
+  # nolint end
 
   # act
   actual <- generate_rates_baseline_data(
@@ -63,6 +67,7 @@ test_that("generate_rates_baseline_data", {
 
 test_that("uprime_calculations", {
   # arrange
+  # nolint start
   df <- tibble::tribble(
     ~denominator , ~rate , ~national_rate ,
             1000 , 2.0   , 1.9            ,
@@ -70,6 +75,7 @@ test_that("uprime_calculations", {
             1500 , 2.5   , 1.9            ,
             2500 , 1.8   , 1.9
   )
+  # nolint end
 
   # act
   actual <- uprime_calculations(df)

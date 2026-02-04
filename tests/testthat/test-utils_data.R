@@ -3,6 +3,7 @@ library(testthat)
 
 test_that("prepare_age_sex_data", {
   # arrange
+  # nolint start
   age_sex_data <- tibble::tribble(
     ~age_group , ~sex , ~n ,
     "0-4"      ,    1 ,  5 ,
@@ -12,6 +13,7 @@ test_that("prepare_age_sex_data", {
     "5-9"      ,    2 , 12 ,
     "10-14"    ,    2 , 22 ,
   )
+  # nolint end
   expected <- structure(
     list(
       age_group = structure(

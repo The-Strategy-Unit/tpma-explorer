@@ -146,7 +146,7 @@ test_that("get_all_geo_data throws error for unknown geography", {
   # arrange
   local_mocked_bindings("get_container" = mock())
 
-  # act & assert
+  # act and assert
   expect_error(
     get_all_geo_data("unknown_geography"),
     "Unknown geography"

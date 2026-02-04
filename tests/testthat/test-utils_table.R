@@ -128,8 +128,8 @@ test_that("prepare_procedures_data adds 'Other' row when pcnt_total < 1", {
     result$procedure_description,
     c("Procedure 1", "Procedure 2", "Other")
   )
-  expect_equal(result$pcnt[3], 0.4) # 1 - 0.6 = 0.4
-  expect_equal(result$n[3], 150 * 0.4 / 0.6) # n_total * (1 - pcnt_total) / pcnt_total
+  expect_equal(result$pcnt[3], 0.4)
+  expect_equal(result$n[3], 150 * 0.4 / 0.6)
 })
 
 test_that("prepare_procedures_data does not add 'Other' row when pcnt_total = 1", {
@@ -291,8 +291,8 @@ test_that("prepare_diagnoses_data adds 'Other' row when pcnt_total < 1", {
     result$diagnosis_description,
     c("Diagnosis 1", "Diagnosis 2", "Other")
   )
-  expect_equal(result$pcnt[3], 0.4) # 1 - 0.6 = 0.4
-  expect_equal(result$n[3], 150 * 0.4 / 0.6) # n_total * (1 - pcnt_total) / pcnt_total
+  expect_equal(result$pcnt[3], 0.4)
+  expect_equal(result$n[3], 150 * 0.4 / 0.6)
 })
 
 test_that("prepare_diagnoses_data does not add 'Other' row when pcnt_total = 1", {

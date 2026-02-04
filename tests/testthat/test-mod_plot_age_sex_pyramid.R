@@ -1,6 +1,7 @@
 library(mockery)
 library(testthat)
 
+# nolint start
 inputs_data_sample <- list(
   "age_sex" = tibble::tribble(
     ~provider , ~strategy , ~fyear ,
@@ -14,6 +15,7 @@ inputs_data_sample <- list(
     "R01"     , "b"       ,      2 ,
   )
 )
+# nolint end
 
 test_that("ui", {
   testthat::local_mocked_bindings(

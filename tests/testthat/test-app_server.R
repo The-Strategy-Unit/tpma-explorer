@@ -1,6 +1,7 @@
 library(mockery)
 library(testthat)
 
+# nolint start
 inputs_data_sample <- list(
   "age_sex" = NULL,
   "diagnoses" = NULL,
@@ -11,6 +12,7 @@ inputs_data_sample <- list(
     "ABC"     , "strategy" ,      2 , 15.6
   )
 )
+# nolint end
 
 setup_app_server_tests <- function(.env = parent.frame()) {
   shiny::shinyOptions(cache = cachem::cache_mem())

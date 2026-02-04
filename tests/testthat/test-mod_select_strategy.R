@@ -53,6 +53,7 @@ test_that("mod_select_strategy_get_strategies works", {
     "read_json" = m,
     .package = "jsonlite"
   )
+  # nolint start
   expected <- list(
     "ip" = tibble::tribble(
       ~strategy , ~name                    ,
@@ -69,6 +70,7 @@ test_that("mod_select_strategy_get_strategies works", {
     dplyr::bind_rows(.id = "category") |>
     dplyr::group_nest(.data$category) |>
     tibble::deframe()
+  # nolint end
 
   # act
   actual <- mod_select_strategy_get_strategies()
