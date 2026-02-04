@@ -76,11 +76,10 @@ test_that("make_strategy_group_lookup", {
       strategy_subset = c("s3" = "S3")
     )
   )
-  expected <- tibble::tribble(
-    ~group , ~strategy ,
-    "a"    , "s1"      ,
-    "a"    , "s2"      ,
-    "b"    , "s3"
+  expected <- list(
+    "s1" = "a",
+    "s2" = "a",
+    "s3" = "b"
   )
 
   # act

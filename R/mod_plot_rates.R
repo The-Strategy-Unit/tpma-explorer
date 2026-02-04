@@ -35,77 +35,45 @@ mod_plot_rates_server <- function(
 ) {
   # load static data items
   strategies_config <- get_golem_config("mitigators_config")
+  strategy_group_lookup <- make_strategy_group_lookup(strategies_config)
 
   # return the shiny module
   shiny::moduleServer(id, function(input, output, session) {
     peers_lookup <- shiny::reactive({
-      filename <- switch(
-        selected_geography(),
-        "nhp" = "nhp-peers.csv",
-        "la" = "la-peers.csv"
-      )
-
-      shiny::req(filename)
-
-      readr::read_csv(
-        app_sys("app", "data", filename),
-        col_types = "c"
-      )
+      get_peers_lookup(selected_geography())
     }) |>
       shiny::bindCache(selected_geography())
 
     #  Prepare data ----
     rates_data <- shiny::reactive({
-      df <- inputs_data()[["rates"]]
+      strategy <- shiny::req(selected_strategy())
 
-      national <- df |>
-        dplyr::filter(.data$provider == "national") |>
-        dplyr::select(
-          "strategy",
-          "fyear",
-          national_rate = "std_rate"
-        )
-
-      df |>
-        dplyr::filter(!.data$provider %in% c("national", "unknown")) |>
-        dplyr::inner_join(
-          national,
-          by = c("strategy", "fyear")
-        ) |>
-        dplyr::rename(rate = "std_rate") |>
-        dplyr::select(-"crude_rate")
+      get_rates_data(
+        inputs_data()[["rates"]],
+        strategy
+      )
     })
 
     rates_trend_data <- shiny::reactive({
-      shiny::req(rates_data())
-      shiny::req(selected_provider())
-      shiny::req(selected_strategy())
+      df <- shiny::req(rates_data())
+      provider <- shiny::req(selected_provider())
 
-      rates_data() |>
-        dplyr::filter(
-          .data$provider == selected_provider(),
-          .data$strategy == selected_strategy()
-        ) |>
-        dplyr::arrange(.data$fyear)
+      get_rates_trend_data(df, provider)
     })
 
     rates_baseline_data <- shiny::reactive({
-      shiny::req(rates_data())
-      shiny::req(peers_lookup())
-      shiny::req(selected_provider())
-      shiny::req(selected_strategy())
+      df <- shiny::req(rates_data())
+      peers_lookup <- shiny::req(peers_lookup())
+      provider <- shiny::req(selected_provider())
+      strategy <- shiny::req(selected_strategy())
+      year <- shiny::req(selected_year())
 
-      provider_peers <- isolate_provider_peers(
-        selected_provider(),
-        peers_lookup()
+      generate_rates_baseline_data(
+        df,
+        provider,
+        peers_lookup,
+        year
       )
-      rates_data() |>
-        generate_rates_baseline_data(
-          selected_provider(),
-          provider_peers,
-          selected_strategy(),
-          selected_year()
-        )
     })
 
     rates_funnel_calculations <- shiny::reactive({
@@ -133,15 +101,9 @@ mod_plot_rates_server <- function(
     })
 
     strategy_config <- shiny::reactive({
-      shiny::req(strategies_config)
-      shiny::req(selected_strategy())
+      strategy <- shiny::req(selected_strategy())
 
-      strategy_group_lookup <- strategies_config |> make_strategy_group_lookup()
-
-      strategy_group <- strategy_group_lookup |>
-        dplyr::filter(.data$strategy == selected_strategy()) |>
-        dplyr::pull("group")
-
+      strategy_group <- strategy_group_lookup[[strategy]]
       strategies_config[[strategy_group]]
     })
 

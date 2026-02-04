@@ -14,24 +14,20 @@ isolate_provider_peers <- function(provider, peers) {
 #' Generate Rates Baseline Data
 #' @param rates A data.frame. Rates data read from Azure.
 #' @param provider Character. Provider code, e.g. `"RCF"`.
-#' @param peers Character. A vector of peers for given `provider`.
-#' @param strategy Character. Strategy variable name, e.g.
-#'     `"alcohol_partially_attributable_acute"`.
+#' @param peers_lookup Dataframe. A lookup from a provider to it's peers.
 #' @param selected_year Integer. Baseline year in the form `202324`.
 #' @return A data.frame.
 #' @export
 generate_rates_baseline_data <- function(
   rates,
   provider,
-  peers,
-  strategy,
+  peers_lookup,
   selected_year
 ) {
+  peers <- isolate_provider_peers(provider, peers_lookup)
+
   rates |>
-    dplyr::filter(
-      .data$strategy == .env$strategy,
-      .data$fyear == .env$selected_year
-    ) |>
+    dplyr::filter(.data$fyear == .env$selected_year) |>
     dplyr::mutate(
       is_peer = dplyr::case_when(
         .data$provider == .env$provider ~ FALSE,

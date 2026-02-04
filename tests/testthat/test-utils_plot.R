@@ -21,50 +21,44 @@ test_that("isolate_provider_peers", {
 
 test_that("generate_rates_baseline_data", {
   # arrange
-  rates <- tibble::tribble(
-    ~provider , ~strategy , ~fyear ,
-    "A"       , "S1"      , 202223 ,
-    "B"       , "S1"      , 202223 ,
-    "C"       , "S1"      , 202223 ,
-    "D"       , "S1"      , 202223 ,
-    "A"       , "S1"      , 202324 ,
-    "B"       , "S1"      , 202324 ,
-    "C"       , "S1"      , 202324 ,
-    "D"       , "S1"      , 202324 ,
+  m <- mock(c("B", "C"))
+  local_mocked_bindings("isolate_provider_peers" = m)
 
-    "A"       , "S2"      , 202223 ,
-    "B"       , "S2"      , 202223 ,
-    "C"       , "S2"      , 202223 ,
-    "D"       , "S2"      , 202223 ,
-    "A"       , "S2"      , 202324 ,
-    "B"       , "S2"      , 202324 ,
-    "C"       , "S2"      , 202324 ,
-    "D"       , "S2"      , 202324 ,
+  rates <- tibble::tribble(
+    ~provider , ~fyear ,
+    "A"       , 202223 ,
+    "B"       , 202223 ,
+    "C"       , 202223 ,
+    "D"       , 202223 ,
+    "A"       , 202324 ,
+    "B"       , 202324 ,
+    "C"       , 202324 ,
+    "D"       , 202324 ,
   )
   provider <- "A"
-  peers <- c("B", "C")
-  strategy <- "S1"
   selected_year <- 202324
 
   expected <- tibble::tribble(
-    ~provider , ~strategy , ~fyear , ~is_peer ,
-    "B"       , "S1"      , 202324 , TRUE     ,
-    "C"       , "S1"      , 202324 , TRUE     ,
-    "A"       , "S1"      , 202324 , FALSE    ,
-    "D"       , "S1"      , 202324 , NA
+    ~provider , ~fyear , ~is_peer ,
+    "B"       , 202324 , TRUE     ,
+    "C"       , 202324 , TRUE     ,
+    "A"       , 202324 , FALSE    ,
+    "D"       , 202324 , NA
   )
 
   # act
   actual <- generate_rates_baseline_data(
     rates,
     provider,
-    peers,
-    strategy,
+    "peers_lookup",
     selected_year
   )
 
   # assert
   expect_equal(actual, expected)
+
+  expect_called(m, 1)
+  expect_args(m, 1, "A", "peers_lookup")
 })
 
 test_that("uprime_calculations", {
