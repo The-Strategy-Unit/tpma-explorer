@@ -6,7 +6,13 @@ mod_select_strategy_ui <- function(id) {
   shiny::tagList(
     shiny::selectInput(
       ns("strategy_category_select"),
-      "Filter by activity type:",
+      label = bslib::tooltip(
+        trigger = list(
+          "Filter by activity type",
+          bsicons::bs_icon("info-circle")
+        ),
+        md_file_to_html("app", "text", "sidebar-selections.md"),
+      ),
       choices = c(
         "Inpatients" = "ip",
         "Outpatients" = "op",
@@ -15,7 +21,13 @@ mod_select_strategy_ui <- function(id) {
     ),
     shiny::selectInput(
       ns("strategy_select"),
-      "Choose a TPMA:",
+      label = bslib::tooltip(
+        trigger = list(
+          "Choose a TPMA",
+          bsicons::bs_icon("info-circle")
+        ),
+        md_file_to_html("app", "text", "sidebar-selections.md"),
+      ),
       choices = NULL
     )
   )
