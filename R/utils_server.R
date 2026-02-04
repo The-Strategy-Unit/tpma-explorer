@@ -4,9 +4,7 @@
 #' @return A list. One element for each dataframes of data.
 #' @export
 get_all_geo_data <- function(geography) {
-  inputs_container <- get_container(
-    container_name = Sys.getenv("AZ_CONTAINER_INPUTS")
-  )
+  inputs_container <- get_container()
 
   data_types <- purrr::set_names(c(
     "age_sex",
