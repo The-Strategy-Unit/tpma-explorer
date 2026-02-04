@@ -5,7 +5,7 @@
     Output
       <div class="container-fluid">
         <div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container" data-bslib-card-init data-full-screen="false" data-require-bs-caller="card()" data-require-bs-version="5" id="bslib-card-X">
-          <div class="card-header">
+          <div class="card-header bslib-gap-spacing">
             Rates Funnel
             <bslib-tooltip placement="right" bsOptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
               <template><p>Baseline activity for the selected unit (red) compared to peers (black) and all others (grey).
@@ -18,9 +18,9 @@
             </bslib-tooltip>
           </div>
           <div class="card-body bslib-gap-spacing html-fill-item html-fill-container" style="margin-top:auto;margin-bottom:auto;flex:1 1 auto;">
-            <div data-spinner-id="spinner-03262af53d3fafb24ed714dd32f5f04c" class="shiny-spinner-output-container shiny-spinner-hideui">
+            <div data-spinner-id="spinner-245ad2ef5aaca56fec62db4be0dc6b09" class="shiny-spinner-output-container shiny-spinner-hideui">
               <div class="load-container shiny-spinner-hidden load1">
-                <div id="spinner-03262af53d3fafb24ed714dd32f5f04c" class="loader">Loading...</div>
+                <div id="spinner-245ad2ef5aaca56fec62db4be0dc6b09" class="loader">Loading...</div>
               </div>
               <div class="shiny-plot-output html-fill-item" id="test-rates_funnel_plot" style="width:100%;height:400px;"></div>
             </div>

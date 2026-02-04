@@ -5,7 +5,7 @@
     Output
       <div class="container-fluid">
         <div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container" data-bslib-card-init data-full-screen="false" data-require-bs-caller="card()" data-require-bs-version="5" id="bslib-card-X">
-          <div class="card-header">
+          <div class="card-header bslib-gap-spacing">
             National Elicitation Exercise (NEE) estimate
             <bslib-tooltip placement="right" bsOptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
               <template><p>Summarised expert predictions from the National Elicitation Exercise (NEE).
@@ -18,9 +18,9 @@
             </bslib-tooltip>
           </div>
           <div class="card-body bslib-gap-spacing html-fill-item html-fill-container" style="margin-top:auto;margin-bottom:auto;flex:1 1 auto;">
-            <div data-spinner-id="spinner-f7ffd162cbe6637ebd6251ac7e696383" class="shiny-spinner-output-container shiny-spinner-hideui">
+            <div data-spinner-id="spinner-7da67c99928022bd0ca63677116b9340" class="shiny-spinner-output-container shiny-spinner-hideui">
               <div class="load-container shiny-spinner-hidden load1">
-                <div id="spinner-f7ffd162cbe6637ebd6251ac7e696383" class="loader">Loading...</div>
+                <div id="spinner-7da67c99928022bd0ca63677116b9340" class="loader">Loading...</div>
               </div>
               <div class="shiny-plot-output html-fill-item" id="test-nee" style="width:100%;height:400px;"></div>
             </div>

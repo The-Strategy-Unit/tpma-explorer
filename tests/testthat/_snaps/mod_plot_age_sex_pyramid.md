@@ -5,7 +5,7 @@
     Output
       <div class="container-fluid">
         <div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container" data-bslib-card-init data-full-screen="false" data-require-bs-caller="card()" data-require-bs-version="5" id="bslib-card-X">
-          <div class="card-header">
+          <div class="card-header bslib-gap-spacing">
             Age-sex pyramid
             <bslib-tooltip placement="right" bsOptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
               <template><p>Activity counts split by five-year age categories and sex.
@@ -16,9 +16,9 @@
             </bslib-tooltip>
           </div>
           <div class="card-body bslib-gap-spacing html-fill-item html-fill-container" style="margin-top:auto;margin-bottom:auto;flex:1 1 auto;">
-            <div data-spinner-id="spinner-fc7e7344895954c2d2111ad2b627b49f" class="shiny-spinner-output-container shiny-spinner-hideui">
+            <div data-spinner-id="spinner-4ac86a10ae83d3408baf249fd1a16c1a" class="shiny-spinner-output-container shiny-spinner-hideui">
               <div class="load-container shiny-spinner-hidden load1">
-                <div id="spinner-fc7e7344895954c2d2111ad2b627b49f" class="loader">Loading...</div>
+                <div id="spinner-4ac86a10ae83d3408baf249fd1a16c1a" class="loader">Loading...</div>
               </div>
               <div class="shiny-plot-output html-fill-item" id="test-age_sex_pyramid" style="width:100%;height:400px;"></div>
             </div>

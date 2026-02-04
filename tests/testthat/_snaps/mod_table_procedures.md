@@ -5,7 +5,7 @@
     Output
       <div class="container-fluid">
         <div class="card bslib-card bslib-mb-spacing html-fill-container" data-bslib-card-init data-full-screen="false" data-require-bs-caller="card()" data-require-bs-version="5" id="bslib-card-X">
-          <div class="card-header">
+          <div class="card-header bslib-gap-spacing">
             Procedures summary
             <bslib-tooltip placement="right" bsOptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
               <template><p>Top six procedures by activity count for the selected unit and TPMA.
