@@ -25,12 +25,3 @@ fetch_strategy_text <- function(strategy, descriptions_lookup) {
     # nolint end
   })
 }
-
-#' Convert Strategy Text from Markdown to HTML
-#' @param text Character. The Markdown text description for a strategy, as read
-#'     by [fetch_strategy_text].
-#' @return HTML/character.
-#' @export
-convert_md_to_html <- function(text) {
-  shiny::HTML(markdown::mark_html(text, output = FALSE, template = FALSE))
-}

@@ -47,7 +47,7 @@ test_that("strategy_text is rendered", {
 
   local_mocked_bindings(
     "fetch_strategy_text" = m1,
-    "convert_md_to_html" = m2
+    "md_file_to_html" = m2
   )
 
   # act
@@ -86,7 +86,7 @@ test_that("strategy_text caches properly", {
 
   local_mocked_bindings(
     "fetch_strategy_text" = m1,
-    "convert_md_to_html" = m2
+    "md_file_to_html" = m2
   )
 
   # act
