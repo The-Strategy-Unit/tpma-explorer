@@ -18,5 +18,5 @@ Fetch Strategy Text from NHP Inputs
 }
 \details{
 Markdown files containing strategy descriptions are read from
-\href{https:","","github.com","The-Strategy-Unit","nhp_inputs","}{NHP Inputs}.
+\href{https://github.com/The-Strategy-Unit/nhp_inputs/}{NHP Inputs}.
 }

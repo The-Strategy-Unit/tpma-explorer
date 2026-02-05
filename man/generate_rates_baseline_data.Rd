@@ -11,7 +11,7 @@ generate_rates_baseline_data(rates, provider, peers_lookup, selected_year)
 
 \item{provider}{Character. Provider code, e.g. \code{"RCF"}.}
 
-\item{peers_lookup}{Dataframe. A lookup from a provider to it's peers.}
+\item{peers_lookup}{Dataframe. A lookup from a provider to its peers.}
 
 \item{selected_year}{Integer. Baseline year in the form \code{202324}.}
 }
