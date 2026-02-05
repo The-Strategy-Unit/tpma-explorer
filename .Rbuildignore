@@ -12,3 +12,4 @@
 ^README\.md$
 ^rsconnect$
 ^tpma-explorer\.Rproj$
+^.cache$

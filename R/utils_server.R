@@ -1,6 +1,4 @@
 #' Get Azure Container
-#' @param tenant Character. Tenant ID.
-#' @param app_id Character. App ID.
 #' @param ep_uri Character. Endpoint URI.
 #' @param container_name Character. The name of the blob/storage container that
 #'     hosts files you want to read.

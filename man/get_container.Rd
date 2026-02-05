@@ -14,10 +14,6 @@ get_container(
 
 \item{container_name}{Character. The name of the blob/storage container that
 hosts files you want to read.}
-
-\item{tenant}{Character. Tenant ID.}
-
-\item{app_id}{Character. App ID.}
 }
 \value{
 A blob_container/storage_container list.
