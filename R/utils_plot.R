@@ -14,7 +14,7 @@ isolate_provider_peers <- function(provider, peers) {
 #' Generate Rates Baseline Data
 #' @param rates A data.frame. Rates data read from Azure.
 #' @param provider Character. Provider code, e.g. `"RCF"`.
-#' @param peers_lookup Dataframe. A lookup from a provider to it's peers.
+#' @param peers_lookup Dataframe. A lookup from a provider to its peers.
 #' @param selected_year Integer. Baseline year in the form `202324`.
 #' @return A data.frame.
 #' @export
