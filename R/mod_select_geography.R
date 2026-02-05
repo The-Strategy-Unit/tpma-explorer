@@ -12,7 +12,10 @@ mod_select_geography_ui <- function(id) {
       ),
       md_file_to_html("app", "text", "sidebar-selections.md"),
     ),
-    choices = NULL
+    choices = c(
+      "NHS provider trusts" = "nhp",
+      "Local authorities (LAs)" = "la"
+    )
   )
 }
 
@@ -20,20 +23,7 @@ mod_select_geography_ui <- function(id) {
 #' @param id Internal parameter for `shiny`.
 #' @noRd
 mod_select_geography_server <- function(id) {
-  geographies <- c(
-    "NHS provider trusts" = "nhp",
-    "Local authorities (LAs)" = "la"
-  )
-
   shiny::moduleServer(id, function(input, output, session) {
-    shiny::observe({
-      shiny::req(geographies)
-      shiny::updateSelectInput(
-        session,
-        "geography_select",
-        choices = geographies
-      )
-    })
     shiny::reactive(input$geography_select)
   })
 }

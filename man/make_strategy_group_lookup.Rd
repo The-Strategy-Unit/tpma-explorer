@@ -12,7 +12,7 @@ make_strategy_group_lookup(strategies_config)
 \link{get_golem_config}.}
 }
 \value{
-A data.frame.
+A lookup from strategy name to strategy group name.
 }
 \description{
 Create a Simple Lookup of Strategies to Strategy Groups

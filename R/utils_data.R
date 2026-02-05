@@ -69,21 +69,23 @@ get_golem_config <- function(
 #' @param strategies_config List. Configuration for strategies from the
 #'     `"mitigators_config"` element of `golem-config.yml`, read in with
 #'     [get_golem_config].
-#' @return A data.frame.
+#' @return A lookup from strategy name to strategy group name.
 #' @export
 make_strategy_group_lookup <- function(strategies_config) {
   strategies_config |>
     purrr::map(\(strategy_group) {
-      strategy_group |> purrr::pluck("strategy_subset") |> names()
+      strategy_group |>
+        purrr::pluck("strategy_subset") |>
+        names()
     }) |>
-    tibble::enframe(name = "group", value = "strategy") |>
-    tidyr::unnest_longer("strategy")
+    purrr::imap(\(.x, .y) purrr::set_names(rep(.y, length(.x)), .x)) |>
+    purrr::flatten()
 }
 
 #' Read an Markdown File and Convert to HTML
 #' @param ... Character vectors. Construct a path to a Markdown file (like
 #'     [file.path]).
-#' @return A data.frame.
+#' @return A shiny HTML object.
 #' @export
 md_file_to_html <- function(...) {
   file <- app_sys(...)
@@ -91,4 +93,12 @@ md_file_to_html <- function(...) {
     return(NULL)
   }
   shiny::HTML(markdown::mark_html(file, output = FALSE, template = FALSE))
+}
+
+#' Convert a Markdown String to HTML
+#' @param text Character string. Markdown text to convert to HTML.
+#' @return A shiny HTML object.
+#' @export
+md_string_to_html <- function(text) {
+  shiny::HTML(markdown::mark_html(text, output = FALSE, template = FALSE))
 }

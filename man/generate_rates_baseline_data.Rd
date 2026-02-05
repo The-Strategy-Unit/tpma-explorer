@@ -4,17 +4,14 @@
 \alias{generate_rates_baseline_data}
 \title{Generate Rates Baseline Data}
 \usage{
-generate_rates_baseline_data(rates, provider, peers, strategy, selected_year)
+generate_rates_baseline_data(rates, provider, peers_lookup, selected_year)
 }
 \arguments{
 \item{rates}{A data.frame. Rates data read from Azure.}
 
 \item{provider}{Character. Provider code, e.g. \code{"RCF"}.}
 
-\item{peers}{Character. A vector of peers for given \code{provider}.}
-
-\item{strategy}{Character. Strategy variable name, e.g.
-\code{"alcohol_partially_attributable_acute"}.}
+\item{peers_lookup}{Dataframe. A lookup from a provider to its peers.}
 
 \item{selected_year}{Integer. Baseline year in the form \code{202324}.}
 }

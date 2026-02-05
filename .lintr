@@ -1,3 +1,7 @@
+linters: linters_with_defaults(
+    line_length_linter(120),
+    object_length_linter(50)
+  )
 exclusions: list(
     "data-raw/la-lookups.R"
   )
