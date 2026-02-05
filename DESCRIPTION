@@ -1,6 +1,6 @@
 Package: tpma.explorer
 Title: Explore TPMA Data
-Version: 0.2.0.9000
+Version: 0.3.4
 Authors@R: c(
     person("Matt", "Dray", , "matt.dray@nhs.net", role = c("aut", "cre")),
     person("Tom", "Jemmett", , "thomas.jemmett@nhs.net", role = "aut")
