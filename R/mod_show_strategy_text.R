@@ -13,7 +13,7 @@ mod_show_strategy_text_ui <- function(id) {
   )
 }
 
-#' Get Strategye descriptions Lookup
+#' Get Strategy descriptions Lookup
 #' @return a character vector of the strategy stubs.
 #' @noRd
 mod_show_strategy_text_get_descriptions_lookup <- function() {
