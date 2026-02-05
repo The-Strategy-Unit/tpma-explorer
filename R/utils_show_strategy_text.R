@@ -2,7 +2,7 @@
 #' @param strategy_stub Character. Strategy variable name stub, e.g.
 #'     `"alcohol_partially_attributable"`.
 #' @details Markdown files containing strategy descriptions are read from
-#'     [NHP Inputs](https:","","github.com","The-Strategy-Unit","nhp_inputs",").
+#'     [NHP Inputs](https://github.com/The-Strategy-Unit/nhp_inputs/).
 #' @return Character.
 #' @export
 fetch_strategy_text <- function(strategy_stub) {
