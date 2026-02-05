@@ -166,7 +166,7 @@ test_that("sidebar accordion opens", {
   shiny::testServer(
     app_server,
     {
-      session$private$flush() # trigger observer
+      session$flushReact() # trigger observer
       expect_called(m, 1)
       expect_args(m, 1, id = "sidebar_accordion", values = TRUE)
     }

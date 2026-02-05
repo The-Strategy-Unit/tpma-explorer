@@ -101,7 +101,7 @@ test_that("it updates the select input", {
     {
       # assert
       selected_geography("nhp")
-      session$private$flush()
+      session$flushReact()
       expect_called(m, 1)
       expect_args(
         m,
@@ -113,7 +113,7 @@ test_that("it updates the select input", {
       )
 
       selected_geography("la")
-      session$private$flush()
+      session$flushReact()
       expect_called(m, 2)
       expect_args(
         m,
