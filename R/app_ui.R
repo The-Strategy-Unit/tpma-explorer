@@ -62,13 +62,13 @@ app_ui <- function(request) {
           ),
           bslib::card(
             id = "card_data",
-            bslib::card_header("Definitions"),
-            md_file_to_html("app", "text", "info-definitions.md")
+            bslib::card_header("Data"),
+            md_file_to_html("app", "text", "info-data.md")
           ),
           bslib::card(
             id = "card_data",
-            bslib::card_header("Data"),
-            md_file_to_html("app", "text", "info-data.md")
+            bslib::card_header("Definitions"),
+            md_file_to_html("app", "text", "info-definitions.md")
           )
         ),
         bslib::layout_columns(
@@ -101,6 +101,7 @@ app_ui <- function(request) {
     sidebar = bslib::sidebar(
       bslib::accordion(
         id = "sidebar_accordion",
+
         open = FALSE,
         multiple = TRUE,
         bslib::accordion_panel(
