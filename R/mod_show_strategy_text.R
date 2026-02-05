@@ -13,6 +13,16 @@ mod_show_strategy_text_ui <- function(id) {
   )
 }
 
+#' Get Strategy descriptions Lookup
+#' @return a character vector of the strategy stubs.
+#' @noRd
+mod_show_strategy_text_get_descriptions_lookup <- function() {
+  jsonlite::read_json(
+    app_sys("app", "data", "descriptions.json"),
+    simplifyVector = TRUE
+  )
+}
+
 #' Show Strategy Description Server
 #' @param id Internal parameter for `shiny`.
 #' @noRd
@@ -21,20 +31,26 @@ mod_show_strategy_text_server <- function(
   selected_strategy
 ) {
   # load static data items
-  descriptions_lookup <- jsonlite::read_json(
-    app_sys("app", "data", "descriptions.json"),
-    simplifyVector = TRUE
-  )
+  descriptions_lookup <- mod_show_strategy_text_get_descriptions_lookup()
 
   # return the shiny module
   shiny::moduleServer(id, function(input, output, session) {
-    output$strategy_text <- shiny::renderText({
-      shiny::req(selected_strategy())
-      shiny::req(descriptions_lookup)
-      selected_strategy() |>
-        fetch_strategy_text(descriptions_lookup) |>
-        convert_md_to_html()
+    strategy_stub <- shiny::reactive({
+      strategy <- shiny::req(selected_strategy())
+
+      is_stub <- stringr::str_detect(strategy, descriptions_lookup)
+      descriptions_lookup[is_stub]
+    })
+
+    strategy_text <- shiny::reactive({
+      s <- shiny::req(strategy_stub())
+      fetch_strategy_text(s)
     }) |>
-      shiny::bindCache(selected_strategy())
+      shiny::bindCache(strategy_stub())
+
+    output$strategy_text <- shiny::renderText({
+      t <- shiny::req(strategy_text())
+      md_string_to_html(t)
+    })
   })
 }

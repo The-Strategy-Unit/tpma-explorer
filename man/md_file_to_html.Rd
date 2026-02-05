@@ -11,7 +11,7 @@ md_file_to_html(...)
 \link{file.path}).}
 }
 \value{
-A data.frame.
+A shiny HTML object.
 }
 \description{
 Read an Markdown File and Convert to HTML

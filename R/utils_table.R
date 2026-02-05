@@ -80,12 +80,12 @@ prepare_diagnoses_data <- function(
   }
 
   diagnoses_prepared <- diagnoses_filtered |>
-    dplyr::inner_join(
+    dplyr::left_join(
       diagnoses_lookup,
       by = c("diagnosis" = "diagnosis_code")
     ) |>
     tidyr::replace_na(list(
-      description = "Unknown/Invalid Diagnosis Code"
+      diagnosis_description = "Unknown/Invalid Diagnosis Code"
     )) |>
     dplyr::select("diagnosis_description", "n", "pcnt")
 
