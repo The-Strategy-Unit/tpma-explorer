@@ -11,9 +11,7 @@ app_ui <- function(request) {
     bslib::nav_panel(
       id = "nav_panel_viz",
       title = "Visualisations",
-
       bslib::card(
-        fill = FALSE,
         bslib::card_header(
           class = "bg-warning",
           bsicons::bs_icon("exclamation-triangle"),
@@ -22,27 +20,17 @@ app_ui <- function(request) {
         "This app is in development and its output has not been verified.",
         "The information presented here should not be relied on as fact."
       ),
-
+      mod_show_strategy_text_ui("mod_show_strategy_text"),
+      mod_plot_rates_ui("mod_plot_rates"),
       bslib::layout_columns(
-        col_widths = c(3, 9),
-        fill = FALSE,
-        fillable = FALSE,
-        mod_show_strategy_text_ui("mod_show_strategy_text"),
-        bslib::layout_column_wrap(
-          width = 1,
-          gap = "0.8rem",
-          mod_plot_rates_ui("mod_plot_rates"),
-          bslib::layout_column_wrap(
-            width = 1 / 2,
-            mod_table_procedures_ui("mod_table_procedures"),
-            mod_table_diagnoses_ui("mod_table_diagnoses")
-          ),
-          bslib::layout_column_wrap(
-            width = 1 / 2,
-            mod_plot_age_sex_pyramid_ui("mod_plot_age_sex_pyramid"),
-            mod_plot_nee_ui("mod_plot_nee")
-          ),
-        )
+        col_widths = c(6, 6),
+        mod_table_diagnoses_ui("mod_table_diagnoses"),
+        mod_table_procedures_ui("mod_table_procedures")
+      ),
+      bslib::layout_columns(
+        col_widths = c(6, 6),
+        mod_plot_age_sex_pyramid_ui("mod_plot_age_sex_pyramid"),
+        mod_plot_nee_ui("mod_plot_nee")
       )
     ),
 
