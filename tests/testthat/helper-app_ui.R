@@ -13,6 +13,11 @@ setup_app_ui_tests <- function(.env = parent.frame()) {
     "mod_select_strategy_ui" = mockery::mock("mod_select_strategy")
   )
 
+  withr::local_envvar(
+    .local_envir = .env,
+    "FEEDBACK_FORM_URL" = "https://example.com/"
+  )
+
   do.call(testthat::local_mocked_bindings, c(mocks, .env = .env))
 
   mocks
