@@ -123,7 +123,7 @@ test_that("sidebar accordion opens", {
   mocks <- setup_app_server_tests()
 
   m <- mock()
-  mockery::stub(app_server, "bslib::accordion_panel_open", m)
+  local_mocked_bindings(accordion_panel_open = m, .package = "bslib")
   # act
 
   shiny::testServer(

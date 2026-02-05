@@ -5,10 +5,16 @@ test_that("get_container uses get_azure_token when not in a managed environment"
   m_blob_endpoint <- mock("ep")
   m_storage_container <- mock("container")
 
-  stub(get_container, "AzureAuth::get_managed_token", m_get_managed_token)
-  stub(get_container, "AzureAuth::get_azure_token", m_get_azure_token)
-  stub(get_container, "AzureStor::blob_endpoint", m_blob_endpoint)
-  stub(get_container, "AzureStor::storage_container", m_storage_container)
+  local_mocked_bindings(
+    "get_managed_token" = m_get_managed_token,
+    "get_azure_token" = m_get_azure_token,
+    .package = "AzureAuth"
+  )
+  local_mocked_bindings(
+    "blob_endpoint" = m_blob_endpoint,
+    "storage_container" = m_storage_container,
+    .package = "AzureStor"
+  )
 
   # act
   actual <- get_container("ep_uri", "container_name")
@@ -40,10 +46,16 @@ test_that("get_container uses get_managed_token when in a managed environment", 
   m_blob_endpoint <- mock("ep")
   m_storage_container <- mock("container")
 
-  stub(get_container, "AzureAuth::get_managed_token", m_get_managed_token)
-  stub(get_container, "AzureAuth::get_azure_token", m_get_azure_token)
-  stub(get_container, "AzureStor::blob_endpoint", m_blob_endpoint)
-  stub(get_container, "AzureStor::storage_container", m_storage_container)
+  local_mocked_bindings(
+    "get_managed_token" = m_get_managed_token,
+    "get_azure_token" = m_get_azure_token,
+    .package = "AzureAuth"
+  )
+  local_mocked_bindings(
+    "blob_endpoint" = m_blob_endpoint,
+    "storage_container" = m_storage_container,
+    .package = "AzureStor"
+  )
 
   # act
   actual <- get_container("ep_uri", "container_name")

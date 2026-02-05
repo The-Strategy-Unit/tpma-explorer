@@ -1,7 +1,7 @@
 test_that("app_sys", {
   # arrange
   m <- mock("path/to/file")
-  stub(app_sys, "system.file", m)
+  local_mocked_bindings(system.file = m)
 
   # act
   actual <- app_sys("subdir", "file.txt")
