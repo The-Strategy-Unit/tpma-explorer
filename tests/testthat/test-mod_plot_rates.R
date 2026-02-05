@@ -1,6 +1,3 @@
-library(mockery)
-library(testthat)
-
 test_that("ui", {
   # arrange
   setup_mod_plot_rates_ui_tests()

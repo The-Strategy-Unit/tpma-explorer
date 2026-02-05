@@ -1,5 +1,3 @@
-library(testthat)
-
 # Tests for prepare_procedures_data ----
 
 test_that("prepare_procedures_data returns NULL when no data matches filter", {

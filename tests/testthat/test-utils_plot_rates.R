@@ -1,6 +1,3 @@
-library(mockery)
-library(testthat)
-
 test_that("get_peers_lookup", {
   # arrange
   m <- mock("peers", cycle = TRUE)

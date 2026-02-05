@@ -1,6 +1,3 @@
-library(mockery)
-library(testthat)
-
 test_that("mod_select_geography", {
   # arrange
   mocks <- setup_app_server_tests()

@@ -1,6 +1,3 @@
-library(mockery)
-library(testthat)
-
 # nolint start
 test_that("ui", {
   setup_ui_test()

@@ -4,3 +4,6 @@ options(
 )
 
 Sys.setenv(TESTTHAT_PARALLEL = "false")
+
+library(mockery)
+library(shiny)

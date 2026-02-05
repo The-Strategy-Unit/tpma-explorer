@@ -1,6 +1,3 @@
-library(mockery)
-library(testthat)
-
 test_that("app_sys", {
   # arrange
   m <- mock("path/to/file")

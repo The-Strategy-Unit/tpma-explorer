@@ -1,6 +1,3 @@
-library(mockery)
-library(testthat)
-
 test_that("run_app", {
   # arrange
   m1 <- mock()

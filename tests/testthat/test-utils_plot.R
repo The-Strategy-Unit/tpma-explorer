@@ -1,6 +1,3 @@
-library(mockery)
-library(testthat)
-
 test_that("isolate_provider_peers", {
   # arrange
   # nolint start

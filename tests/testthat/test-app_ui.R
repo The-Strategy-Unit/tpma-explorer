@@ -1,5 +1,3 @@
-library(mockery)
-
 test_that("ui", {
   # arrange
   setup_app_ui_tests()

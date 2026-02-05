@@ -1,6 +1,3 @@
-library(mockery)
-library(testthat)
-
 test_that("prepare_age_sex_data", {
   # arrange
   # nolint start

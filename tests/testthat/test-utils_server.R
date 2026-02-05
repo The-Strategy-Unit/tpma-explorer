@@ -1,6 +1,3 @@
-library(mockery)
-library(testthat)
-
 test_that("get_container uses get_azure_token when not in a managed environment", {
   # arrange
   m_get_managed_token <- \() stop("expected error")
