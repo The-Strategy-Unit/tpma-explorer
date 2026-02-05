@@ -2,10 +2,7 @@ library(mockery)
 library(testthat)
 
 test_that("ui", {
-  testthat::local_mocked_bindings(
-    "p_randomInt" = \(...) "X",
-    .package = "shiny"
-  )
+  setup_ui_test()
 
   ui <- mod_show_strategy_text_ui("test")
 

@@ -2,10 +2,7 @@ library(mockery)
 library(testthat)
 
 test_that("ui", {
-  testthat::local_mocked_bindings(
-    "p_randomInt" = \(...) "X",
-    .package = "shiny"
-  )
+  setup_ui_test()
 
   ui <- mod_select_provider_ui("test")
 
@@ -101,7 +98,7 @@ test_that("it updates the select input", {
     {
       # assert
       selected_geography("nhp")
-      session$flushReact()
+      session$private$flush()
       expect_called(m, 1)
       expect_args(
         m,
@@ -113,7 +110,7 @@ test_that("it updates the select input", {
       )
 
       selected_geography("la")
-      session$flushReact()
+      session$private$flush()
       expect_called(m, 2)
       expect_args(
         m,

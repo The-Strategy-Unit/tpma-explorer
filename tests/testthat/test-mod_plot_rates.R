@@ -1,64 +1,6 @@
 library(mockery)
 library(testthat)
 
-
-setup_mod_plot_rates_ui_tests <- function(.env = parent.frame()) {
-  testthat::local_mocked_bindings(
-    "p_randomInt" = \(...) "X",
-    .package = "shiny",
-    .env = .env
-  )
-
-  mocks <- list(
-    "mod_plot_rates_trend_ui" = mock("mod_plot_rates_trend"),
-    "mod_plot_rates_funnel_ui" = mock("mod_plot_rates_funnel"),
-    "mod_plot_rates_box_ui" = mock("mod_plot_rates_box")
-  )
-
-  do.call(testthat::local_mocked_bindings, c(mocks, .env = .env))
-
-  mocks
-}
-
-server_mod_plot_rates_server_tests <- function(.env = parent.frame()) {
-  mocks <- list(
-    "mod_plot_rates_trend_server" = mock(),
-    "mod_plot_rates_funnel_server" = mock(),
-    "mod_plot_rates_box_server" = mock(),
-    "get_golem_config" = mock("strategies_config"),
-    "make_strategy_group_lookup" = mock("strategy_group_lookup"),
-    "get_peers_lookup" = mock("peers_lookup", cycle = TRUE),
-    "get_rates_data" = mock("rates"),
-    "get_rates_trend_data" = mock("rates_trend"),
-    "generate_rates_baseline_data" = mock("rates_baseline"),
-    "uprime_calculations" = mock("uprime")
-  )
-  do.call(testthat::local_mocked_bindings, c(mocks, .env = .env))
-
-  mocks
-}
-
-# nolint start
-inputs_data_sample <- list(
-  "rates" = tibble::tribble(
-    ~fyear , ~provider  , ~strategy    , ~crude_rate , ~std_rate ,
-    202223 , "a"        , "Strategy A" ,           1 ,         2 ,
-    202223 , "b"        , "Strategy A" ,           3 ,         4 ,
-    202223 , "national" , "Strategy A" ,           5 ,         6 ,
-    202324 , "A"        , "Strategy A" ,           7 ,         8 ,
-    202324 , "B"        , "Strategy A" ,           9 ,        10 ,
-    202324 , "national" , "Strategy A" ,          10 ,        12 ,
-
-    202223 , "a"        , "Strategy B" ,           2 ,         1 ,
-    202223 , "b"        , "Strategy B" ,           4 ,         3 ,
-    202223 , "national" , "Strategy B" ,           6 ,         5 ,
-    202324 , "A"        , "Strategy B" ,           8 ,         7 ,
-    202324 , "B"        , "Strategy B" ,          10 ,         9 ,
-    202324 , "national" , "Strategy B" ,          12 ,        11
-  )
-)
-# nolint end
-
 test_that("ui", {
   # arrange
   setup_mod_plot_rates_ui_tests()

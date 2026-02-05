@@ -2,26 +2,8 @@ library(mockery)
 library(testthat)
 
 # nolint start
-inputs_data_sample <- list(
-  "age_sex" = tibble::tribble(
-    ~provider , ~strategy , ~fyear ,
-    "R00"     , "a"       ,      1 ,
-    "R00"     , "a"       ,      2 ,
-    "R00"     , "b"       ,      1 ,
-    "R00"     , "b"       ,      2 ,
-    "R01"     , "a"       ,      1 ,
-    "R01"     , "a"       ,      2 ,
-    "R01"     , "b"       ,      1 ,
-    "R01"     , "b"       ,      2 ,
-  )
-)
-# nolint end
-
 test_that("ui", {
-  testthat::local_mocked_bindings(
-    "p_randomInt" = \(...) "X",
-    .package = "shiny"
-  )
+  setup_ui_test()
 
   ui <- mod_plot_age_sex_pyramid_ui("test")
 

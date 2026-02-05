@@ -2,10 +2,7 @@ library(mockery)
 library(testthat)
 
 test_that("ui", {
-  testthat::local_mocked_bindings(
-    "p_randomInt" = \(...) "X",
-    .package = "shiny"
-  )
+  setup_ui_test()
 
   ui <- mod_plot_rates_box_ui("test")
 

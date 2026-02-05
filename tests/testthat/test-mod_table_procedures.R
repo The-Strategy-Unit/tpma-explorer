@@ -2,10 +2,7 @@ library(mockery)
 library(testthat)
 
 test_that("ui", {
-  testthat::local_mocked_bindings(
-    "p_randomInt" = \(...) "X",
-    .package = "shiny"
-  )
+  setup_ui_test()
 
   ui <- mod_table_procedures_ui("test")
 
@@ -44,15 +41,12 @@ test_that("it loads the procedures csv", {
 
 test_that("procedures_data", {
   # arrange
-  sample_inputs_data = list(
-    procedures = "procedures"
-  )
 
   # act
   shiny::testServer(
     mod_table_procedures_server,
     args = list(
-      inputs_data = reactiveVal(sample_inputs_data),
+      inputs_data = reactiveVal(inputs_data_sample),
       selected_provider = reactiveVal("R00"),
       selected_strategy = reactiveVal("strategy"),
       selected_year = reactiveVal(1)
@@ -69,10 +63,6 @@ test_that("procedures_data", {
 
 test_that("procedures_prepared", {
   # arrange
-  sample_inputs_data <- list(
-    procedures = "procedures"
-  )
-
   testthat::local_mocked_bindings(
     "read_csv" = \(...) "procedures_lookup",
     .package = "readr"
@@ -87,7 +77,7 @@ test_that("procedures_prepared", {
   shiny::testServer(
     mod_table_procedures_server,
     args = list(
-      inputs_data = reactiveVal(sample_inputs_data),
+      inputs_data = reactiveVal(inputs_data_sample),
       selected_provider = reactiveVal("R00"),
       selected_strategy = reactiveVal("strategy"),
       selected_year = reactiveVal(1)

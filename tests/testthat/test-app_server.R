@@ -1,40 +1,6 @@
 library(mockery)
 library(testthat)
 
-# nolint start
-inputs_data_sample <- list(
-  "age_sex" = NULL,
-  "diagnoses" = NULL,
-  "procedures" = NULL,
-  "rates" = tibble::tribble(
-    ~provider , ~strategy  , ~fyear , ~rate ,
-    "ABC"     , "strategy" ,      1 , 12.3  ,
-    "ABC"     , "strategy" ,      2 , 15.6
-  )
-)
-# nolint end
-
-setup_app_server_tests <- function(.env = parent.frame()) {
-  shiny::shinyOptions(cache = cachem::cache_mem())
-
-  mocks <- list(
-    mod_select_geography_server = mock(shiny::reactiveVal("nhp")),
-    mod_select_provider_server = mock(shiny::reactiveVal("ABC")),
-    mod_select_strategy_server = mock(shiny::reactiveVal("strategy")),
-    get_all_geo_data = mock(inputs_data_sample, cycle = TRUE),
-    mod_show_strategy_text_server = mock(),
-    mod_plot_rates_server = mock(),
-    mod_table_procedures_server = mock(),
-    mod_table_diagnoses_server = mock(),
-    mod_plot_age_sex_pyramid_server = mock(),
-    mod_plot_nee_server = mock()
-  )
-
-  do.call(testthat::local_mocked_bindings, c(mocks, .env = .env))
-
-  mocks
-}
-
 test_that("mod_select_geography", {
   # arrange
   mocks <- setup_app_server_tests()
@@ -99,7 +65,7 @@ test_that("selected_year (env var not set)", {
     {
       # assert
       withr::local_envvar("BASELINE_YEAR" = "")
-      expect_equal(selected_year(), 2)
+      expect_equal(selected_year(), 202324)
       expect_called(mocks$get_all_geo_data, 1)
       expect_args(mocks$get_all_geo_data, 1, "nhp")
     }
