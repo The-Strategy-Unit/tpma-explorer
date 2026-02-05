@@ -21,6 +21,12 @@ mod_select_strategy_ui <- function(id) {
   )
 }
 
+#' Get TPMAs for the drop down menu
+#'
+#' Reads the mitigators.json file and extracts the name and category (IP/OP/AE).
+#'
+#' @return A named list of data frames, where the names are the categories (IP/OP/AE)
+#' @noRd
 mod_select_strategy_get_strategies <- function() {
   strategies <- jsonlite::read_json(
     app_sys("app", "data", "mitigators.json"),

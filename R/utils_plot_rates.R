@@ -1,3 +1,12 @@
+#' Get Peers Lookup
+#'
+#' Reads the appropriate peers lookup file based on the selected geography.
+#'
+#' @param selected_geography Character. The selected geography, e.g. "nhp" or "la".
+#'
+#' @return A data.frame with provider codes and their corresponding peers.
+#'
+#' @export
 get_peers_lookup <- function(selected_geography) {
   filename <- switch(
     selected_geography,
