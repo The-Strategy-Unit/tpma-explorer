@@ -1,6 +1,6 @@
 test_that("entable_encounters (diagnoses)", {
   # arrange
-  set.seed(1)
+  withr::local_seed(1)
   df <- tibble::tribble(
     ~diagnosis_description, ~n, ~pcnt,
     "A", 100, 0.5,
@@ -18,7 +18,7 @@ test_that("entable_encounters (diagnoses)", {
 
 test_that("entable_encounters (procedures)", {
   # arrange
-  set.seed(1)
+  withr::local_seed(1)
   df <- tibble::tribble(
     ~procedures_description, ~n, ~pcnt,
     "A", 100, 0.5,

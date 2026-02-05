@@ -99,10 +99,9 @@ test_that("md_file_to_html returns NULL if file doesn't exist", {
 test_that("md_file_to_html reads valid file", {
   # arrange
   local_mocked_bindings(
-    "app_sys" = \(...) file.path(...)
+    "app_sys" = \(...) file.path(...),
+    "file.exists" = \(...) TRUE
   )
-
-  stub(md_file_to_html, "file.exists", TRUE)
 
   m1 <- mock("content")
   m2 <- mock("html")
