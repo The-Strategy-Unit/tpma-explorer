@@ -250,7 +250,6 @@ test_that("prepare_diagnoses_data handles unknown diagnosis codes", {
   )
 
   # assert
-  # Note: inner_join will drop rows without a match, so UNKNOWN won't be in result
   expect_equal(nrow(result), 2)
   expect_equal(
     result$diagnosis_description,
