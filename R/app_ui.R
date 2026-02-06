@@ -11,6 +11,8 @@ app_ui <- function(request) {
     bslib::nav_panel(
       id = "nav_panel_viz",
       title = "Visualisations",
+      icon = bsicons::bs_icon("graph-up"),
+
       bslib::card(
         bslib::card_header(
           class = "bg-warning",
@@ -37,6 +39,8 @@ app_ui <- function(request) {
     bslib::nav_panel(
       id = "nav_panel_info",
       title = "Information",
+      icon = bsicons::bs_icon("book"),
+
       bslib::layout_columns(
         bslib::layout_columns(
           col_widths = c(12, 12),
@@ -47,13 +51,13 @@ app_ui <- function(request) {
           ),
           bslib::card(
             id = "card_data",
-            bslib::card_header("Definitions"),
-            md_file_to_html("app", "text", "info-definitions.md")
+            bslib::card_header("Data"),
+            md_file_to_html("app", "text", "info-data.md")
           ),
           bslib::card(
             id = "card_data",
-            bslib::card_header("Data"),
-            md_file_to_html("app", "text", "info-data.md")
+            bslib::card_header("Definitions"),
+            md_file_to_html("app", "text", "info-definitions.md")
           )
         ),
         bslib::layout_columns(
@@ -67,6 +71,11 @@ app_ui <- function(request) {
             id = "card_how_to_use",
             bslib::card_header("Interface"),
             md_file_to_html("app", "text", "info-interface.md")
+          ),
+          bslib::card(
+            id = "card_author",
+            bslib::card_header("Author"),
+            md_file_to_html("app", "text", "info-author.md")
           )
         )
       )
@@ -86,6 +95,7 @@ app_ui <- function(request) {
     sidebar = bslib::sidebar(
       bslib::accordion(
         id = "sidebar_accordion",
+
         open = FALSE,
         multiple = TRUE,
         bslib::accordion_panel(
@@ -95,7 +105,7 @@ app_ui <- function(request) {
           mod_select_provider_ui("mod_select_provider"),
         ),
         bslib::accordion_panel(
-          title = "Types of Potentially Mitigatable Activity (TPMAs)",
+          title = "Types of Potentially-Mitigatable Activity (TPMAs)",
           icon = bsicons::bs_icon("hospital"),
           mod_select_strategy_ui("mod_select_strategy")
         )

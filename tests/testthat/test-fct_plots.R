@@ -37,7 +37,7 @@ test_that("plot_rates_trend", {
 
 test_that("plot_rates_funnel", {
   # arrange
-  set.seed(1)
+  withr::local_seed(1)
   # nolint start
   rates_funnel_data <- tibble::tribble(
     ~rate , ~denominator , ~national_rate , ~is_peer , ~provider ,

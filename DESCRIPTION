@@ -6,7 +6,7 @@ Authors@R: c(
     person("Tom", "Jemmett", , "thomas.jemmett@nhs.net", role = "aut")
   )
 Description: A Shiny-app-in-a-package to explore data related to Types of
-    Potentially Mitigatable Activity (TPMAs).
+    Potentially-Mitigatable Activity (TPMAs).
 License: MIT + file LICENSE
 URL: https://github.com/The-Strategy-Unit/tpma-explorer
 BugReports: https://github.com/The-Strategy-Unit/tpma-explorer/issues

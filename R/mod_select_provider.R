@@ -5,7 +5,13 @@ mod_select_provider_ui <- function(id) {
   ns <- shiny::NS(id)
   shiny::selectInput(
     ns("provider_select"),
-    "Choose a statistical unit:",
+    label = bslib::tooltip(
+      trigger = list(
+        "Choose a statistical unit",
+        bsicons::bs_icon("info-circle")
+      ),
+      md_file_to_html("app", "text", "sidebar-selections.md"),
+    ),
     choices = NULL
   )
 }
@@ -34,21 +40,12 @@ mod_select_provider_server <- function(id, selected_geography) {
       shiny::bindEvent(selected_geography())
 
     shiny::observe({
-      sg <- shiny::req(selected_geography())
       providers <- shiny::req(providers())
-
       provider_choices <- purrr::set_names(names(providers), providers)
-
-      provider_label <- switch(
-        sg,
-        "nhp" = "Choose a trust:",
-        "la" = "Choose an LA:"
-      )
 
       shiny::updateSelectInput(
         session,
         "provider_select",
-        label = provider_label,
         choices = provider_choices
       )
     })

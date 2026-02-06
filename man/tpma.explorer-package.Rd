@@ -6,7 +6,7 @@
 \alias{tpma.explorer-package}
 \title{tpma.explorer: Explore TPMA Data}
 \description{
-A Shiny-app-in-a-package to explore data related to Types of Potentially Mitigatable Activity (TPMAs).
+A Shiny-app-in-a-package to explore data related to Types of Potentially-Mitigatable Activity (TPMAs).
 }
 \seealso{
 Useful links:
