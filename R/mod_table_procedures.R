@@ -8,7 +8,7 @@ mod_table_procedures_ui <- function(id) {
       "Procedures summary",
       bslib::tooltip(
         bsicons::bs_icon("info-circle"),
-        md_file_to_html("app", "text", "viz-procedures.md"),
+        md_file_to_html("app", "text", "viz-tooltip-procedures.md"),
         placement = "right"
       )
     ),
