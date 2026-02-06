@@ -95,7 +95,6 @@ app_ui <- function(request) {
     sidebar = bslib::sidebar(
       bslib::accordion(
         id = "sidebar_accordion",
-
         open = FALSE,
         multiple = TRUE,
         bslib::accordion_panel(
@@ -109,6 +108,11 @@ app_ui <- function(request) {
           icon = bsicons::bs_icon("hospital"),
           mod_select_strategy_ui("mod_select_strategy")
         )
+      ),
+      shiny::bookmarkButton(
+        label = "Bookmark",
+        title = "Bookmark your selections and get a URL for sharing",
+        icon = bsicons::bs_icon("bookmark"),
       )
     )
   )

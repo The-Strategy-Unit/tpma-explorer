@@ -87,6 +87,15 @@ mod_select_strategy_server <- function(id) {
       )
     })
 
+    shiny::onRestored(function(state) {
+      # Enforce loading of selection when restoring from a bookmark
+      shiny::updateSelectInput(
+        session,
+        "strategy_select",
+        selected = state$input$strategy_select
+      )
+    })
+
     shiny::reactive(input$strategy_select)
   })
 }
