@@ -6,8 +6,6 @@ mod_plot_rates_ui <- function(id) {
   # Rates plots share a y-axis, so don't wrap
   bslib::layout_columns(
     col_widths = c(5, 5, 2),
-    fill = FALSE,
-    fillable = FALSE,
     mod_plot_rates_trend_ui(ns("mod_plot_rates_trend")),
     mod_plot_rates_funnel_ui(ns("mod_plot_rates_funnel")),
     mod_plot_rates_box_ui(ns("mod_plot_rates_box"))
