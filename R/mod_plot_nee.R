@@ -44,12 +44,13 @@ mod_plot_nee_server <- function(id, selected_strategy) {
       if (has_nee) {
         nee_aggregate <- paste0(
           "They predicted that a mean of <b>",
-          round(df$mean),
-          "%</b> (with an 80% prediction interval from <b>",
-          round(df$percentile90),
+          round(100 - df$mean),
+          "%</b>  of this type of activity could be mitigated, ",
+          "with an 80% prediction interval from <b>",
+          round(100 - df$percentile10),
           "%</b> to <b>",
-          round(df$percentile10),
-          "%</b>) of this type of activity could be mitigated."
+          round(100 - df$percentile90),
+          "%</b>."
         )
       }
 
