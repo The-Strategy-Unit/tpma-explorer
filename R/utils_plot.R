@@ -25,7 +25,6 @@ generate_rates_baseline_data <- function(
   peers <- isolate_provider_peers(provider, peers_lookup)
 
   rates |>
-    # dplyr::filter(.data$fyear == .env$selected_year) |>
     dplyr::mutate(
       is_peer = dplyr::case_when(
         .data$provider == .env$provider ~ FALSE,

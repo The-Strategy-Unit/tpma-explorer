@@ -57,14 +57,8 @@ mod_plot_rates_server <- function(
       peers_lookup <- shiny::req(peers_lookup())
       provider <- shiny::req(selected_provider())
       strategy <- shiny::req(selected_strategy())
-      # year <- shiny::req(selected_year())
 
-      generate_rates_baseline_data(
-        df,
-        provider,
-        peers_lookup #,
-        # year
-      )
+      generate_rates_baseline_data(df, provider, peers_lookup)
     })
 
     rates_baseline_data <- shiny::reactive({
