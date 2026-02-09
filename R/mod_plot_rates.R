@@ -54,24 +54,23 @@ mod_plot_rates_server <- function(
 
     rates_trend_data <- shiny::reactive({
       df <- shiny::req(rates_data())
-      provider <- shiny::req(selected_provider())
-
-      get_rates_trend_data(df, provider)
-    })
-
-    rates_baseline_data <- shiny::reactive({
-      df <- shiny::req(rates_data())
       peers_lookup <- shiny::req(peers_lookup())
       provider <- shiny::req(selected_provider())
       strategy <- shiny::req(selected_strategy())
-      year <- shiny::req(selected_year())
+      # year <- shiny::req(selected_year())
 
       generate_rates_baseline_data(
         df,
         provider,
-        peers_lookup,
-        year
+        peers_lookup #,
+        # year
       )
+    })
+
+    rates_baseline_data <- shiny::reactive({
+      df <- shiny::req(rates_trend_data())
+      year <- year <- shiny::req(selected_year())
+      df |> dplyr::filter(.data[["fyear"]] == .env[["year"]])
     })
 
     rates_funnel_calculations <- shiny::reactive({
