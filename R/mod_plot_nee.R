@@ -4,22 +4,12 @@
 mod_plot_nee_ui <- function(id) {
   ns <- shiny::NS(id)
   bslib::card(
-    bslib::card_header(
-      "National Elicitation Exercise (NEE) estimate",
-      bslib::tooltip(
-        bsicons::bs_icon("info-circle"),
-        md_file_to_html("app", "text", "viz-tooltip-nee.md"),
-        placement = "right"
-      )
-    ),
+    fill = FALSE,
+    bslib::card_header("National Elicitation Exercise (NEE) estimate"),
     bslib::card_body(
       md_file_to_html("app", "text", "viz-nee.md"),
-      shinycssloaders::withSpinner(shiny::textOutput(ns("nee_text"))),
-      shinycssloaders::withSpinner(
-        shiny::plotOutput(ns("nee_plot"), height = "100px")
-      )
-    ),
-    full_screen = TRUE
+      shinycssloaders::withSpinner(shiny::htmlOutput(ns("nee_text")))
+    )
   )
 }
 
@@ -47,28 +37,23 @@ mod_plot_nee_server <- function(id, selected_strategy) {
     output$nee_text <- shiny::renderText({
       df <- selected_nee_data()
 
-      nee_aggregate <- "This TPMA was not part of the NEE. No estimate is available."
+      nee_aggregate <-
+        "This TPMA was not part of that exercise. No estimate is available."
 
       has_nee <- nrow(df) > 0
       if (has_nee) {
         nee_aggregate <- paste0(
-          "The mean prediction for this TPMA was ",
+          "They predicted that a mean of <b>",
           round(df$mean),
-          "%, with an 80% prediction interval from ",
+          "%</b> (with an 80% prediction interval from <b>",
           round(df$percentile90),
-          "% to ",
+          "%</b> to <b>",
           round(df$percentile10),
-          "%."
+          "%</b>) of this type of activity could be mitigated."
         )
       }
 
       nee_aggregate
-    })
-
-    output$nee_plot <- shiny::renderPlot({
-      df <- selected_nee_data()
-      shiny::req(nrow(df) > 0)
-      plot_nee(df)
     })
   })
 }

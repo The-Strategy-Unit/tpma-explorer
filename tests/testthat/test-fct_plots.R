@@ -11,7 +11,7 @@ test_that("plot_rates_trend", {
     202021 , 0.07  ,
     202122 , 0.06  ,
     202223 , 0.05  ,
-    202324 , 0.04  
+    202324 , 0.04
   )
   # nolint end
 
@@ -49,7 +49,7 @@ test_that("plot_rates_funnel", {
     0.07  ,         2000 ,           0.08 , NA       , "f"       ,
     0.06  ,         2200 ,           0.08 , NA       , "g"       ,
     0.05  ,         2400 ,           0.08 , NA       , "h"       ,
-    0.04  ,         2600 ,           0.08 , TRUE     , "i"       
+    0.04  ,         2600 ,           0.08 , TRUE     , "i"
   )
   # nolint end
 
@@ -82,7 +82,7 @@ test_that("plot_rates_box", {
     0.07  ,         2000 ,           0.08 , NA       , "f"       ,
     0.06  ,         2200 ,           0.08 , NA       , "g"       ,
     0.05  ,         2400 ,           0.08 , NA       , "h"       ,
-    0.04  ,         2600 ,           0.08 , TRUE     , "i"       
+    0.04  ,         2600 ,           0.08 , TRUE     , "i"
   )
   # nolint end
 
@@ -183,18 +183,4 @@ test_that("plot_age_sex_pyramid", {
 
   # assert
   vdiffr::expect_doppelganger("plot_age_sex_pyramid", actual)
-})
-
-test_that("plot_nee", {
-  # arrange
-  nee_data <- tibble::tribble(
-    ~strategy, ~percentile10, ~mean, ~percentile90,
-    "Strategy A", 20, 50, 80
-  )
-
-  # act
-  actual <- plot_nee(nee_data)
-
-  # assert
-  vdiffr::expect_doppelganger("plot_nee", actual)
 })
