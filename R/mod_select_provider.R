@@ -50,6 +50,15 @@ mod_select_provider_server <- function(id, selected_geography) {
       )
     })
 
+    shiny::onRestored(function(state) {
+      # Enforce loading of selection when restoring from a bookmark
+      shiny::updateSelectInput(
+        session,
+        "provider_select",
+        selected = state$input$provider_select
+      )
+    })
+
     shiny::reactive(input$provider_select)
   })
 }
