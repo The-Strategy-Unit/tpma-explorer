@@ -4,18 +4,12 @@
 mod_plot_nee_ui <- function(id) {
   ns <- shiny::NS(id)
   bslib::card(
-    bslib::card_header(
-      "National Elicitation Exercise (NEE) estimate",
-      bslib::tooltip(
-        bsicons::bs_icon("info-circle"),
-        md_file_to_html("app", "text", "viz-nee.md"),
-        placement = "right"
-      )
-    ),
+    fill = FALSE,
+    bslib::card_header("National Elicitation Exercise (NEE) estimate"),
     bslib::card_body(
-      shinycssloaders::withSpinner(shiny::plotOutput(ns("nee")))
-    ),
-    full_screen = TRUE
+      md_file_to_html("app", "text", "viz-nee.md"),
+      shinycssloaders::withSpinner(shiny::htmlOutput(ns("nee_text")))
+    )
   )
 }
 
@@ -40,21 +34,27 @@ mod_plot_nee_server <- function(id, selected_strategy) {
         dplyr::filter(.data$param_name == strat)
     })
 
-    output$nee <- shiny::renderPlot({
+    output$nee_text <- shiny::renderText({
       df <- selected_nee_data()
 
-      shiny::validate(
-        shiny::need(
-          nrow(df) > 0,
-          paste(
-            "This type of potentially-mitigatable activity (TPMA) was not part",
-            "of the National Elicitation Exercise (NEE), so a",
-            "nationally-determined estimate is not available."
-          )
-        )
-      )
+      nee_aggregate <-
+        "This TPMA was not part of that exercise. No estimate is available."
 
-      plot_nee(df)
+      has_nee <- nrow(df) > 0
+      if (has_nee) {
+        nee_aggregate <- paste0(
+          "They predicted that a mean of <b>",
+          round(100 - df$mean),
+          "%</b>  of this type of activity could be mitigated, ",
+          "with an 80% prediction interval from <b>",
+          round(100 - df$percentile10),
+          "%</b> to <b>",
+          round(100 - df$percentile90),
+          "%</b>."
+        )
+      }
+
+      nee_aggregate
     })
   })
 }

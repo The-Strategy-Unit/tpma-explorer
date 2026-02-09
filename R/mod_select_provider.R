@@ -10,7 +10,7 @@ mod_select_provider_ui <- function(id) {
         "Choose a statistical unit",
         bsicons::bs_icon("info-circle")
       ),
-      md_file_to_html("app", "text", "sidebar-selections.md"),
+      md_file_to_html("app", "text", "sidebar-tooltip-selections.md"),
     ),
     choices = NULL
   )

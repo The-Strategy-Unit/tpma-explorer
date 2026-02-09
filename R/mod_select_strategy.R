@@ -11,7 +11,7 @@ mod_select_strategy_ui <- function(id) {
           "Filter by activity type",
           bsicons::bs_icon("info-circle")
         ),
-        md_file_to_html("app", "text", "sidebar-selections.md"),
+        md_file_to_html("app", "text", "sidebar-tooltip-selections.md"),
       ),
       choices = c(
         "Inpatients" = "ip",
@@ -26,7 +26,7 @@ mod_select_strategy_ui <- function(id) {
           "Choose a TPMA",
           bsicons::bs_icon("info-circle")
         ),
-        md_file_to_html("app", "text", "sidebar-selections.md"),
+        md_file_to_html("app", "text", "sidebar-tooltip-selections.md"),
       ),
       choices = NULL
     )

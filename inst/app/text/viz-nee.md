@@ -1,4 +1,1 @@
-Summarised expert predictions from the National Elicitation Exercise (NEE).
-The dot is the mean value and the horizontal bar is the 10% to 90% interval.
-Predictions were for 2039/40.
-Not all TPMAs were part of that exercise.
+Subject-matter experts were invited to provide national forecasts about future hospital activity (2039/40) in [an evidence-based elicitation exercise](https://doi.org/10.1136/bmjopen-2024-084632).

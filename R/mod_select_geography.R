@@ -10,7 +10,7 @@ mod_select_geography_ui <- function(id) {
         "Filter by geography",
         bsicons::bs_icon("info-circle")
       ),
-      md_file_to_html("app", "text", "sidebar-selections.md"),
+      md_file_to_html("app", "text", "sidebar-tooltip-selections.md"),
     ),
     choices = c(
       "NHS provider trusts" = "nhp",

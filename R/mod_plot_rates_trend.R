@@ -8,7 +8,7 @@ mod_plot_rates_trend_ui <- function(id) {
       "Rates Trend",
       bslib::tooltip(
         bsicons::bs_icon("info-circle"),
-        md_file_to_html("app", "text", "viz-trend.md"),
+        md_file_to_html("app", "text", "viz-tooltip-trend.md"),
         placement = "right"
       )
     ),
