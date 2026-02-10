@@ -18,12 +18,26 @@ plot_rates_trend <- function(
 ) {
   rates_trend_data |>
     ggplot2::ggplot(
-      ggplot2::aes(as.factor(.data[["fyear"]]), .data[["rate"]], group = 1)
+      ggplot2::aes(
+        x = as.factor(.data[["fyear"]]),
+        y = .data[["rate"]],
+        group = .data[["provider"]]
+      )
     ) +
-    ggplot2::geom_line() +
-    ggplot2::geom_point(
-      data = \(.x) dplyr::filter(.x, .data[["fyear"]] == selected_year),
-      colour = "red"
+    ggplot2::geom_line(
+      data = \(.x) dplyr::filter(.x, !is.na(.data[["is_peer"]])),
+      ggplot2::aes(
+        colour = .data[["is_peer"]],
+        alpha = .data[["is_peer"]]
+      )
+    ) +
+    ggplot2::scale_colour_manual(
+      values = c("TRUE" = "black", "FALSE" = "red"),
+      na.value = "black"
+    ) +
+    ggplot2::scale_alpha_manual(
+      values = c("TRUE" = 0.4, "FALSE" = 1),
+      na.value = 0.1
     ) +
     ggplot2::scale_y_continuous(name = y_axis_title, labels = y_labels) +
     ggplot2::coord_cartesian(ylim = y_axis_limits) +
@@ -57,47 +71,47 @@ plot_rates_funnel <- function(
   cl3_line_type <- "dashed"
   cl3_colour <- "black"
 
-  plot_x_range <- c(0, max(rates_funnel_data$denominator) * 1.05)
+  plot_x_range <- c(0, max(rates_funnel_data[["denominator"]]) * 1.05)
   function_x_range <- plot_x_range * 1.2
 
   rates_funnel_data |>
-    ggplot2::ggplot(ggplot2::aes(.data$denominator, .data$rate)) +
+    ggplot2::ggplot(ggplot2::aes(.data[["denominator"]], .data[["rate"]])) +
     ggplot2::geom_hline(
-      yintercept = funnel_calculations$cl,
+      yintercept = funnel_calculations[["cl"]],
       colour = cl_colour,
       linetype = cl_line_type
     ) +
     ggplot2::geom_function(
-      fun = funnel_calculations$lcl2,
+      fun = funnel_calculations[["lcl2"]],
       colour = cl2_colour,
       linetype = cl2_line_type,
       xlim = function_x_range
     ) +
     ggplot2::geom_function(
-      fun = funnel_calculations$ucl2,
+      fun = funnel_calculations[["ucl2"]],
       colour = cl2_colour,
       linetype = cl2_line_type,
       xlim = function_x_range
     ) +
     ggplot2::geom_function(
-      fun = funnel_calculations$lcl3,
+      fun = funnel_calculations[["lcl3"]],
       colour = cl3_colour,
       linetype = cl3_line_type,
       xlim = function_x_range
     ) +
     ggplot2::geom_function(
-      fun = funnel_calculations$ucl3,
+      fun = funnel_calculations[["ucl3"]],
       colour = cl3_colour,
       linetype = cl3_line_type,
       xlim = function_x_range
     ) +
     ggplot2::geom_point(ggplot2::aes(
-      colour = .data$is_peer,
-      alpha = .data$is_peer
+      colour = .data[["is_peer"]],
+      alpha = .data[["is_peer"]]
     )) +
     ggrepel::geom_text_repel(
-      data = dplyr::filter(rates_funnel_data, !is.na(.data$is_peer)),
-      ggplot2::aes(label = .data$provider, colour = .data$is_peer),
+      data = dplyr::filter(rates_funnel_data, !is.na(.data[["is_peer"]])),
+      ggplot2::aes(label = .data[["provider"]], colour = .data[["is_peer"]]),
       max.overlaps = Inf # include all labels
     ) +
     ggplot2::scale_colour_manual(
@@ -105,8 +119,8 @@ plot_rates_funnel <- function(
       na.value = "black"
     ) +
     ggplot2::scale_alpha_manual(
-      values = c("TRUE" = 1, "FALSE" = 1),
-      na.value = 0.2
+      values = c("TRUE" = 0.4, "FALSE" = 1),
+      na.value = 0.1
     ) +
     ggplot2::theme(legend.position = "none") +
     ggplot2::scale_x_continuous(labels = scales::comma_format()) +
@@ -124,14 +138,14 @@ plot_rates_funnel <- function(
 #' @export
 plot_rates_box <- function(rates_box_data, y_axis_limits) {
   rates_box_data |>
-    ggplot2::ggplot(ggplot2::aes(x = "", y = .data$rate)) +
+    ggplot2::ggplot(ggplot2::aes(x = "", y = .data[["rate"]])) +
     ggplot2::geom_boxplot(alpha = 0.2, outlier.shape = NA) +
     ggbeeswarm::geom_quasirandom(
       # just show peers/selected provider
-      data = \(.x) dplyr::filter(.x, !is.na(.data$is_peer)),
+      data = \(.x) dplyr::filter(.x, !is.na(.data[["is_peer"]])),
       ggplot2::aes(
-        colour = .data$is_peer,
-        alpha = .data$is_peer
+        colour = .data[["is_peer"]],
+        alpha = .data[["is_peer"]]
       )
     ) +
     ggplot2::scale_colour_manual(
@@ -139,8 +153,8 @@ plot_rates_box <- function(rates_box_data, y_axis_limits) {
       na.value = "black"
     ) +
     ggplot2::scale_alpha_manual(
-      values = c("TRUE" = 1, "FALSE" = 1),
-      na.value = 0.2
+      values = c("TRUE" = 0.4, "FALSE" = 1),
+      na.value = 0.1
     ) +
     ggplot2::coord_cartesian(ylim = y_axis_limits) +
     ggplot2::labs(x = "") +
