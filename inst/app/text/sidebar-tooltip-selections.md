@@ -1,2 +1,2 @@
-Choose an option from the dropdown.
-Delete the current selection and start typing to begin a search.
+To search: delete the selection and start typing.
+You can widen this sidebar or collapse sections.
