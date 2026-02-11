@@ -85,7 +85,7 @@ mod_plot_rates_server <- function(
       }
 
       providers_lookup |>
-        dplyr::mutate(provider_label = stringr::str_squish(provider_label))
+        dplyr::mutate(provider_label = stringr::str_squish(.data$provider_label))
     }) |>
       shiny::bindEvent(selected_geography())
 
