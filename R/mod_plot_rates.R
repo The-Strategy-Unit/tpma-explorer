@@ -79,6 +79,7 @@ mod_plot_rates_server <- function(
       }
 
       if (selected_geography == "nhp") {
+        # For now, use the trust code as its label
         providers_lookup <- providers_lookup |>
           dplyr::mutate(provider_label = .data$provider)
       }
