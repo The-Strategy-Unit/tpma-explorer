@@ -14,17 +14,20 @@ isolate_provider_peers <- function(provider, peers) {
 #' Generate Rates Baseline Data
 #' @param rates A data.frame. Rates data read from Azure.
 #' @param provider Character. Provider code, e.g. `"RCF"`.
+#' @param providers_lookup Dataframe. A lookup from a provider code to its name.
 #' @param peers_lookup Dataframe. A lookup from a provider to its peers.
 #' @return A data.frame.
 #' @export
 generate_rates_baseline_data <- function(
   rates,
   provider,
+  providers_lookup,
   peers_lookup
 ) {
   peers <- isolate_provider_peers(provider, peers_lookup)
 
   rates |>
+    dplyr::inner_join(providers_lookup, by = "provider") |> # adds plotting label
     dplyr::mutate(
       is_peer = dplyr::case_when(
         .data$provider == .env$provider ~ FALSE,

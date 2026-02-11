@@ -111,7 +111,7 @@ plot_rates_funnel <- function(
     )) +
     ggrepel::geom_text_repel(
       data = dplyr::filter(rates_funnel_data, !is.na(.data[["is_peer"]])),
-      ggplot2::aes(label = .data[["provider"]], colour = .data[["is_peer"]]),
+      ggplot2::aes(label = .data[["provider_label"]], colour = .data[["is_peer"]]),
       max.overlaps = Inf # include all labels
     ) +
     ggplot2::scale_colour_manual(
