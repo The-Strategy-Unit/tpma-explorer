@@ -39,7 +39,10 @@ plot_rates_trend <- function(
       values = c("TRUE" = 0.4, "FALSE" = 1),
       na.value = 0.1
     ) +
-    ggplot2::scale_y_continuous(name = y_axis_title, labels = y_labels) +
+    ggplot2::scale_y_continuous(
+      name = stringr::str_wrap(y_axis_title, width = 40),
+      labels = y_labels
+    ) +
     ggplot2::coord_cartesian(ylim = y_axis_limits) +
     ggplot2::scale_x_discrete(
       labels = \(.x) {
