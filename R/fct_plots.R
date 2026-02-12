@@ -42,7 +42,9 @@ plot_rates_trend <- function(
     ggplot2::scale_y_continuous(name = y_axis_title, labels = y_labels) +
     ggplot2::coord_cartesian(ylim = y_axis_limits) +
     ggplot2::scale_x_discrete(
-      labels = \(.x) stringr::str_replace(.x, "^(\\d{4})(\\d{2})$", "\\1/\\2")
+      labels = \(.x) {
+        stringr::str_replace(.x, "^\\d{2}(\\d{2})(\\d{2})$", "\\1/\\2") # 23/24
+      }
     ) +
     ggplot2::labs(x = x_axis_title) +
     theme_rates()
@@ -161,33 +163,10 @@ plot_rates_box <- function(rates_box_data, y_axis_limits) {
     theme_rates(has_y_axis = FALSE)
 }
 
-#' A 'ggplot2' Theme for Rates Plots
-#' @param has_y_axis Logical. Should the y-axis, ticks and labels be shown?
-#'     Default `TRUE`.
-#' @return A 'ggplot2' theme.
-#' @export
-theme_rates <- function(has_y_axis = TRUE) {
-  theme <- ggplot2::theme(
-    legend.position = "none",
-    panel.background = ggplot2::element_blank(),
-    panel.grid.major.y = ggplot2::element_line(
-      "#9d928a",
-      linetype = "dotted"
-    )
-  )
-
-  if (!has_y_axis) {
-    theme <- theme +
-      ggplot2::theme(
-        axis.ticks.x = ggplot2::element_blank(),
-        axis.ticks.y = ggplot2::element_blank(),
-        axis.text.y = ggplot2::element_blank(),
-        axis.title.y = ggplot2::element_blank()
-      )
-  }
-
-  theme
-}
+theme_all <- ggplot2::theme(
+  legend.position = "none",
+  panel.background = ggplot2::element_blank()
+)
 
 #' Plot Age-Sex Pyramid
 #' @param age_sex_data A data.frame. Age-sex data read from Azure and processed
@@ -215,8 +194,57 @@ plot_age_sex_pyramid <- function(age_sex_data) {
       colour = ggplot2::guide_legend(NULL)
     ) +
     ggplot2::labs(x = NULL, y = NULL) +
+    theme_base() +
+    ggplot2::theme(legend.position = "bottom")
+}
+
+#' A 'ggplot2' Theme for All Plots
+#' @param base_size Numeric. Size of base text from which other sizes can be
+#'     calculated.
+#' @return A 'ggplot2' theme.
+#' @export
+theme_base <- function(base_size = 16) {
+  ggplot2::theme_minimal(base_size = base_size) +
     ggplot2::theme(
-      legend.position = "bottom",
-      panel.background = ggplot2::element_blank()
+      axis.title = ggplot2::element_text(size = base_size),
+      axis.text = ggplot2::element_text(size = base_size * 0.9),
+      legend.text = ggplot2::element_text(size = base_size * 0.9),
+      panel.background = ggplot2::element_blank(),
+      panel.grid = ggplot2::element_blank(),
+      panel.grid.major.x = ggplot2::element_line(
+        "#9d928a",
+        linetype = "dotted"
+      )
     )
+}
+
+#' A 'ggplot2' Theme for Rates Plots
+#' @param has_y_axis Logical. Should the y-axis, ticks and labels be shown?
+#'     Default `TRUE`.
+#' @param base_size Numeric. Size of base text from which other sizes can be
+#'     calculated.
+#' @return A 'ggplot2' theme.
+#' @export
+theme_rates <- function(has_y_axis = TRUE, base_size = 16) {
+  theme <- theme_base(base_size) +
+    ggplot2::theme(
+      legend.position = "none",
+      panel.grid.major.x = ggplot2::element_blank(),
+      panel.grid.major.y = ggplot2::element_line(
+        "#9d928a",
+        linetype = "dotted"
+      )
+    )
+
+  if (!has_y_axis) {
+    theme <- theme +
+      ggplot2::theme(
+        axis.ticks.x = ggplot2::element_blank(),
+        axis.ticks.y = ggplot2::element_blank(),
+        axis.text.y = ggplot2::element_blank(),
+        axis.title.y = ggplot2::element_blank()
+      )
+  }
+
+  theme
 }
