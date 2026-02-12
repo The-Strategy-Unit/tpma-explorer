@@ -52,13 +52,51 @@ mod_plot_rates_server <- function(
       )
     })
 
+    providers_lookup <- shiny::reactive({
+      selected_geography <- shiny::req(selected_geography())
+      filename <- switch(
+        selected_geography,
+        "nhp" = "nhp-datasets.json",
+        "la" = "la-datasets.json"
+      )
+
+      shiny::req(filename)
+      providers_lookup <- jsonlite::read_json(
+        app_sys("app", "data", filename),
+        simplify_vector = TRUE
+      ) |>
+        tibble::enframe("provider", "provider_label") |> # label for plotting
+        tidyr::unnest(.data$provider_label)
+
+      if (selected_geography == "la") {
+        providers_lookup <- providers_lookup |>
+          dplyr::mutate(
+            provider_label = stringr::str_remove(
+              .data$provider_label,
+              " \\(\\w{1}\\d{8}\\)$" # e.g. remove ' (E06000014)' from the end
+            )
+          )
+      }
+
+      if (selected_geography == "nhp") {
+        # For now, use the trust code as its label
+        providers_lookup <- providers_lookup |>
+          dplyr::mutate(provider_label = .data$provider)
+      }
+
+      providers_lookup |>
+        dplyr::mutate(provider_label = stringr::str_squish(.data$provider_label))
+    }) |>
+      shiny::bindEvent(selected_geography())
+
     rates_trend_data <- shiny::reactive({
       df <- shiny::req(rates_data())
+      providers_lookup <- shiny::req(providers_lookup())
       peers_lookup <- shiny::req(peers_lookup())
       provider <- shiny::req(selected_provider())
       strategy <- shiny::req(selected_strategy())
 
-      generate_rates_baseline_data(df, provider, peers_lookup)
+      generate_rates_baseline_data(df, provider, providers_lookup, peers_lookup)
     })
 
     rates_baseline_data <- shiny::reactive({
