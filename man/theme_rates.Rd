@@ -4,11 +4,14 @@
 \alias{theme_rates}
 \title{A 'ggplot2' Theme for Rates Plots}
 \usage{
-theme_rates(has_y_axis = TRUE)
+theme_rates(has_y_axis = TRUE, base_size = 16)
 }
 \arguments{
 \item{has_y_axis}{Logical. Should the y-axis, ticks and labels be shown?
 Default \code{TRUE}.}
+
+\item{base_size}{Numeric. Size of base text from which other sizes can be
+calculated.}
 }
 \value{
 A 'ggplot2' theme.
