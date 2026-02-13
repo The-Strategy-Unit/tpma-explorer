@@ -6,6 +6,7 @@
 names_lkup_resource <-
   "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/LAD_APR_2023_UK_NC/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson"
 
+# Consider pagination in future if required
 names_lkup_resp <- names_lkup_resource |>
   httr2::request() |>
   httr2::req_perform() |>
