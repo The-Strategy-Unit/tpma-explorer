@@ -1,11 +1,12 @@
-# Prepare raw code/name lookup ----
+# Prepare raw code/name lookup (2023) ----
 
 # Data source from the ONS Open Geography Portal:
-#   https://geoportal.statistics.gov.uk/datasets/ons::local-authority-districts-april-2025-names-and-codes-in-the-uk-v2/about
+#   https://geoportal.statistics.gov.uk/datasets/ons::local-authority-districts-april-2023-names-and-codes-in-the-uk/about
 
 names_lkup_resource <-
-  "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/LAD_APR_2025_UK_NC_v2/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson"
+  "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/LAD_APR_2023_UK_NC/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson"
 
+# Consider pagination in future if required
 names_lkup_resp <- names_lkup_resource |>
   httr2::request() |>
   httr2::req_perform() |>
@@ -15,8 +16,8 @@ names_lkup <- purrr::map(
   names_lkup_resp[["features"]],
   \(la) {
     props <- la[["properties"]]
-    cd <- props[["LAD25CD"]]
-    nm <- glue::glue("{props[['LAD25NM']]} ({cd})")
+    cd <- props[["LAD23CD"]]
+    nm <- glue::glue("{props[['LAD23NM']]} ({cd})")
     setNames(nm, cd)
   }
 ) |>
@@ -32,7 +33,7 @@ jsonlite::write_json(
   pretty = TRUE
 )
 
-# Prepare raw neighbours data ----
+# Prepare raw neighbours data (2025) ----
 
 # Download manually the file from the ONS:
 #   https://www.ons.gov.uk/peoplepopulationandcommunity/healthandsocialcare/healthandwellbeing/adhocs/3048statisticalnearestneighboursforenglishuppertierandlowertierlocalauthorities
