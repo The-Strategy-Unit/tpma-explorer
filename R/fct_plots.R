@@ -1,11 +1,12 @@
 #' Plot Rates Trend Over Time
 #' @param rates_trend_data A data.frame. Rates data read in from Azure, filtered
 #'     for a given provider and strategy, and arranged by year.
-#' @param selected_year Integer. Selected year in the form `202324`.
+#' @param selected_year Integer scalar. Selected year in the form `202324`.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
-#' @param x_axis_title Character. Title for the x-axis.
-#' @param y_axis_title Character. Title for the y-axis.
+#' @param x_axis_title Character scalar. Title for the x-axis.
+#' @param y_axis_title Character scalar. Title for the y-axis.
 #' @param y_labels A function. Function to format y-axis labels.
+#' @param base_size Numeric scalar. Scale plot-elements sizes against this value.
 #' @return A 'ggplot2' object.
 #' @export
 plot_rates_trend <- function(
@@ -14,7 +15,8 @@ plot_rates_trend <- function(
   y_axis_limits,
   x_axis_title = "Financial year",
   y_axis_title,
-  y_labels
+  y_labels,
+  base_size = 16
 ) {
   rates_trend_data |>
     ggplot2::ggplot(
@@ -50,7 +52,7 @@ plot_rates_trend <- function(
       }
     ) +
     ggplot2::labs(x = x_axis_title) +
-    theme_rates()
+    theme_rates(base_size = base_size)
 }
 
 #' Plot Rates Funnel with Peers
@@ -59,13 +61,15 @@ plot_rates_trend <- function(
 #'     plot U-Prime lines.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
 #' @param x_axis_title Character. Title for the x-axis.
+#' @param base_size Numeric scalar. Scale plot-elements sizes against this value.
 #' @return A 'ggplot2' object.
 #' @export
 plot_rates_funnel <- function(
   rates_funnel_data,
   funnel_calculations,
   y_axis_limits,
-  x_axis_title
+  x_axis_title,
+  base_size = 16
 ) {
   cl_line_type <- "dashed"
   cl_colour <- "black"
@@ -117,6 +121,7 @@ plot_rates_funnel <- function(
     ggrepel::geom_text_repel(
       data = dplyr::filter(rates_funnel_data, !is.na(.data[["is_peer"]])),
       ggplot2::aes(label = .data[["provider_label"]], colour = .data[["is_peer"]]),
+      size = base_size / ggplot2::.pt, # scale with base size
       max.overlaps = Inf # include all labels
     ) +
     ggplot2::scale_colour_manual(
@@ -131,7 +136,7 @@ plot_rates_funnel <- function(
     ggplot2::scale_x_continuous(labels = scales::comma_format()) +
     ggplot2::coord_cartesian(xlim = plot_x_range, ylim = y_axis_limits) +
     ggplot2::labs(x = x_axis_title) +
-    theme_rates(has_y_axis = FALSE)
+    theme_rates(base_size = base_size, has_y_axis = FALSE)
 }
 
 #' Plot Rates Boxplot with Peers
@@ -139,9 +144,10 @@ plot_rates_funnel <- function(
 #'     processed with [generate_rates_baseline_data] to filter for provider,
 #'     strategy and year.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
+#' @param base_size Numeric scalar. Scale plot-elements sizes against this value.
 #' @return A 'ggplot2' object.
 #' @export
-plot_rates_box <- function(rates_box_data, y_axis_limits) {
+plot_rates_box <- function(rates_box_data, y_axis_limits, base_size = 16) {
   rates_box_data |>
     ggplot2::ggplot(ggplot2::aes(x = "", y = .data[["rate"]])) +
     ggplot2::geom_boxplot(alpha = 0.2, outlier.shape = NA) +
@@ -163,21 +169,17 @@ plot_rates_box <- function(rates_box_data, y_axis_limits) {
     ) +
     ggplot2::coord_cartesian(ylim = y_axis_limits) +
     ggplot2::labs(x = "") +
-    theme_rates(has_y_axis = FALSE)
+    theme_rates(has_y_axis = FALSE, base_size = base_size)
 }
-
-theme_all <- ggplot2::theme(
-  legend.position = "none",
-  panel.background = ggplot2::element_blank()
-)
 
 #' Plot Age-Sex Pyramid
 #' @param age_sex_data A data.frame. Age-sex data read from Azure and processed
 #'     with [prepare_age_sex_data]. Counts for each strategy split by provider,
 #'     year, age group and sex.
+#' @param base_size Numeric scalar. Scale plot-elements sizes against this value.
 #' @return A 'ggplot2' object.
 #' @export
-plot_age_sex_pyramid <- function(age_sex_data) {
+plot_age_sex_pyramid <- function(age_sex_data, base_size = 16) {
   age_sex_data |>
     ggplot2::ggplot(
       ggplot2::aes(
@@ -197,11 +199,11 @@ plot_age_sex_pyramid <- function(age_sex_data) {
       colour = ggplot2::guide_legend(NULL)
     ) +
     ggplot2::labs(x = NULL, y = NULL) +
-    theme_base() +
+    theme_base(base_size = base_size) +
     ggplot2::theme(legend.position = "bottom")
 }
 
-#' A 'ggplot2' Theme for All Plots
+#' A 'ggplot2' Base Theme for All Plots
 #' @param base_size Numeric. Size of base text from which other sizes can be
 #'     calculated.
 #' @return A 'ggplot2' theme.
@@ -228,7 +230,7 @@ theme_base <- function(base_size = 16) {
 #'     calculated.
 #' @return A 'ggplot2' theme.
 #' @export
-theme_rates <- function(has_y_axis = TRUE, base_size = 16) {
+theme_rates <- function(base_size = 16, has_y_axis = TRUE) {
   theme <- theme_base(base_size) +
     ggplot2::theme(
       legend.position = "none",
