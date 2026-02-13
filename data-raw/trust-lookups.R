@@ -1,5 +1,5 @@
-# Take existing, full json lookup at  filter for just the set of trusts for
-# which we have rates data.
+# Take existing, full json lookup and filter for just the set of trusts for
+# which we have rates data. Assumes existing lookup is the full trusts list.
 
 devtools::load_all(".")
 trusts_data <- get_all_geo_data("nhp")
