@@ -30,12 +30,12 @@ generate_rates_baseline_data <- function(
     dplyr::inner_join(providers_lookup, by = "provider") |> # adds plotting label
     dplyr::mutate(
       is_peer = dplyr::case_when(
-        .data$provider == .env$provider ~ FALSE,
-        .data$provider %in% .env$peers ~ TRUE,
-        .default = NA # if scheme is neither focal nor a peer
+        .data$provider == .env$provider ~ "self",
+        .data$provider %in% .env$peers ~ "peer",
+        .default = "other"
       )
     ) |>
-    dplyr::arrange(dplyr::desc(.data$is_peer)) # to plot focal scheme last
+    dplyr::arrange(.data$is_peer) # to plot focal scheme last
 }
 
 #' Generate Function to Calculate U-Prime values

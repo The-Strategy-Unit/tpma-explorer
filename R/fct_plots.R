@@ -27,19 +27,15 @@ plot_rates_trend <- function(
       )
     ) +
     ggplot2::geom_line(
-      data = \(.x) dplyr::filter(.x, !is.na(.data[["is_peer"]])),
-      ggplot2::aes(
-        colour = .data[["is_peer"]],
-        alpha = .data[["is_peer"]]
-      )
+      data = \(.x) dplyr::filter(.x, .data[["is_peer"]] %in% c("self", "peer")),
+      ggplot2::aes(colour = .data[["is_peer"]])
     ) +
     ggplot2::scale_colour_manual(
-      values = c("TRUE" = "black", "FALSE" = "red"),
-      na.value = "black"
-    ) +
-    ggplot2::scale_alpha_manual(
-      values = c("TRUE" = 0.4, "FALSE" = 1),
-      na.value = 0.1
+      values = c(
+        "other" = scales::alpha("black", 0),
+        "peer" = scales::alpha("black", 0.1),
+        "self" = scales::alpha("red", 1)
+      )
     ) +
     ggplot2::scale_y_continuous(
       name = stringr::str_wrap(y_axis_title, width = 40),
@@ -56,7 +52,7 @@ plot_rates_trend <- function(
     theme_rates(base_size = base_size)
 }
 
-#' Plot Rates Funnel with Peers
+#' Plot Rates Funnel with Peers and All Others
 #' @param rates_funnel_data A data.frame. Rates data read in from Azure.
 #' @param funnel_calculations A list. Output from [uprime_calculations] used to
 #'     plot U-Prime lines.
@@ -73,13 +69,13 @@ plot_rates_funnel <- function(
   base_size = 16
 ) {
   cl_line_type <- "dashed"
-  cl_colour <- "black"
+  cl_colour <- "#9d928a"
 
   cl2_line_type <- "dashed"
-  cl2_colour <- "black"
+  cl2_colour <- "#9d928a"
 
   cl3_line_type <- "dashed"
-  cl3_colour <- "black"
+  cl3_colour <- "#9d928a"
 
   plot_x_range <- c(0, max(rates_funnel_data[["denominator"]]) * 1.05)
   function_x_range <- plot_x_range * 1.2
@@ -115,23 +111,38 @@ plot_rates_funnel <- function(
       linetype = cl3_line_type,
       xlim = function_x_range
     ) +
-    ggplot2::geom_point(ggplot2::aes(
-      colour = .data[["is_peer"]],
-      alpha = .data[["is_peer"]]
-    )) +
+    ggplot2::geom_point(
+      ggplot2::aes(
+        fill = .data[["is_peer"]],
+        colour = .data[["is_peer"]]
+      ),
+      shape = 21
+    ) +
     ggrepel::geom_text_repel(
-      data = dplyr::filter(rates_funnel_data, !is.na(.data[["is_peer"]])),
-      ggplot2::aes(label = .data[["provider_label"]], colour = .data[["is_peer"]]),
+      data = dplyr::filter(
+        rates_funnel_data,
+        .data[["is_peer"]] %in% c("self", "peer")
+      ),
+      ggplot2::aes(
+        label = .data[["provider_label"]],
+        colour = .data[["is_peer"]]
+      ),
       size = base_size / ggplot2::.pt, # scale with base size
       max.overlaps = Inf # include all labels
     ) +
-    ggplot2::scale_colour_manual(
-      values = c("TRUE" = "black", "FALSE" = "red"),
-      na.value = "black"
+    ggplot2::scale_fill_manual(
+      values = c(
+        "other" = scales::alpha("black", 0.1),
+        "peer" = scales::alpha("black", 0.1),
+        "self" = scales::alpha("red", 1)
+      )
     ) +
-    ggplot2::scale_alpha_manual(
-      values = c("TRUE" = 0.4, "FALSE" = 1),
-      na.value = 0.1
+    ggplot2::scale_colour_manual(
+      values = c(
+        "other" = scales::alpha("black", 0.1),
+        "peer" = scales::alpha("black", 1),
+        "self" = scales::alpha("red", 1)
+      )
     ) +
     ggplot2::theme(legend.position = "none") +
     ggplot2::scale_x_continuous(labels = scales::comma_format()) +
@@ -151,22 +162,29 @@ plot_rates_funnel <- function(
 plot_rates_box <- function(rates_box_data, y_axis_limits, base_size = 16) {
   rates_box_data |>
     ggplot2::ggplot(ggplot2::aes(x = "", y = .data[["rate"]])) +
-    ggplot2::geom_boxplot(alpha = 0.2, outlier.shape = NA) +
+    ggplot2::geom_boxplot(alpha = 0.2, outlier.shape = NA, colour = "#9d928a") +
     ggbeeswarm::geom_quasirandom(
       # just show peers/selected provider
-      data = \(.x) dplyr::filter(.x, !is.na(.data[["is_peer"]])),
+      data = \(.x) dplyr::filter(.x, .data[["is_peer"]] %in% c("self", "peer")),
       ggplot2::aes(
-        colour = .data[["is_peer"]],
-        alpha = .data[["is_peer"]]
+        fill = .data[["is_peer"]],
+        colour = .data[["is_peer"]]
+      ),
+      shape = 21
+    ) +
+    ggplot2::scale_fill_manual(
+      values = c(
+        "other" = scales::alpha("black", 0.1),
+        "peer" = scales::alpha("black", 0.1),
+        "self" = scales::alpha("red", 1)
       )
     ) +
     ggplot2::scale_colour_manual(
-      values = c("TRUE" = "black", "FALSE" = "red"),
-      na.value = "black"
-    ) +
-    ggplot2::scale_alpha_manual(
-      values = c("TRUE" = 0.4, "FALSE" = 1),
-      na.value = 0.1
+      values = c(
+        "other" = scales::alpha("black", 0.1),
+        "peer" = scales::alpha("black", 1),
+        "self" = scales::alpha("red", 1)
+      )
     ) +
     ggplot2::coord_cartesian(ylim = y_axis_limits) +
     ggplot2::labs(x = "") +

@@ -2,7 +2,7 @@
 % Please edit documentation in R/fct_plots.R
 \name{plot_rates_funnel}
 \alias{plot_rates_funnel}
-\title{Plot Rates Funnel with Peers}
+\title{Plot Rates Funnel with Peers and All Others}
 \usage{
 plot_rates_funnel(
   rates_funnel_data,
@@ -28,5 +28,5 @@ plot U-Prime lines.}
 A 'ggplot2' object.
 }
 \description{
-Plot Rates Funnel with Peers
+Plot Rates Funnel with Peers and All Others
 }
