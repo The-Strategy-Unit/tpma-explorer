@@ -3,7 +3,9 @@
 #' @noRd
 app_server <- function(input, output, session) {
   # Constants
+  # nolint start: object_name_linter.
   BASE_SIZE <- 16 # scaling for plot elements
+  # nolint end
 
   # User inputs ----
   selected_geography <- mod_select_geography_server(

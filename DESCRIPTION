@@ -21,7 +21,6 @@ Imports:
     cachem,
     config,
     dplyr,
-    forcats,
     ggbeeswarm,
     ggplot2,
     ggrepel,

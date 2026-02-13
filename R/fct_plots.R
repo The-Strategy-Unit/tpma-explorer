@@ -48,7 +48,8 @@ plot_rates_trend <- function(
     ggplot2::coord_cartesian(ylim = y_axis_limits) +
     ggplot2::scale_x_discrete(
       labels = \(.x) {
-        stringr::str_replace(.x, "^\\d{2}(\\d{2})(\\d{2})$", "\\1/\\2") # 23/24
+        # Format as 23/24 to save space vs 2023/34
+        stringr::str_replace(.x, "^\\d{2}(\\d{2})(\\d{2})$", "\\1/\\2")
       }
     ) +
     ggplot2::labs(x = x_axis_title) +
