@@ -1,4 +1,4 @@
-# Prepare raw code/name lookup ----
+# Prepare raw code/name lookup (2023) ----
 
 # Data source from the ONS Open Geography Portal:
 #   https://geoportal.statistics.gov.uk/datasets/ons::local-authority-districts-april-2023-names-and-codes-in-the-uk/about
@@ -32,7 +32,7 @@ jsonlite::write_json(
   pretty = TRUE
 )
 
-# Prepare raw neighbours data ----
+# Prepare raw neighbours data (2025) ----
 
 # Download manually the file from the ONS:
 #   https://www.ons.gov.uk/peoplepopulationandcommunity/healthandsocialcare/healthandwellbeing/adhocs/3048statisticalnearestneighboursforenglishuppertierandlowertierlocalauthorities
