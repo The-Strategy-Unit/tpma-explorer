@@ -8,7 +8,8 @@ plot_rates_funnel(
   rates_funnel_data,
   funnel_calculations,
   y_axis_limits,
-  x_axis_title
+  x_axis_title,
+  base_size = 16
 )
 }
 \arguments{
@@ -20,6 +21,8 @@ plot U-Prime lines.}
 \item{y_axis_limits}{Numeric vector. Min and max values for the y axis.}
 
 \item{x_axis_title}{Character. Title for the x-axis.}
+
+\item{base_size}{Numeric scalar. For scaling plot-element sizes.}
 }
 \value{
 A 'ggplot2' object.

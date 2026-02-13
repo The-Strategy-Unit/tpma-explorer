@@ -2,7 +2,7 @@
 % Please edit documentation in R/fct_plots.R
 \name{theme_base}
 \alias{theme_base}
-\title{A 'ggplot2' Theme for All Plots}
+\title{A 'ggplot2' Base Theme for All Plots}
 \usage{
 theme_base(base_size = 16)
 }
@@ -14,5 +14,5 @@ calculated.}
 A 'ggplot2' theme.
 }
 \description{
-A 'ggplot2' Theme for All Plots
+A 'ggplot2' Base Theme for All Plots
 }

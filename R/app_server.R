@@ -2,6 +2,9 @@
 #' @param input,output,session Internal parameters for 'shiny'.
 #' @noRd
 app_server <- function(input, output, session) {
+  # Constants
+  BASE_SIZE <- 16 # scaling for plot elements
+
   # User inputs ----
   selected_geography <- mod_select_geography_server(
     "mod_select_geography"
@@ -50,7 +53,8 @@ app_server <- function(input, output, session) {
     selected_geography,
     selected_provider,
     selected_strategy,
-    selected_year
+    selected_year,
+    BASE_SIZE
   )
   mod_table_procedures_server(
     "mod_table_procedures",
@@ -71,7 +75,8 @@ app_server <- function(input, output, session) {
     inputs_data,
     selected_provider,
     selected_strategy,
-    selected_year
+    selected_year,
+    BASE_SIZE
   )
   mod_plot_nee_server(
     "mod_plot_nee",

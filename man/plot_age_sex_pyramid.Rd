@@ -4,12 +4,14 @@
 \alias{plot_age_sex_pyramid}
 \title{Plot Age-Sex Pyramid}
 \usage{
-plot_age_sex_pyramid(age_sex_data)
+plot_age_sex_pyramid(age_sex_data, base_size = 16)
 }
 \arguments{
 \item{age_sex_data}{A data.frame. Age-sex data read from Azure and processed
 with \link{prepare_age_sex_data}. Counts for each strategy split by provider,
 year, age group and sex.}
+
+\item{base_size}{Numeric scalar. For scaling plot-element sizes.}
 }
 \value{
 A 'ggplot2' object.

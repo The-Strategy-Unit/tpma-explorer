@@ -6,7 +6,7 @@
 #' @param x_axis_title Character scalar. Title for the x-axis.
 #' @param y_axis_title Character scalar. Title for the y-axis.
 #' @param y_labels A function. Function to format y-axis labels.
-#' @param base_size Numeric scalar. Scale plot-elements sizes against this value.
+#' @param base_size Numeric scalar. For scaling plot-element sizes.
 #' @return A 'ggplot2' object.
 #' @export
 plot_rates_trend <- function(
@@ -61,7 +61,7 @@ plot_rates_trend <- function(
 #'     plot U-Prime lines.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
 #' @param x_axis_title Character. Title for the x-axis.
-#' @param base_size Numeric scalar. Scale plot-elements sizes against this value.
+#' @param base_size Numeric scalar. For scaling plot-element sizes.
 #' @return A 'ggplot2' object.
 #' @export
 plot_rates_funnel <- function(
@@ -144,7 +144,7 @@ plot_rates_funnel <- function(
 #'     processed with [generate_rates_baseline_data] to filter for provider,
 #'     strategy and year.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
-#' @param base_size Numeric scalar. Scale plot-elements sizes against this value.
+#' @param base_size Numeric scalar. For scaling plot-element sizes.
 #' @return A 'ggplot2' object.
 #' @export
 plot_rates_box <- function(rates_box_data, y_axis_limits, base_size = 16) {
@@ -176,7 +176,7 @@ plot_rates_box <- function(rates_box_data, y_axis_limits, base_size = 16) {
 #' @param age_sex_data A data.frame. Age-sex data read from Azure and processed
 #'     with [prepare_age_sex_data]. Counts for each strategy split by provider,
 #'     year, age group and sex.
-#' @param base_size Numeric scalar. Scale plot-elements sizes against this value.
+#' @param base_size Numeric scalar. For scaling plot-element sizes.
 #' @return A 'ggplot2' object.
 #' @export
 plot_age_sex_pyramid <- function(age_sex_data, base_size = 16) {

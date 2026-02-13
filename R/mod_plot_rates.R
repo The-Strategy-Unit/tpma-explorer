@@ -22,6 +22,7 @@ mod_plot_rates_ui <- function(id) {
 #' @param selected_strategy Character. Strategy variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
 #' @param selected_year Integer. Selected year in the form `202324`.
+#' @param base_size Numeric scalar. For scaling plot-element sizes.
 #' @noRd
 mod_plot_rates_server <- function(
   id,
@@ -29,7 +30,8 @@ mod_plot_rates_server <- function(
   selected_geography,
   selected_provider,
   selected_strategy,
-  selected_year
+  selected_year,
+  base_size
 ) {
   # load static data items
   strategies_config <- get_golem_config("mitigators_config")
@@ -156,19 +158,22 @@ mod_plot_rates_server <- function(
       y_axis_limits,
       y_axis_title,
       y_labels,
-      selected_year
+      selected_year,
+      base_size
     )
     mod_plot_rates_funnel_server(
       "mod_plot_rates_funnel",
       rates_baseline_data,
       rates_funnel_calculations,
       y_axis_limits,
-      funnel_x_title
+      funnel_x_title,
+      base_size
     )
     mod_plot_rates_box_server(
       "mod_plot_rates_box",
       rates_baseline_data,
-      y_axis_limits
+      y_axis_limits,
+      base_size
     )
   })
 }

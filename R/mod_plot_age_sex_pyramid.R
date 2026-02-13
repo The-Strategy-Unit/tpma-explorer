@@ -29,6 +29,7 @@ mod_plot_age_sex_pyramid_ui <- function(id) {
 #' @param selected_strategy Reactive. Strategy variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
 #' @param selected_year Reactive. Selected year in the form `202324`.
+#' @param base_size Numeric scalar. For scaling plot-element sizes.
 #' @noRd
 # nolint start: object_length_linter.
 mod_plot_age_sex_pyramid_server <- function(
@@ -37,7 +38,8 @@ mod_plot_age_sex_pyramid_server <- function(
   inputs_data,
   selected_provider,
   selected_strategy,
-  selected_year
+  selected_year,
+  base_size
 ) {
   shiny::moduleServer(id, function(input, output, session) {
     age_sex_data <- shiny::reactive({
@@ -62,7 +64,7 @@ mod_plot_age_sex_pyramid_server <- function(
         "No data available for these selections."
       ))
 
-      plot_age_sex_pyramid(df)
+      plot_age_sex_pyramid(age_sex_data = df, base_size)
     })
   })
 }
