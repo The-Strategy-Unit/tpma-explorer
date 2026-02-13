@@ -10,22 +10,25 @@ plot_rates_trend(
   y_axis_limits,
   x_axis_title = "Financial year",
   y_axis_title,
-  y_labels
+  y_labels,
+  base_size = 16
 )
 }
 \arguments{
 \item{rates_trend_data}{A data.frame. Rates data read in from Azure, filtered
 for a given provider and strategy, and arranged by year.}
 
-\item{selected_year}{Integer. Selected year in the form \code{202324}.}
+\item{selected_year}{Integer scalar. Selected year in the form \code{202324}.}
 
 \item{y_axis_limits}{Numeric vector. Min and max values for the y axis.}
 
-\item{x_axis_title}{Character. Title for the x-axis.}
+\item{x_axis_title}{Character scalar. Title for the x-axis.}
 
-\item{y_axis_title}{Character. Title for the y-axis.}
+\item{y_axis_title}{Character scalar. Title for the y-axis.}
 
 \item{y_labels}{A function. Function to format y-axis labels.}
+
+\item{base_size}{Numeric scalar. For scaling plot-element sizes.}
 }
 \value{
 A 'ggplot2' object.

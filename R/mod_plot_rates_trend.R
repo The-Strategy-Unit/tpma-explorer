@@ -29,6 +29,7 @@ mod_plot_rates_trend_ui <- function(id) {
 #' @param y_axis_title Character. Title for the y-axis.
 #' @param y_labels Function. Function to format y-axis labels.
 #' @param selected_year Reactive. Selected year in the form `202324`.
+#' @param base_size Numeric scalar. For scaling plot-element sizes.
 #' @noRd
 mod_plot_rates_trend_server <- function(
   id,
@@ -36,7 +37,8 @@ mod_plot_rates_trend_server <- function(
   y_axis_limits,
   y_axis_title,
   y_labels,
-  selected_year
+  selected_year,
+  base_size
 ) {
   shiny::moduleServer(id, function(input, output, session) {
     output$rates_trend_plot <- shiny::renderPlot({
@@ -48,11 +50,12 @@ mod_plot_rates_trend_server <- function(
       )
 
       plot_rates_trend(
-        rates(),
-        selected_year(),
-        y_axis_limits(),
+        rates_trend_data = rates(),
+        selected_year = selected_year(),
+        y_axis_limits = y_axis_limits(),
         y_axis_title = y_axis_title(),
-        y_labels = y_labels()
+        y_labels = y_labels(),
+        base_size = base_size
       )
     })
   })

@@ -4,7 +4,7 @@
 \alias{plot_rates_box}
 \title{Plot Rates Boxplot with Peers}
 \usage{
-plot_rates_box(rates_box_data, y_axis_limits)
+plot_rates_box(rates_box_data, y_axis_limits, base_size = 16)
 }
 \arguments{
 \item{rates_box_data}{A data.frame. Rates data read in from Azure and
@@ -12,6 +12,8 @@ processed with \link{generate_rates_baseline_data} to filter for provider,
 strategy and year.}
 
 \item{y_axis_limits}{Numeric vector. Min and max values for the y axis.}
+
+\item{base_size}{Numeric scalar. For scaling plot-element sizes.}
 }
 \value{
 A 'ggplot2' object.

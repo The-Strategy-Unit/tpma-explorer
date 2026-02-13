@@ -29,13 +29,15 @@ mod_plot_rates_funnel_ui <- function(id) {
 #'     plot U-Prime lines.
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
 #' @param x_axis_title Character. Title for the x-axis.
+#' @param base_size Numeric scalar. For scaling plot-element sizes.
 #' @noRd
 mod_plot_rates_funnel_server <- function(
   id,
   rates,
   funnel_calculations,
   y_axis_limits,
-  x_axis_title
+  x_axis_title,
+  base_size
 ) {
   shiny::moduleServer(id, function(input, output, session) {
     output$rates_funnel_plot <- shiny::renderPlot({
@@ -48,10 +50,11 @@ mod_plot_rates_funnel_server <- function(
       shiny::req(x_axis_title())
 
       plot_rates_funnel(
-        rates,
+        rates_funnel_data = rates,
         funnel_calculations(),
         y_axis_limits(),
-        x_axis_title = x_axis_title()
+        x_axis_title(),
+        base_size
       )
     })
   })

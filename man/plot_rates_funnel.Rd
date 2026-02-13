@@ -2,13 +2,14 @@
 % Please edit documentation in R/fct_plots.R
 \name{plot_rates_funnel}
 \alias{plot_rates_funnel}
-\title{Plot Rates Funnel with Peers}
+\title{Plot Rates Funnel with Peers and All Others}
 \usage{
 plot_rates_funnel(
   rates_funnel_data,
   funnel_calculations,
   y_axis_limits,
-  x_axis_title
+  x_axis_title,
+  base_size = 16
 )
 }
 \arguments{
@@ -20,10 +21,12 @@ plot U-Prime lines.}
 \item{y_axis_limits}{Numeric vector. Min and max values for the y axis.}
 
 \item{x_axis_title}{Character. Title for the x-axis.}
+
+\item{base_size}{Numeric scalar. For scaling plot-element sizes.}
 }
 \value{
 A 'ggplot2' object.
 }
 \description{
-Plot Rates Funnel with Peers
+Plot Rates Funnel with Peers and All Others
 }
