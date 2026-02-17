@@ -4,7 +4,7 @@
 app_ui <- function(request) {
   bslib::page_navbar(
     id = "page_navbar",
-    title = "Explore potentially-mitigatable activity data",
+    title = "Explore opportunities to reduce hospital care",
     selected = "Visualisations", # start with this panel open
     fillable = FALSE, # allow page scroll
 

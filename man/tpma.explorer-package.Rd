@@ -4,9 +4,9 @@
 \name{tpma.explorer-package}
 \alias{tpma.explorer}
 \alias{tpma.explorer-package}
-\title{tpma.explorer: Explore TPMA Data}
+\title{tpma.explorer: Explore Opportunities to Reduce Hospital Care}
 \description{
-A Shiny-app-in-a-package to explore data related to Types of Potentially-Mitigatable Activity (TPMAs).
+A Shiny-app-in-a-package to explore data related to Types of Potentially-Mitigatable Activity (TPMAs) with the goal of finding opportunities to reduce hospital care.
 }
 \seealso{
 Useful links:
