@@ -78,8 +78,14 @@ app_ui <- function(request) {
           ),
           bslib::card(
             id = "card_author",
-            bslib::card_header("Author"),
-            md_file_to_html("app", "text", "info-author.md")
+            bslib::card_header("Authors"),
+            style = "display:inline;", # put items on the same line
+            md_file_to_html("app", "text", "info-author.md"),
+            paste0(
+              "Version ",
+              as.character(utils::packageVersion(utils::packageName())),
+              "."
+            )
           )
         )
       )
