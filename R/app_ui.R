@@ -15,12 +15,12 @@ app_ui <- function(request) {
 
       bslib::card(
         bslib::card_header(
-          class = "bg-warning",
-          bsicons::bs_icon("exclamation-triangle"),
-          "Warning"
+          class = "text-bg-info",
+          bsicons::bs_icon("info-circle"),
+          "Note"
         ),
-        "This app is in development and its output has not been verified.",
-        "The information presented here should not be relied on as fact."
+        "This app is in continuous development.",
+        "Please give feedback by clicking the link in the top-right."
       ),
       mod_show_strategy_text_ui("mod_show_strategy_text"),
       mod_plot_rates_ui("mod_plot_rates"),
