@@ -42,8 +42,11 @@ app_ui <- function(request) {
       icon = bsicons::bs_icon("book"),
 
       bslib::layout_columns(
+        col_widths = c(6, 6),
+        fill = FALSE,
         bslib::layout_columns(
-          col_widths = c(12, 12),
+          col_widths = 12,
+          fill = FALSE,
           bslib::card(
             id = "card_purpose",
             bslib::card_header("Purpose"),
@@ -61,7 +64,8 @@ app_ui <- function(request) {
           )
         ),
         bslib::layout_columns(
-          col_widths = c(12, 12),
+          col_widths = 12,
+          fill = FALSE,
           bslib::card(
             id = "card_navigation",
             bslib::card_header("Navigation"),
