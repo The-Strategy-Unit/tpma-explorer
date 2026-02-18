@@ -21,6 +21,10 @@ To run the app, you must:
 * run `dev/app.R` to launch the app locally for development purposes
 * run `dev/deploy.R` to deploy the app to Posit Connect when ready
 
+### Data
+
+Underlying data is generated via the NHP inputs-data pipeline in [the nhp_data repository](https://github.com/The-Strategy-Unit/nhp_data/) and is read into the app from the relevant Azure container (named in the `AZ_CONTAINER_INPUTS` environment variable).
+
 ### Files
 
 In `R/` you can find:
