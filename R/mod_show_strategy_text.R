@@ -17,10 +17,7 @@ mod_show_strategy_text_ui <- function(id) {
 #' @return a character vector of the strategy stubs.
 #' @noRd
 mod_show_strategy_text_get_descriptions_lookup <- function() {
-  jsonlite::read_json(
-    app_sys("app", "data", "descriptions.json"),
-    simplifyVector = TRUE
-  )
+  yyjsonr::read_json_file(app_sys("app", "data", "descriptions.json"))
 }
 
 #' Show Strategy Description Server

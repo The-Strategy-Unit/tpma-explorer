@@ -40,10 +40,8 @@ mod_select_strategy_ui <- function(id) {
 #' @return A named list of data frames, where the names are the categories (IP/OP/AE)
 #' @noRd
 mod_select_strategy_get_strategies <- function() {
-  strategies <- jsonlite::read_json(
-    app_sys("app", "data", "mitigators.json"),
-    simplify_vector = TRUE
-  )
+  strategies <- app_sys("app", "data", "mitigators.json") |>
+    yyjsonr::read_json_file()
 
   strategies |>
     unlist() |>

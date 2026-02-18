@@ -32,10 +32,7 @@ mod_select_provider_server <- function(id, selected_geography) {
 
       shiny::req(filename)
 
-      jsonlite::read_json(
-        app_sys("app", "data", filename),
-        simplify_vector = TRUE
-      )
+      yyjsonr::read_json_file(app_sys("app", "data", filename))
     }) |>
       shiny::bindEvent(selected_geography())
 

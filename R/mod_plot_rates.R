@@ -63,10 +63,9 @@ mod_plot_rates_server <- function(
       )
 
       shiny::req(filename)
-      providers_lookup <- jsonlite::read_json(
-        app_sys("app", "data", filename),
-        simplify_vector = TRUE
-      ) |>
+
+      providers_lookup <- app_sys("app", "data", filename) |>
+        yyjsonr::read_json_file() |>
         tibble::enframe("provider", "provider_label") |> # label for plotting
         tidyr::unnest(.data$provider_label)
 
