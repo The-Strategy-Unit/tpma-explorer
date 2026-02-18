@@ -10,7 +10,7 @@ The app is [deployed openly to Posit Connect](https://connect.strategyunitwm.nhs
 
 This section is aimed at maintainers of the tool who work for The Strategy Unit Data Science team.
 
-## Run and deploy
+### Run and deploy
 
 The app is made with [Shiny](https://shiny.posit.co/) and is an R package following [the nolem approach](https://github.com/StatsRhian/nolem).
 
