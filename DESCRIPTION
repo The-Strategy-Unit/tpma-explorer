@@ -28,7 +28,6 @@ Imports:
     glue,
     gt,
     httr2,
-    jsonlite,
     markdown,
     purrr,
     readr,
@@ -38,8 +37,10 @@ Imports:
     shinycssloaders,
     stringr,
     tibble,
-    tidyr
+    tidyr,
+    yyjsonr
 Suggests:
+    jsonlite,
     mockery,
     testthat (>= 3.0.0),
     tidyselect,
