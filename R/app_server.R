@@ -33,7 +33,9 @@ app_server <- function(input, output, session) {
   # Data ----
   inputs_data <- shiny::reactive({
     sg <- shiny::req(selected_geography())
-    get_all_geo_data(sg)
+    year <- shiny::req(selected_year())
+
+    get_all_geo_data(sg, year)
   }) |>
     shiny::bindCache(selected_geography())
 

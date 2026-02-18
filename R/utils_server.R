@@ -32,9 +32,10 @@ get_container <- function(
 #' Read Inputs Datasets for All Geographies
 #' @param geography Character. The geography level for which the user wants to
 #'     select a provider. Either "nhp" or "la".
+#' @param fyear Numeric. The financial year to filter the data to.
 #' @return A list. One element for each dataframes of data.
 #' @export
-get_all_geo_data <- function(geography) {
+get_all_geo_data <- function(geography, fyear) {
   inputs_container <- get_container()
 
   data_types <- purrr::set_names(c(
@@ -61,15 +62,20 @@ get_all_geo_data <- function(geography) {
 
   col_renames <- c(provider = "lad23cd")
 
-  purrr::map(
-    data_types,
-    \(data_type) {
-      azkit::read_azure_parquet(
-        inputs_container,
-        data_type,
-        container_dir
-      ) |>
-        dplyr::rename(dplyr::any_of(col_renames)) # standardise
-    }
-  )
+  data_types |>
+    purrr::map(
+      \(data_type) {
+        azkit::read_azure_parquet(
+          inputs_container,
+          data_type,
+          container_dir
+        ) |>
+          dplyr::rename(dplyr::any_of(col_renames)) # standardise
+      }
+    ) |>
+    purrr::modify_at(
+      data_types[data_types != "rates"],
+      dplyr::filter,
+      .data[["fyear"]] == .env[["fyear"]]
+    )
 }
