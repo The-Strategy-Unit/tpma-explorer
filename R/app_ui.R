@@ -4,7 +4,7 @@
 app_ui <- function(request) {
   bslib::page_navbar(
     id = "page_navbar",
-    title = "Explore potentially-mitigatable activity data",
+    title = "Explore opportunities to reduce hospital care",
     selected = "Visualisations", # start with this panel open
     fillable = FALSE, # allow page scroll
 
@@ -15,12 +15,12 @@ app_ui <- function(request) {
 
       bslib::card(
         bslib::card_header(
-          class = "bg-warning",
-          bsicons::bs_icon("exclamation-triangle"),
-          "Warning"
+          class = "text-bg-info",
+          bsicons::bs_icon("info-circle"),
+          "Note"
         ),
-        "This app is in development and its output has not been verified.",
-        "The information presented here should not be relied on as fact."
+        "This app is in continuous development.",
+        "Please give feedback by clicking the link in the top-right."
       ),
       mod_show_strategy_text_ui("mod_show_strategy_text"),
       mod_plot_rates_ui("mod_plot_rates"),
@@ -42,8 +42,11 @@ app_ui <- function(request) {
       icon = bsicons::bs_icon("book"),
 
       bslib::layout_columns(
+        col_widths = c(6, 6),
+        fill = FALSE,
         bslib::layout_columns(
-          col_widths = c(12, 12),
+          col_widths = 12,
+          fill = FALSE,
           bslib::card(
             id = "card_purpose",
             bslib::card_header("Purpose"),
@@ -61,7 +64,8 @@ app_ui <- function(request) {
           )
         ),
         bslib::layout_columns(
-          col_widths = c(12, 12),
+          col_widths = 12,
+          fill = FALSE,
           bslib::card(
             id = "card_navigation",
             bslib::card_header("Navigation"),
@@ -74,8 +78,14 @@ app_ui <- function(request) {
           ),
           bslib::card(
             id = "card_author",
-            bslib::card_header("Author"),
-            md_file_to_html("app", "text", "info-author.md")
+            bslib::card_header("Authors"),
+            style = "display:inline;", # put items on the same line
+            md_file_to_html("app", "text", "info-author.md"),
+            paste0(
+              "Version ",
+              as.character(utils::packageVersion(utils::packageName())),
+              "."
+            )
           )
         )
       )
