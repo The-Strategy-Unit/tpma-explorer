@@ -91,25 +91,29 @@ plot_rates_funnel <- function(
       fun = funnel_calculations[["lcl2"]],
       colour = cl2_colour,
       linetype = cl2_line_type,
-      xlim = function_x_range
+      xlim = function_x_range,
+      n = 1001
     ) +
     ggplot2::geom_function(
       fun = funnel_calculations[["ucl2"]],
       colour = cl2_colour,
       linetype = cl2_line_type,
-      xlim = function_x_range
+      xlim = function_x_range,
+      n = 1001
     ) +
     ggplot2::geom_function(
       fun = funnel_calculations[["lcl3"]],
       colour = cl3_colour,
       linetype = cl3_line_type,
-      xlim = function_x_range
+      xlim = function_x_range,
+      n = 1001
     ) +
     ggplot2::geom_function(
       fun = funnel_calculations[["ucl3"]],
       colour = cl3_colour,
       linetype = cl3_line_type,
-      xlim = function_x_range
+      xlim = function_x_range,
+      n = 1001
     ) +
     ggplot2::geom_point(
       ggplot2::aes(
