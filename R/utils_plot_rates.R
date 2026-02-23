@@ -17,7 +17,7 @@ get_peers_lookup <- function(selected_geography) {
   shiny::req(filename)
 
   readr::read_csv(
-    app_sys("app", "data", filename),
+    app_sys("app", "reference", filename),
     col_types = "c"
   )
 }

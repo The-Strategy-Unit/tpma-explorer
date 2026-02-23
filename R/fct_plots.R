@@ -152,9 +152,7 @@ plot_rates_funnel <- function(
 }
 
 #' Plot Rates Boxplot with Peers
-#' @param rates_box_data A data.frame. Rates data read in from Azure and
-#'     processed with [generate_rates_baseline_data] to filter for provider,
-#'     strategy and year.
+#' @param rates_box_data A data.frame. Rates data
 #' @param y_axis_limits Numeric vector. Min and max values for the y axis.
 #' @param base_size Numeric scalar. For scaling plot-element sizes.
 #' @return A 'ggplot2' object.

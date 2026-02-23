@@ -79,3 +79,86 @@ get_all_geo_data <- function(geography, fyear) {
       .data[["fyear"]] == .env[["fyear"]]
     )
 }
+
+
+#' Download Inputs Datasets for Specific Geography
+#' @param geography Character. The geography level for which the user wants to
+#'     select a provider. Either "nhp" or "la".
+#' @return A list. The filenames of the downloaded datasets.
+#' @export
+download_geo_data <- function(geography) {
+  inputs_container <- get_container()
+
+  data_types <- purrr::set_names(c(
+    "age_sex",
+    "diagnoses",
+    "procedures",
+    "rates"
+  ))
+
+  geography_folder <- switch(
+    geography,
+    "nhp" = "provider",
+    "la" = "lad23cd"
+  )
+
+  stopifnot(
+    "Unknown geography" = !is.null(geography_folder)
+  )
+
+  data_path <- file.path(app_sys("app"), "data", geography_folder)
+
+  if (!dir.exists(data_path)) {
+    dir.create(data_path, recursive = TRUE)
+  }
+
+  container_dir <- file.path(
+    Sys.getenv("DATA_VERSION", "dev"),
+    geography_folder
+  )
+
+  col_renames <- c(provider = "lad23cd")
+
+  data_types |>
+    purrr::map(
+      \(data_type) {
+        file_name <- file.path(
+          data_path,
+          paste0(data_type, ".parquet")
+        )
+
+        azkit::read_azure_parquet(
+          inputs_container,
+          data_type,
+          container_dir
+        ) |>
+          dplyr::rename(dplyr::any_of(col_renames)) |>
+          dplyr::arrange(
+            dplyr::across(
+              c(
+                "fyear",
+                "strategy",
+                "provider",
+                tidyselect::any_of(c("sex", "age_group"))
+              )
+            )
+          ) |>
+          tidyr::drop_na("strategy") |>
+          arrow::write_parquet(file_name)
+
+        file_name
+      }
+    )
+}
+
+#' Download Inputs Datasets for Specific Geography
+#' @export
+download_all_data <- function() {
+  if (!dir.exists(app_sys("app", "data"))) {
+    c("nhp", "la") |>
+      purrr::set_names() |>
+      purrr::map(download_geo_data)
+  }
+
+  invisible(NULL)
+}

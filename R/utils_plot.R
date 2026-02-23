@@ -1,46 +1,93 @@
-#' Find the Peers for a Given Provider
-#' @param provider Character. Provider code, e.g. `"RCF"`.
-#' @param peers A data.frame. A row per provider-peer pair.
-#' @return Character vector of peers for given `provider`.
-#' @export
-isolate_provider_peers <- function(provider, peers) {
-  peers |>
-    dplyr::filter(
-      .data$procode == .env$provider & .data$peer != .env$provider
-    ) |>
-    dplyr::pull(.data$peer)
-}
-
 #' Generate Rates Baseline Data
-#' @param rates A data.frame. Rates data read from Azure.
-#' @param provider Character. Provider code, e.g. `"RCF"`.
+#' @param selected_geography Character. Selected geography, either `"nhp"` or `"la"`.
+#' @param selected_provider Character. Provider code, e.g. `"RCF"`.
+#' @param selected_year Integer. Selected year in the form `202324`.
+#' @param selected_strategy Character. Strategy variable name, e.g. `"alcohol_partially_attributable_acute"`.
 #' @param providers_lookup Dataframe. A lookup from a provider code to its name.
 #' @param peers_lookup Dataframe. A lookup from a provider to its peers.
 #' @return A data.frame.
 #' @export
-generate_rates_baseline_data <- function(
-  rates,
-  provider,
+generate_rates_funnel_data <- function(
+  selected_geography,
+  selected_provider,
+  selected_strategy,
+  selected_year,
   providers_lookup,
   peers_lookup
 ) {
-  peers <- isolate_provider_peers(provider, peers_lookup)
+  geography <- switch(selected_geography, "nhp" = "provider", "la" = "lad23cd")
 
-  rates |>
+  filename <- app_sys("app", "data", geography, "rates.parquet")
+
+  df <- arrow::read_parquet(filename, as_data_frame = FALSE) |>
+    dplyr::filter(
+      .data$strategy == .env$selected_strategy,
+      .data$fyear == .env$selected_year,
+    ) |>
+    dplyr::collect()
+
+  national <- df |>
+    dplyr::filter(.data$provider == "national") |>
+    dplyr::select(
+      "strategy",
+      "fyear",
+      national_rate = "std_rate"
+    )
+
+  df |>
+    dplyr::filter(!.data$provider %in% c("national", "unknown")) |>
+    dplyr::inner_join(
+      national,
+      by = c("strategy", "fyear")
+    ) |>
+    dplyr::rename(rate = "std_rate") |>
+    dplyr::select(-"crude_rate") |>
     dplyr::inner_join(providers_lookup, by = "provider") |> # adds plotting label
     dplyr::mutate(
       is_peer = dplyr::case_when(
-        .data$provider == .env$provider ~ "self",
-        .data$provider %in% .env$peers ~ "peer",
+        .data$provider == .env$selected_provider ~ "self",
+        .data$provider %in% .env$peers_lookup ~ "peer",
         .default = "other"
       )
     ) |>
     dplyr::arrange(.data$is_peer) # to plot focal scheme last
 }
 
+#' Generate Rates Trend Data
+#' @param selected_geography Character. Selected geography, either `"nhp"` or `"la"`.
+#' @param selected_provider Character. Provider code, e.g. `"RCF"`.
+#' @param selected_strategy Character. Strategy variable name, e.g. `"alcohol_partially_attributable_acute"`.
+#' @return A data.frame.
+#' @export
+generate_rates_trend_data <- function(
+  selected_geography,
+  selected_provider,
+  selected_strategy,
+  peers_lookup
+) {
+  geography <- switch(selected_geography, "nhp" = "provider", "la" = "lad23cd")
+
+  filename <- app_sys("app", "data", geography, "rates.parquet")
+
+  arrow::read_parquet(filename, as_data_frame = FALSE) |>
+    dplyr::filter(
+      .data$provider %in% c(.env$selected_provider, .env$peers_lookup),
+      .data$strategy == .env$selected_strategy
+    ) |>
+    dplyr::collect() |>
+    dplyr::rename(rate = "std_rate") |>
+    dplyr::select(-"crude_rate") |>
+    dplyr::mutate(
+      is_peer = dplyr::case_when(
+        .data$provider == .env$selected_provider ~ "self",
+        .data$provider %in% .env$peers_lookup ~ "peer",
+        .default = "other"
+      )
+    )
+}
+
 #' Generate Function to Calculate U-Prime values
-#' @param df A data.frame. Rates data read in from Azure and
-#'     processed [generate_rates_baseline_data].
+#' @param df A data.frame. Rates data
 #' @return A list containing items to produce a U-Prime funnel chart.
 #' @export
 uprime_calculations <- function(df) {

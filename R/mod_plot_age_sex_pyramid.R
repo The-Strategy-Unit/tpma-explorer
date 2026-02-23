@@ -35,7 +35,7 @@ mod_plot_age_sex_pyramid_ui <- function(id) {
 mod_plot_age_sex_pyramid_server <- function(
   # nolint end
   id,
-  inputs_data,
+  selected_geography,
   selected_provider,
   selected_strategy,
   selected_year,
@@ -43,16 +43,23 @@ mod_plot_age_sex_pyramid_server <- function(
 ) {
   shiny::moduleServer(id, function(input, output, session) {
     age_sex_data <- shiny::reactive({
-      selected_provider <- shiny::req(selected_provider())
-      selected_strategy <- shiny::req(selected_strategy())
-      selected_year <- shiny::req(selected_year())
+      geography <- shiny::req(selected_geography())
+      provider <- shiny::req(selected_provider())
+      strategy <- shiny::req(selected_strategy())
+      year <- shiny::req(selected_year())
 
-      inputs_data()[["age_sex"]] |>
+      geography <- switch(geography, "nhp" = "provider", "la" = "lad23cd")
+
+      filename <- app_sys("app", "data", geography, "age_sex.parquet")
+
+      arrow::read_parquet(filename, as_data_frame = FALSE) |>
         dplyr::filter(
-          .data$provider == selected_provider,
-          .data$strategy == selected_strategy,
-          .data$fyear == selected_year
+          .data$provider == .env$provider,
+          .data$strategy == .env$strategy,
+          .data$fyear == .env$year
         ) |>
+        dplyr::select("sex", "age_group", "n") |>
+        dplyr::collect() |>
         prepare_age_sex_data()
     })
 

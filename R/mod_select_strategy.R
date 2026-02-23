@@ -11,7 +11,7 @@ mod_select_strategy_ui <- function(id) {
           "Filter for care-shift TPMAs",
           bsicons::bs_icon("info-circle")
         ),
-        md_file_to_html("app", "text", "sidebar-tooltip-careshift.md"),
+        md_file_to_html("app", "text", "sidebar-tooltip-selections.md"),
       ),
       value = FALSE
     ),
@@ -62,14 +62,14 @@ mod_select_strategy_ui <- function(id) {
 #' @noRd
 mod_select_strategy_get_strategies <- function() {
   # Read local lookups
-  categories <- app_sys("app", "data", "mitigator-categories.csv") |>
+  categories <- app_sys("app", "reference", "mitigator-categories.csv") |>
     readr::read_csv(
       col_types = readr::cols(
         .default = "c",
         is_care_shift = readr::col_logical()
       )
     )
-  strategies <- app_sys("app", "data", "mitigators.json") |>
+  strategies <- app_sys("app", "reference", "mitigators.json") |>
     yyjsonr::read_json_file()
 
   strategies |>
@@ -106,11 +106,17 @@ mod_select_strategy_server <- function(id) {
     strategies_filtered <- shiny::reactive({
       shiny::req(input$strategy_activity_type_select)
 
-      strategies_lookup |>
+      strategies_lookup <- strategies_lookup |>
         dplyr::filter(
-          .data$activity_type == input$strategy_activity_type_select,
-          .data$is_care_shift | !input$strategy_care_shift_checkbox
+          .data$activity_type == input$strategy_activity_type_select
         )
+
+      if (isTRUE(input$strategy_care_shift_checkbox)) {
+        strategies_lookup <- strategies_lookup |>
+          dplyr::filter(.data$is_care_shift)
+      }
+
+      strategies_lookup
     })
 
     shiny::observe({
@@ -132,8 +138,6 @@ mod_select_strategy_server <- function(id) {
         dplyr::filter(.data$category == input$strategy_category_select) |>
         dplyr::select("strategy_name", "strategy") |>
         tibble::deframe()
-
-      shiny::req(strategy_choices)
 
       # A bookmark restore will have changed this reactiveVal to a strategy
       # value, otherwise it remains NULL
@@ -163,6 +167,7 @@ mod_select_strategy_server <- function(id) {
       # which will then result in the restored strategy being selected.
       pending_strategy(state$input$strategy_select)
 
+      cat("on restored\n")
       shiny::updateSelectInput(
         session,
         "strategy_category_select",

@@ -51,7 +51,7 @@ test_that("mod_select_strategy_get_strategies works", {
     m,
     1,
     jsonlite::read_json(
-      app_sys("app", "data", "mitigators.json"),
+      app_sys("app", "reference", "mitigators.json"),
       simplify_vector = TRUE
     )
   )

@@ -28,7 +28,7 @@ test_that("it loads the diagnoses csv", {
         m,
         1,
         readr::read_csv(
-          app_sys("app", "data", "diagnoses.csv"),
+          app_sys("app", "reference", "diagnoses.csv"),
           col_types = "c"
         )
       )

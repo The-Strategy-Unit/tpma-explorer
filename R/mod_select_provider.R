@@ -32,7 +32,7 @@ mod_select_provider_server <- function(id, selected_geography) {
 
       shiny::req(filename)
 
-      yyjsonr::read_json_file(app_sys("app", "data", filename))
+      yyjsonr::read_json_file(app_sys("app", "reference", filename))
     }) |>
       shiny::bindEvent(selected_geography())
 

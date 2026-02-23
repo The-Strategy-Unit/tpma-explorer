@@ -21,7 +21,7 @@ mod_plot_nee_ui <- function(id) {
 mod_plot_nee_server <- function(id, selected_strategy) {
   # load static data items
   nee_data <- readr::read_csv(
-    app_sys("app", "data", "nee_table.csv"),
+    app_sys("app", "reference", "nee_table.csv"),
     col_types = "cddd"
   )
 

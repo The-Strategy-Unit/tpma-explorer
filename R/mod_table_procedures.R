@@ -22,10 +22,28 @@ mod_table_procedures_ui <- function(id) {
   )
 }
 
+mod_table_procedures_data <- function(
+  selected_geography,
+  selected_provider,
+  selected_strategy,
+  selected_year
+) {
+  filename <- app_sys("app", "data", selected_geography, "procedures.parquet")
+
+  arrow::read_parquet(filename, as_data_frame = FALSE) |>
+    dplyr::filter(
+      .data$provider == selected_provider,
+      .data$strategy == selected_strategy,
+      .data$fyear == selected_year
+    ) |>
+    dplyr::select("procedure_code", "n", "total", "pcnt", "rn") |>
+    dplyr::collect()
+}
+
 #' Procedures Table Server
 #' @param id Internal parameter for `shiny`.
-#' @param inputs_data A reactive. Contains a list with data.frames, which we can
-#'     extract the procedures data from.
+#' @param selected_geography Reactive. Selected geography. Either `"nhp"` or
+#'     `"la"`.
 #' @param selected_provider Reactive. Provider code, e.g. `"RCF"`.
 #' @param selected_strategy Reactive. Strategy variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
@@ -33,32 +51,28 @@ mod_table_procedures_ui <- function(id) {
 #' @noRd
 mod_table_procedures_server <- function(
   id,
-  inputs_data,
+  selected_geography,
   selected_provider,
   selected_strategy,
   selected_year
 ) {
   # load static data items
   procedures_lookup <- readr::read_csv(
-    app_sys("app", "data", "procedures.csv"),
+    app_sys("app", "reference", "procedures.csv"),
     col_types = "c"
   )
 
   # return the shiny module
   shiny::moduleServer(id, function(input, output, session) {
-    procedures_data <- shiny::reactive({
-      inputs_data()[["procedures"]]
-    })
-
     procedures_prepared <- shiny::reactive({
-      df <- shiny::req(procedures_data())
+      geography <- shiny::req(selected_geography())
       provider <- shiny::req(selected_provider())
       strategy <- shiny::req(selected_strategy())
       year <- shiny::req(selected_year())
 
       prepare_procedures_data(
-        df,
         procedures_lookup,
+        geography,
         provider,
         strategy,
         year
@@ -66,13 +80,16 @@ mod_table_procedures_server <- function(
     })
 
     output$procedures_table <- gt::render_gt({
+      df <- procedures_prepared()
+
       shiny::validate(
         shiny::need(
-          !is.null(procedures_prepared()) && nrow(procedures_prepared()) > 0,
+          !is.null(df) && nrow(df) > 0,
           "No procedures to display."
         )
       )
-      procedures_prepared() |> entable_encounters()
+
+      entable_encounters(df)
     })
   })
 }

@@ -5,19 +5,18 @@
 \title{Prepare Data for Procedures Table}
 \usage{
 prepare_procedures_data(
-  procedures_data,
   procedures_lookup,
+  geography,
   provider,
   strategy,
   selected_year
 )
 }
 \arguments{
-\item{procedures_data}{A data.frame. Procedure data read in from Azure.
-Annual procedure counts by provider and strategy.}
-
 \item{procedures_lookup}{A data.frame. Type, code and description for
 procedures.}
+
+\item{geography}{Character. Geography type, either \code{"nhp"} or \code{"la"}.}
 
 \item{provider}{Character. Provider code, e.g. \code{"RCF"}.}
 

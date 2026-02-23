@@ -7,9 +7,7 @@
 plot_rates_box(rates_box_data, y_axis_limits, base_size = 16)
 }
 \arguments{
-\item{rates_box_data}{A data.frame. Rates data read in from Azure and
-processed with \link{generate_rates_baseline_data} to filter for provider,
-strategy and year.}
+\item{rates_box_data}{A data.frame. Rates data}
 
 \item{y_axis_limits}{Numeric vector. Min and max values for the y axis.}
 
