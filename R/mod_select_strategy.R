@@ -5,7 +5,7 @@ mod_select_strategy_ui <- function(id) {
   ns <- shiny::NS(id)
   shiny::tagList(
     shiny::selectInput(
-      ns("strategy_category_select"),
+      ns("strategy_activity_type_select"),
       label = bslib::tooltip(
         trigger = list(
           "Filter by activity type",
@@ -22,10 +22,7 @@ mod_select_strategy_ui <- function(id) {
     shiny::selectInput(
       ns("strategy_select"),
       label = bslib::tooltip(
-        trigger = list(
-          "Choose a TPMA",
-          bsicons::bs_icon("info-circle")
-        ),
+        trigger = list("Choose a TPMA", bsicons::bs_icon("info-circle")),
         md_file_to_html("app", "text", "sidebar-tooltip-selections.md"),
       ),
       choices = NULL
@@ -66,13 +63,13 @@ mod_select_strategy_server <- function(id) {
 
   # return the shiny module
   shiny::moduleServer(id, function(input, output, session) {
-    selected_category <- shiny::reactive({
-      shiny::req(input$strategy_category_select)
-      input$strategy_category_select
+    selected_activity_type <- shiny::reactive({
+      shiny::req(input$strategy_activity_type_select)
+      input$strategy_activity_type_select
     })
 
     shiny::observe({
-      category <- shiny::req(selected_category())
+      category <- shiny::req(selected_activity_type())
 
       strategy_choices <- strategies[[category]] |>
         dplyr::select("name", "strategy") |>
