@@ -5,6 +5,17 @@ mod_select_strategy_ui <- function(id) {
   ns <- shiny::NS(id)
   shiny::tagList(
     shiny::selectInput(
+      ns("strategy_care_shift_select"),
+      label = bslib::tooltip(
+        trigger = list(
+          "Choose a care-shift category",
+          bsicons::bs_icon("info-circle")
+        ),
+        md_file_to_html("app", "text", "sidebar-tooltip-selections.md"),
+      ),
+      choices = NULL
+    ),
+    shiny::selectInput(
       ns("strategy_activity_type_select"),
       label = bslib::tooltip(
         trigger = list(
