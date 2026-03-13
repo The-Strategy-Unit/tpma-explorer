@@ -19,15 +19,7 @@ app_server <- function(input, output, session) {
     "mod_select_strategy"
   )
   selected_year <- shiny::reactive({
-    year <- as.numeric(Sys.getenv("BASELINE_YEAR"))
-
-    if (is.na(year)) {
-      inputs_data()[["rates"]] |>
-        dplyr::pull(.data$fyear) |>
-        max()
-    } else {
-      year
-    }
+    as.numeric(Sys.getenv("BASELINE_YEAR"))
   })
 
   # Data ----
