@@ -76,7 +76,7 @@ mod_select_strategy_get_strategies <- function() {
         "(?<= \\()(IP|OP|AE)(?=-(AA|EF))" # e.g. 'IP' in 'IP-AA-001'
       ) |>
         stringr::str_to_lower(),
-      activity_type_name = dplyr::case_match(
+      activity_type_name = dplyr::recode_values(
         activity_type,
         "ip" ~ "Inpatients",
         "op" ~ "Outpatients",
