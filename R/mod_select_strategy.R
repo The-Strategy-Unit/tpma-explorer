@@ -4,6 +4,17 @@
 mod_select_strategy_ui <- function(id) {
   ns <- shiny::NS(id)
   shiny::tagList(
+    shiny::checkboxInput(
+      ns("strategy_care_shift_check"),
+      label = bslib::tooltip(
+        trigger = list(
+          "Care-shift",
+          bsicons::bs_icon("info-circle")
+        ),
+        md_file_to_html("app", "text", "sidebar-tooltip-selections.md"),
+      ),
+      value = FALSE
+    ),
     shiny::selectInput(
       ns("strategy_activity_type_select"),
       label = bslib::tooltip(
@@ -14,7 +25,6 @@ mod_select_strategy_ui <- function(id) {
         md_file_to_html("app", "text", "sidebar-tooltip-selections.md"),
       ),
       choices = c(
-        # TODO: set this in the server for consistency with other dropdowns?
         "Inpatients" = "ip",
         "Outpatients" = "op",
         "Accident & Emergency" = "ae"
