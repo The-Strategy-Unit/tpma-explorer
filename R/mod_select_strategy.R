@@ -5,7 +5,7 @@ mod_select_strategy_ui <- function(id) {
   ns <- shiny::NS(id)
   shiny::tagList(
     shiny::checkboxInput(
-      ns("strategy_care_shift_check"),
+      ns("strategy_care_shift_checkbox"),
       label = bslib::tooltip(
         trigger = list(
           "Care-shift",
@@ -83,13 +83,7 @@ mod_select_strategy_get_strategies <- function() {
         "ae" ~ "Accident & Emergency"
       )
     ) |>
-    dplyr::left_join(categories, by = "strategy") |>
-    dplyr::select(
-      # Order columns from broadest to narrowest
-      tidyselect::starts_with("activity_type"),
-      tidyselect::starts_with("category"),
-      tidyselect::starts_with("strategy")
-    )
+    dplyr::left_join(categories, by = "strategy")
 }
 
 #' Select Strategy Server
@@ -111,11 +105,24 @@ mod_select_strategy_server <- function(id) {
       input$strategy_category_select
     })
 
-    observe({
-      activity_type <- req(selected_activity_type())
+    strategies_filtered <- reactive({
+      shiny::req(input$strategy_activity_type_select)
 
-      category_choices <- strategies_lookup |>
-        dplyr::filter(.data$activity_type == .env$activity_type) |>
+      strategies_lookup <- strategies_lookup |>
+        dplyr::filter(
+          .data$activity_type == input$strategy_activity_type_select
+        )
+
+      if (isTRUE(input$strategy_care_shift_checkbox)) {
+        strategies_lookup <- strategies_lookup |>
+          dplyr::filter(.data$is_care_shift)
+      }
+
+      strategies_lookup
+    })
+
+    observe({
+      category_choices <- strategies_filtered() |>
         dplyr::distinct(category_name, category) |>
         tibble::deframe()
 
@@ -127,14 +134,12 @@ mod_select_strategy_server <- function(id) {
     })
 
     observe({
-      activity_type <- req(selected_activity_type())
-      category <- req(selected_category())
+      shiny::req(input$strategy_category_select)
 
-      strategy_choices <- strategies_lookup |>
-        dplyr::filter(
-          .data$activity_type == .env$activity_type,
-          .data$category == .env$category
-        ) |>
+      strategies_filtered <- strategies_filtered() |>
+        dplyr::filter(.data$category == input$strategy_category_select)
+
+      strategy_choices <- strategies_filtered |>
         dplyr::select(strategy_name, strategy) |>
         tibble::deframe()
 
@@ -142,15 +147,6 @@ mod_select_strategy_server <- function(id) {
         session,
         "strategy_select",
         choices = strategy_choices
-      )
-    })
-
-    shiny::onRestored(function(state) {
-      # Enforce loading of selection when restoring from a bookmark
-      shiny::updateSelectInput(
-        session,
-        "strategy_select",
-        selected = state$input$strategy_select
       )
     })
 
