@@ -139,9 +139,15 @@ mod_select_strategy_server <- function(id) {
         dplyr::select("strategy_name", "strategy") |>
         tibble::deframe()
 
+      shiny::req(strategy_choices)
+
       # A bookmark restore will have changed this reactiveVal to a strategy
       # value, otherwise it remains NULL
       selected_value <- pending_strategy()
+
+      if (!(selected_value %||% "") %in% strategy_choices) {
+        selected_value <- NULL
+      }
 
       shiny::updateSelectInput(
         session,
@@ -149,7 +155,14 @@ mod_select_strategy_server <- function(id) {
         choices = strategy_choices,
         selected = selected_value # if NULL, default to first available option
       )
-    })
+    }) |>
+      shiny::bindEvent(input$strategy_category_select)
+
+    shiny::observe({
+      selected_strategy <- input$strategy_select
+      pending_strategy(selected_strategy)
+    }) |>
+      shiny::bindEvent(input$strategy_select)
 
     shiny::onRestored(function(state) {
       # Store the bookmarked value. The category dropdown will be updated below,
