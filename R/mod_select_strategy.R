@@ -8,7 +8,7 @@ mod_select_strategy_ui <- function(id) {
       ns("strategy_care_shift_checkbox"),
       label = bslib::tooltip(
         trigger = list(
-          "Care-shift",
+          "Filter for care-shift TPMAs",
           bsicons::bs_icon("info-circle")
         ),
         md_file_to_html("app", "text", "sidebar-tooltip-selections.md"),
@@ -34,7 +34,7 @@ mod_select_strategy_ui <- function(id) {
       ns("strategy_category_select"),
       label = bslib::tooltip(
         trigger = list(
-          "Filter by category",
+          "Filter by TPMA category",
           bsicons::bs_icon("info-circle")
         ),
         md_file_to_html("app", "text", "sidebar-tooltip-selections.md"),
@@ -95,6 +95,9 @@ mod_select_strategy_server <- function(id) {
 
   # return the shiny module
   shiny::moduleServer(id, function(input, output, session) {
+    # A value to hold the bookmarked option if there's one being restored
+    pending_strategy <- shiny::reactiveVal(NULL) # does nothing if not restoring
+
     selected_activity_type <- shiny::reactive({
       shiny::req(input$strategy_activity_type_select)
       input$strategy_activity_type_select
@@ -105,13 +108,11 @@ mod_select_strategy_server <- function(id) {
       input$strategy_category_select
     })
 
-    strategies_filtered <- reactive({
+    strategies_filtered <- shiny::reactive({
       shiny::req(input$strategy_activity_type_select)
 
       strategies_lookup <- strategies_lookup |>
-        dplyr::filter(
-          .data$activity_type == input$strategy_activity_type_select
-        )
+        dplyr::filter(.data$activity_type == input$strategy_activity_type_select)
 
       if (isTRUE(input$strategy_care_shift_checkbox)) {
         strategies_lookup <- strategies_lookup |>
@@ -121,32 +122,47 @@ mod_select_strategy_server <- function(id) {
       strategies_lookup
     })
 
-    observe({
+    shiny::observe({
       category_choices <- strategies_filtered() |>
         dplyr::distinct(category_name, category) |>
         tibble::deframe()
 
-      updateSelectInput(
+      shiny::updateSelectInput(
         session,
         "strategy_category_select",
         choices = category_choices
       )
     })
 
-    observe({
+    shiny::observe({
       shiny::req(input$strategy_category_select)
 
-      strategies_filtered <- strategies_filtered() |>
-        dplyr::filter(.data$category == input$strategy_category_select)
-
-      strategy_choices <- strategies_filtered |>
+      strategy_choices <- strategies_filtered() |>
+        dplyr::filter(.data$category == input$strategy_category_select) |>
         dplyr::select(strategy_name, strategy) |>
         tibble::deframe()
 
-      updateSelectInput(
+      # A bookmark restore will have changed this reactiveVal to a strategy
+      # value, otherwise it remains NULL
+      selected_value <- pending_strategy()
+
+      shiny::updateSelectInput(
         session,
         "strategy_select",
-        choices = strategy_choices
+        choices = strategy_choices,
+        selected = selected_value # if NULL, default to first available option
+      )
+    })
+
+    shiny::onRestored(function(state) {
+      # Store the bookmarked value. The category dropdown will be updated below,
+      # which will then result in the restored strategy being selected.
+      pending_strategy(state$input$strategy_select)
+
+      shiny::updateSelectInput(
+        session,
+        "strategy_category_select",
+        selected = state$input$strategy_category_select
       )
     })
 
