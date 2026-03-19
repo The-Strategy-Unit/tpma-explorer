@@ -52,7 +52,7 @@ mod_select_strategy_ui <- function(id) {
   )
 }
 
-#' Prepare Table of Options for Drodown Menus
+#' Prepare Table of Options for Dropdown Menus
 #'
 #' Reads the local mitigator-categories.csv and mitigators.json files. Extracts
 #' names and categories into a single lookup table that can be filtered to help
@@ -82,7 +82,7 @@ mod_select_strategy_get_strategies <- function() {
       ) |>
         stringr::str_to_lower(),
       activity_type_name = dplyr::recode_values(
-        activity_type,
+        .data$activity_type,
         "ip" ~ "Inpatients",
         "op" ~ "Outpatients",
         "ae" ~ "Accident & Emergency"
@@ -96,18 +96,20 @@ mod_select_strategy_get_strategies <- function() {
 #' @noRd
 mod_select_strategy_server <- function(id) {
   # load static data items
-  strategies_lookup <- mod_select_strategy_get_strategies()
+  strategies_lookup <- mod_select_strategy_get_strategies() # nolint: object_usage_linter.
 
   # return the shiny module
   shiny::moduleServer(id, function(input, output, session) {
     # A value to hold the bookmarked option if there's one being restored
     pending_strategy <- shiny::reactiveVal(NULL) # does nothing if not restoring
 
-    selected_category <- shiny::reactive({
-      shiny::req(input$strategy_category_select)
-      input$strategy_category_select
-    })
+    strategies_filtered <- shiny::reactive({
+      shiny::req(input$strategy_activity_type_select)
 
+      strategies_lookup <- strategies_lookup |>
+        dplyr::filter(
+          .data$activity_type == input$strategy_activity_type_select
+        )
 
       if (isTRUE(input$strategy_care_shift_checkbox)) {
         strategies_lookup <- strategies_lookup |>
@@ -119,7 +121,7 @@ mod_select_strategy_server <- function(id) {
 
     shiny::observe({
       category_choices <- strategies_filtered() |>
-        dplyr::distinct(category_name, category) |>
+        dplyr::distinct(.data$category_name, .data$category) |>
         tibble::deframe()
 
       shiny::updateSelectInput(
@@ -134,7 +136,7 @@ mod_select_strategy_server <- function(id) {
 
       strategy_choices <- strategies_filtered() |>
         dplyr::filter(.data$category == input$strategy_category_select) |>
-        dplyr::select(strategy_name, strategy) |>
+        dplyr::select("strategy_name", "strategy") |>
         tibble::deframe()
 
       # A bookmark restore will have changed this reactiveVal to a strategy
