@@ -103,11 +103,6 @@ mod_select_strategy_server <- function(id) {
     # A value to hold the bookmarked option if there's one being restored
     pending_strategy <- shiny::reactiveVal(NULL) # does nothing if not restoring
 
-    selected_activity_type <- shiny::reactive({
-      shiny::req(input$strategy_activity_type_select)
-      input$strategy_activity_type_select
-    })
-
     selected_category <- shiny::reactive({
       shiny::req(input$strategy_category_select)
       input$strategy_category_select
