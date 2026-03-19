@@ -63,7 +63,12 @@ mod_select_strategy_ui <- function(id) {
 mod_select_strategy_get_strategies <- function() {
   # Read local lookups
   categories <- app_sys("app", "data", "mitigator-categories.csv") |>
-    readr::read_csv(col_types = "c")
+    readr::read_csv(
+      col_types = readr::cols(
+        .default = "c",
+        is_care_shift = readr::col_logical()
+      )
+    )
   strategies <- app_sys("app", "data", "mitigators.json") |>
     yyjsonr::read_json_file()
 
