@@ -108,11 +108,6 @@ mod_select_strategy_server <- function(id) {
       input$strategy_category_select
     })
 
-    strategies_filtered <- shiny::reactive({
-      shiny::req(input$strategy_activity_type_select)
-
-      strategies_lookup <- strategies_lookup |>
-        dplyr::filter(.data$activity_type == input$strategy_activity_type_select)
 
       if (isTRUE(input$strategy_care_shift_checkbox)) {
         strategies_lookup <- strategies_lookup |>
