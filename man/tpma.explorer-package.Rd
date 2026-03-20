@@ -24,5 +24,10 @@ Authors:
   \item Tom Jemmett \email{thomas.jemmett@nhs.net}
 }
 
+Other contributors:
+\itemize{
+  \item Claire Welsh \email{claire.welsh8@nhs.net} [contributor]
+}
+
 }
 \keyword{internal}
