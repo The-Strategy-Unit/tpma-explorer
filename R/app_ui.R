@@ -24,12 +24,16 @@ app_ui <- function(request) {
           title = "Types of Potentially-Mitigatable Activity (TPMAs)",
           icon = bsicons::bs_icon("hospital"),
           mod_select_strategy_ui("mod_select_strategy")
+        ),
+        bslib::accordion_panel(
+          title = "Bookmark",
+          icon = bsicons::bs_icon("bookmark"),
+          shiny::bookmarkButton(
+            label = "Generate shareable URL",
+            title = "Bookmark your selections and get a URL for sharing",
+            icon = NULL
+          )
         )
-      ),
-      shiny::bookmarkButton(
-        label = "Bookmark",
-        title = "Bookmark your selections and get a URL for sharing",
-        icon = bsicons::bs_icon("bookmark"),
       )
     ),
 
