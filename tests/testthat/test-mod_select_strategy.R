@@ -87,14 +87,14 @@ test_that("it calls mod_select_strategy_get_strategies", {
   })
 })
 
-test_that("selected_category", {
+test_that("selected_activity_type", {
   # arrange
   setup_mod_select_strategy_server()
 
   # act
   shiny::testServer(mod_select_strategy_server, {
-    session$setInputs("strategy_category_select" = "ip")
-    actual <- selected_category()
+    session$setInputs("strategy_activity_type_select" = "ip")
+    actual <- selected_activity_type()
 
     # assert
     expect_equal(actual, "ip")
@@ -113,7 +113,7 @@ test_that("it updates the strategy_select choices", {
   # act
   shiny::testServer(mod_select_strategy_server, {
     # assert
-    session$setInputs("strategy_category_select" = "ip")
+    session$setInputs("strategy_activity_type_select" = "ip")
     expect_called(m, 1)
     expect_args(
       m,
@@ -124,7 +124,7 @@ test_that("it updates the strategy_select choices", {
     )
 
     # assert
-    session$setInputs("strategy_category_select" = "op")
+    session$setInputs("strategy_activity_type_select" = "op")
     expect_called(m, 2)
     expect_args(
       m,

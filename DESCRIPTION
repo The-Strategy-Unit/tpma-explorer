@@ -3,7 +3,8 @@ Title: Explore Opportunities to Reduce Hospital Care
 Version: 0.4.0.9000
 Authors@R: c(
     person("Matt", "Dray", , "matt.dray@nhs.net", role = c("aut", "cre")),
-    person("Tom", "Jemmett", , "thomas.jemmett@nhs.net", role = "aut")
+    person("Tom", "Jemmett", , "thomas.jemmett@nhs.net", role = "aut"),
+    person("Claire", "Welsh", , "claire.welsh8@nhs.net", role = "ctb")
   )
 Description: A Shiny-app-in-a-package to explore data related to Types of
     Potentially-Mitigatable Activity (TPMAs) with the goal of finding

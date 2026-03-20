@@ -14,11 +14,11 @@ prepare_age_sex_data <- function(age_sex_data) {
         .data[["age_group"]],
         levels = .env[["age_fct"]]
       ),
-      sex = dplyr::case_match(
+      sex = dplyr::recode_values(
         .data[["sex"]],
         "1" ~ "Males",
         "2" ~ "Females",
-        .default = NA_character_
+        default = NA_character_
       ),
       sex = factor(.data[["sex"]], levels = c("Males", "Females")),
       dplyr::across(
