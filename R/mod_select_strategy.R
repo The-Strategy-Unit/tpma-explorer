@@ -6,7 +6,13 @@ mod_select_strategy_ui <- function(id) {
   shiny::tagList(
     shiny::checkboxInput(
       ns("strategy_care_shift_checkbox"),
-      "Filter for care-shift TPMAs",
+      label = bslib::tooltip(
+        trigger = list(
+          "Filter for care-shift TPMAs",
+          bsicons::bs_icon("info-circle")
+        ),
+        md_file_to_html("app", "text", "sidebar-tooltip-checkbox.md"),
+      ),
       value = FALSE
     ),
     shiny::selectInput(
