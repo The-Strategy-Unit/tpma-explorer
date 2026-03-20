@@ -82,6 +82,11 @@ app_ui <- function(request) {
             md_file_to_html("app", "text", "info-purpose.md")
           ),
           bslib::card(
+            id = "card_related",
+            bslib::card_header("Related"),
+            md_file_to_html("app", "text", "info-related.md")
+          ),
+          bslib::card(
             id = "card_data",
             bslib::card_header("Data"),
             md_file_to_html("app", "text", "info-data.md")
