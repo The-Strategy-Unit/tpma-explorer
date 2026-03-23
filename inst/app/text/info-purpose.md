@@ -1,3 +1,1 @@
 View data summaries for **Types of Potentially-Mitigatable Activity (TPMAs)** for statistical units within different geographies. This may, for example, help set parameters for New Hospital Programme (NHP) modelling or identify care-shift opportunities.
-
-You can [view a report](https://connect.strategyunitwm.nhs.uk/nhp/CPMA_community/_book/) prepared by The Strategy Unit on the scale, trends, and regional variations of potentially mitigatable hospital activity at national and Integrated Care Board (ICB) levels.

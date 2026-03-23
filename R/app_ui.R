@@ -8,6 +8,35 @@ app_ui <- function(request) {
     selected = "Visualisations", # start with this panel open
     fillable = FALSE, # allow page scroll
 
+    sidebar = bslib::sidebar(
+      width = 400,
+      bslib::accordion(
+        id = "sidebar_accordion",
+        open = FALSE,
+        multiple = TRUE,
+        bslib::accordion_panel(
+          title = "Datasets",
+          icon = bsicons::bs_icon("table"),
+          mod_select_geography_ui("mod_select_geography"),
+          mod_select_provider_ui("mod_select_provider"),
+        ),
+        bslib::accordion_panel(
+          title = "Types of Potentially-Mitigatable Activity (TPMAs)",
+          icon = bsicons::bs_icon("hospital"),
+          mod_select_strategy_ui("mod_select_strategy")
+        ),
+        bslib::accordion_panel(
+          title = "Bookmark",
+          icon = bsicons::bs_icon("bookmark"),
+          shiny::bookmarkButton(
+            label = "Generate shareable URL",
+            title = "Bookmark your selections and get a URL for sharing",
+            icon = NULL
+          )
+        )
+      )
+    ),
+
     bslib::nav_panel(
       id = "nav_panel_viz",
       title = "Visualisations",
@@ -51,6 +80,11 @@ app_ui <- function(request) {
             id = "card_purpose",
             bslib::card_header("Purpose"),
             md_file_to_html("app", "text", "info-purpose.md")
+          ),
+          bslib::card(
+            id = "card_related",
+            bslib::card_header("Related"),
+            md_file_to_html("app", "text", "info-related.md")
           ),
           bslib::card(
             id = "card_data",
@@ -99,30 +133,6 @@ app_ui <- function(request) {
         class = "nav-link",
         bsicons::bs_icon("chat-dots"),
         "Give feedback"
-      )
-    ),
-
-    sidebar = bslib::sidebar(
-      bslib::accordion(
-        id = "sidebar_accordion",
-        open = FALSE,
-        multiple = TRUE,
-        bslib::accordion_panel(
-          title = "Datasets",
-          icon = bsicons::bs_icon("table"),
-          mod_select_geography_ui("mod_select_geography"),
-          mod_select_provider_ui("mod_select_provider"),
-        ),
-        bslib::accordion_panel(
-          title = "Types of Potentially-Mitigatable Activity (TPMAs)",
-          icon = bsicons::bs_icon("hospital"),
-          mod_select_strategy_ui("mod_select_strategy")
-        )
-      ),
-      shiny::bookmarkButton(
-        label = "Bookmark",
-        title = "Bookmark your selections and get a URL for sharing",
-        icon = bsicons::bs_icon("bookmark"),
       )
     )
   )

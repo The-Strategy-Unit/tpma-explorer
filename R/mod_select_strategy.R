@@ -6,7 +6,13 @@ mod_select_strategy_ui <- function(id) {
   shiny::tagList(
     shiny::checkboxInput(
       ns("strategy_care_shift_checkbox"),
-      "Filter for care-shift TPMAs",
+      label = bslib::tooltip(
+        trigger = list(
+          "Filter for care-shift TPMAs",
+          bsicons::bs_icon("info-circle")
+        ),
+        md_file_to_html("app", "text", "sidebar-tooltip-careshift.md"),
+      ),
       value = FALSE
     ),
     shiny::selectInput(
@@ -16,7 +22,7 @@ mod_select_strategy_ui <- function(id) {
           "Filter by activity type",
           bsicons::bs_icon("info-circle")
         ),
-        md_file_to_html("app", "text", "sidebar-tooltip-selections.md"),
+        md_file_to_html("app", "text", "sidebar-tooltip-activity.md"),
       ),
       choices = c(
         "Inpatients" = "ip",
@@ -31,7 +37,7 @@ mod_select_strategy_ui <- function(id) {
           "Filter by TPMA category",
           bsicons::bs_icon("info-circle")
         ),
-        md_file_to_html("app", "text", "sidebar-tooltip-selections.md"),
+        md_file_to_html("app", "text", "sidebar-tooltip-category.md"),
       ),
       choices = NULL
     ),
@@ -39,7 +45,7 @@ mod_select_strategy_ui <- function(id) {
       ns("strategy_select"),
       label = bslib::tooltip(
         trigger = list("Choose a TPMA", bsicons::bs_icon("info-circle")),
-        md_file_to_html("app", "text", "sidebar-tooltip-selections.md"),
+        md_file_to_html("app", "text", "sidebar-tooltip-tpma.md"),
       ),
       choices = NULL
     )
