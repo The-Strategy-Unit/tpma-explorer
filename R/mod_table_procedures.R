@@ -30,7 +30,7 @@ mod_table_procedures_data <- function(
 ) {
   filename <- app_sys("app", "data", selected_geography, "procedures.parquet")
 
-  arrow::read_parquet(filename, as_data_frame = FALSE) |>
+  arrow::open_dataset(filename) |>
     dplyr::filter(
       .data$provider == selected_provider,
       .data$strategy == selected_strategy,

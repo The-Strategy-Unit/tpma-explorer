@@ -19,7 +19,7 @@ generate_rates_funnel_data <- function(
 
   filename <- app_sys("app", "data", geography, "rates.parquet")
 
-  df <- arrow::read_parquet(filename, as_data_frame = FALSE) |>
+  df <- arrow::open_dataset(filename) |>
     dplyr::filter(
       .data$strategy == .env$selected_strategy,
       .data$fyear == .env$selected_year,
@@ -69,7 +69,7 @@ generate_rates_trend_data <- function(
 
   filename <- app_sys("app", "data", geography, "rates.parquet")
 
-  arrow::read_parquet(filename, as_data_frame = FALSE) |>
+  arrow::open_dataset(filename) |>
     dplyr::filter(
       .data$provider %in% c(.env$selected_provider, .env$peers_lookup),
       .data$strategy == .env$selected_strategy

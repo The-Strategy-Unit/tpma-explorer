@@ -19,7 +19,7 @@ prepare_procedures_data <- function(
 
   filename <- app_sys("app", "data", geography, "procedures.parquet")
 
-  procedures_filtered <- arrow::read_parquet(filename, as_data_frame = FALSE) |>
+  procedures_filtered <- arrow::open_dataset(filename) |>
     dplyr::filter(
       .data$provider == .env$provider,
       .data$strategy == .env$strategy,
@@ -78,7 +78,7 @@ prepare_diagnoses_data <- function(
 
   filename <- app_sys("app", "data", geography, "diagnoses.parquet")
 
-  diagnoses_filtered <- arrow::read_parquet(filename, as_data_frame = FALSE) |>
+  diagnoses_filtered <- arrow::open_dataset(filename) |>
     dplyr::filter(
       .data$provider == .env$provider,
       .data$strategy == .env$strategy,
