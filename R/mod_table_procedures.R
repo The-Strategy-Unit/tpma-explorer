@@ -28,9 +28,7 @@ mod_table_procedures_data <- function(
   selected_strategy,
   selected_year
 ) {
-  filename <- app_sys("app", "data", selected_geography, "procedures.parquet")
-
-  arrow::open_dataset(filename) |>
+  get_arrow_dataset(selected_geography, "procedures") |>
     dplyr::filter(
       .data$provider == selected_provider,
       .data$strategy == selected_strategy,

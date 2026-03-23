@@ -48,11 +48,7 @@ mod_plot_age_sex_pyramid_server <- function(
       strategy <- shiny::req(selected_strategy())
       year <- shiny::req(selected_year())
 
-      geography <- switch(geography, "nhp" = "provider", "la" = "lad23cd")
-
-      filename <- app_sys("app", "data", geography, "age_sex.parquet")
-
-      arrow::read_parquet(filename, as_data_frame = FALSE) |>
+      get_arrow_dataset(geography, "age_sex") |>
         dplyr::filter(
           .data$provider == .env$provider,
           .data$strategy == .env$strategy,

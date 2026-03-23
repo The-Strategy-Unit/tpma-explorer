@@ -15,11 +15,7 @@ prepare_procedures_data <- function(
   strategy,
   selected_year
 ) {
-  geography <- switch(geography, "nhp" = "provider", "la" = "lad23cd")
-
-  filename <- app_sys("app", "data", geography, "procedures.parquet")
-
-  procedures_filtered <- arrow::open_dataset(filename) |>
+  procedures_filtered <- get_arrow_dataset(geography, "procedures") |>
     dplyr::filter(
       .data$provider == .env$provider,
       .data$strategy == .env$strategy,
@@ -74,11 +70,7 @@ prepare_diagnoses_data <- function(
   strategy,
   selected_year
 ) {
-  geography <- switch(geography, "nhp" = "provider", "la" = "lad23cd")
-
-  filename <- app_sys("app", "data", geography, "diagnoses.parquet")
-
-  diagnoses_filtered <- arrow::open_dataset(filename) |>
+  diagnoses_filtered <- get_arrow_dataset(geography, "diagnoses") |>
     dplyr::filter(
       .data$provider == .env$provider,
       .data$strategy == .env$strategy,

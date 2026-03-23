@@ -99,3 +99,28 @@ md_file_to_html <- function(...) {
 md_string_to_html <- function(text) {
   shiny::HTML(markdown::mark_html(text, output = FALSE, template = FALSE))
 }
+
+
+# ------------------------------------------------------------------------------
+.arrow_dataset_cache <- new.env(parent = emptyenv())
+
+#' Get an Arrow Dataset
+#'
+#' This function loads a parquet file as an Arrow dataset and caches it in
+#' memory for future use.
+#'
+#' @param geography Character. Either "nhp" or "la", used to determine the file
+#'     path.
+#' @param dataset_name Character. The name of the dataset, e.g. "rates".
+#' @return An Arrow dataset object.
+get_arrow_dataset <- function(geography, dataset_name) {
+  geo_dir <- switch(geography, "nhp" = "provider", "la" = "lad23cd")
+  key <- paste0(geo_dir, "::", dataset_name)
+
+  if (!exists(key, envir = .arrow_dataset_cache, inherits = FALSE)) {
+    path <- app_sys("app", "data", geo_dir, paste0(dataset_name, ".parquet"))
+    assign(key, arrow::open_dataset(path), envir = .arrow_dataset_cache)
+  }
+
+  get(key, envir = .arrow_dataset_cache, inherits = FALSE)
+}

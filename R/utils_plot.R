@@ -15,11 +15,7 @@ generate_rates_funnel_data <- function(
   providers_lookup,
   peers_lookup
 ) {
-  geography <- switch(selected_geography, "nhp" = "provider", "la" = "lad23cd")
-
-  filename <- app_sys("app", "data", geography, "rates.parquet")
-
-  df <- arrow::open_dataset(filename) |>
+  df <- get_arrow_dataset(selected_geography, "rates") |>
     dplyr::filter(
       .data$strategy == .env$selected_strategy,
       .data$fyear == .env$selected_year,
@@ -65,11 +61,7 @@ generate_rates_trend_data <- function(
   selected_strategy,
   peers_lookup
 ) {
-  geography <- switch(selected_geography, "nhp" = "provider", "la" = "lad23cd")
-
-  filename <- app_sys("app", "data", geography, "rates.parquet")
-
-  arrow::open_dataset(filename) |>
+  get_arrow_dataset(selected_geography, "rates") |>
     dplyr::filter(
       .data$provider %in% c(.env$selected_provider, .env$peers_lookup),
       .data$strategy == .env$selected_strategy

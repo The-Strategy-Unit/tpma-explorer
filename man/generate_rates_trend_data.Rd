@@ -7,7 +7,8 @@
 generate_rates_trend_data(
   selected_geography,
   selected_provider,
-  selected_strategy
+  selected_strategy,
+  peers_lookup
 )
 }
 \arguments{
