@@ -4,13 +4,13 @@
 \alias{get_all_geo_data}
 \title{Read Inputs Datasets for All Geographies}
 \usage{
-get_all_geo_data(geography, fyear)
+get_all_geo_data(geography_folder, fyear)
 }
 \arguments{
+\item{fyear}{Numeric. The financial year to filter the data to.}
+
 \item{geography}{Character. The geography level for which the user wants to
 select a provider. Either "nhp" or "la".}
-
-\item{fyear}{Numeric. The financial year to filter the data to.}
 }
 \value{
 A list. One element for each dataframes of data.

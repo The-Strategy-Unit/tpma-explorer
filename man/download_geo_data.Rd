@@ -4,11 +4,22 @@
 \alias{download_geo_data}
 \title{Download Inputs Datasets for Specific Geography}
 \usage{
-download_geo_data(geography)
+download_geo_data(
+  geography_folder,
+  data_version = Sys.getenv("DATA_VERSION", "dev"),
+  redownload = FALSE
+)
 }
 \arguments{
-\item{geography}{Character. The geography level for which the user wants to
-select a provider. Either "nhp" or "la".}
+\item{geography_folder}{Character. The geography level of the data to
+download. Either "provider" or "lad23cd".}
+
+\item{data_version}{Character. The version of the data to download. By
+default, uses the value of the "DATA_VERSION" environment variable, or
+"dev" if that variable is not set.}
+
+\item{redownload}{Logical. Whether to redownload the data if it already
+exists. By default, FALSE.}
 }
 \value{
 A list. The filenames of the downloaded datasets.

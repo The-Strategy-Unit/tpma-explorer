@@ -35,7 +35,7 @@ get_container <- function(
 #' @param fyear Numeric. The financial year to filter the data to.
 #' @return A list. One element for each dataframes of data.
 #' @export
-get_all_geo_data <- function(geography, fyear) {
+get_all_geo_data <- function(geography_folder, fyear) {
   inputs_container <- get_container()
 
   data_types <- purrr::set_names(c(
@@ -44,12 +44,6 @@ get_all_geo_data <- function(geography, fyear) {
     "procedures",
     "rates"
   ))
-
-  geography_folder <- switch(
-    geography,
-    "nhp" = "provider",
-    "la" = "lad23cd"
-  )
 
   stopifnot(
     "Unknown geography" = !is.null(geography_folder)
@@ -82,13 +76,16 @@ get_all_geo_data <- function(geography, fyear) {
 
 
 #' Download Inputs Datasets for Specific Geography
-#' @param geography Character. The geography level for which the user wants to
-#'     select a provider. Either "nhp" or "la".
+#' @param geography_folder Character. The geography level of the data to
+#'     download. Either "provider" or "lad23cd".
+#' @param data_version Character. The version of the data to download. By
+#'     default, uses the value of the "DATA_VERSION" environment variable, or
+#'     "dev" if that variable is not set.
+#' @param redownload Logical. Whether to redownload the data if it already
+#'     exists. By default, FALSE.
 #' @return A list. The filenames of the downloaded datasets.
 #' @export
-download_geo_data <- function(geography) {
-  inputs_container <- get_container()
-
+download_geo_data <- function(geography_folder, data_version = Sys.getenv("DATA_VERSION", "dev"), redownload = FALSE) {
   data_types <- purrr::set_names(c(
     "age_sex",
     "diagnoses",
@@ -96,28 +93,21 @@ download_geo_data <- function(geography) {
     "rates"
   ))
 
-  geography_folder <- switch(
-    geography,
-    "nhp" = "provider",
-    "la" = "lad23cd"
-  )
-
-  stopifnot(
-    "Unknown geography" = !is.null(geography_folder)
-  )
-
   data_path <- file.path(app_sys("app"), "data", geography_folder)
+
+  if (dir.exists(data_path) && !redownload) {
+    return(invisible(NULL))
+  }
 
   if (!dir.exists(data_path)) {
     dir.create(data_path, recursive = TRUE)
   }
 
-  container_dir <- file.path(
-    Sys.getenv("DATA_VERSION", "dev"),
-    geography_folder
-  )
+  container_dir <- file.path(data_version, geography_folder)
 
   col_renames <- c(provider = "lad23cd")
+
+  inputs_container <- get_container()
 
   data_types |>
     purrr::map(
@@ -149,16 +139,16 @@ download_geo_data <- function(geography) {
         file_name
       }
     )
+
+  invisible(NULL)
 }
 
 #' Download Inputs Datasets for Specific Geography
 #' @export
 download_all_data <- function() {
-  if (!dir.exists(app_sys("app", "data"))) {
-    c("nhp", "la") |>
-      purrr::set_names() |>
-      purrr::map(download_geo_data)
-  }
+  c("provider", "lad23cd") |>
+    purrr::set_names() |>
+    purrr::map(download_geo_data)
 
   invisible(NULL)
 }
