@@ -8,8 +8,13 @@ test_that("prepare_procedures_data returns NULL when no data matches filter", {
     fyear = c(202324, 202324),
     procedure_code = c("P1", "P2"),
     n = c(100, 200),
-    pcnt = c(0.5, 0.5)
+    pcnt = c(0.5, 0.5),
+    total = c(200, 400),
+    rn = c(1, 1)
   )
+
+  m <- mock(procedures_data)
+  testthat::local_mocked_bindings(get_arrow_dataset = m)
 
   procedures_lookup <- data.frame(
     code = c("P1", "P2"),
@@ -18,8 +23,8 @@ test_that("prepare_procedures_data returns NULL when no data matches filter", {
 
   # act
   result <- prepare_procedures_data(
-    procedures_data,
     procedures_lookup,
+    geography = "nhp",
     provider = "XYZ",
     strategy = "strategy1",
     selected_year = 202324
@@ -27,6 +32,9 @@ test_that("prepare_procedures_data returns NULL when no data matches filter", {
 
   # assert
   expect_null(result)
+
+  expect_called(m, 1)
+  expect_args(m, 1, "nhp", "procedures")
 })
 
 test_that("prepare_procedures_data filters and joins data correctly", {
@@ -37,8 +45,13 @@ test_that("prepare_procedures_data filters and joins data correctly", {
     fyear = c(202324, 202324, 202324),
     procedure_code = c("P1", "P2", "P3"),
     n = c(100, 200, 50),
-    pcnt = c(0.4, 0.6, 0.5)
+    pcnt = c(0.4, 0.6, 0.5),
+    total = c(400, 400, 400),
+    rn = c(1, 2, 3)
   )
+
+  m <- mock(procedures_data)
+  testthat::local_mocked_bindings(get_arrow_dataset = m)
 
   procedures_lookup <- data.frame(
     code = c("P1", "P2", "P3"),
@@ -47,8 +60,8 @@ test_that("prepare_procedures_data filters and joins data correctly", {
 
   # act
   result <- prepare_procedures_data(
-    procedures_data,
     procedures_lookup,
+    geography = "nhp",
     provider = "RCF",
     strategy = "strategy1",
     selected_year = 202324
@@ -70,8 +83,13 @@ test_that("prepare_procedures_data handles unknown procedure codes", {
     fyear = c(202324, 202324),
     procedure_code = c("P1", "UNKNOWN"),
     n = c(100, 50),
-    pcnt = c(0.6, 0.4)
+    pcnt = c(0.6, 0.4),
+    total = c(400, 400),
+    rn = c(1, 2)
   )
+
+  m <- mock(procedures_data)
+  testthat::local_mocked_bindings(get_arrow_dataset = m)
 
   procedures_lookup <- data.frame(
     code = c("P1"),
@@ -80,8 +98,8 @@ test_that("prepare_procedures_data handles unknown procedure codes", {
 
   # act
   result <- prepare_procedures_data(
-    procedures_data,
     procedures_lookup,
+    geography = "nhp",
     provider = "RCF",
     strategy = "strategy1",
     selected_year = 202324
@@ -103,8 +121,13 @@ test_that("prepare_procedures_data adds 'Other' row when pcnt_total < 1", {
     fyear = c(202324, 202324),
     procedure_code = c("P1", "P2"),
     n = c(100, 50),
-    pcnt = c(0.4, 0.2)
+    pcnt = c(0.4, 0.2),
+    total = c(400, 400),
+    rn = c(1, 2)
   )
+
+  m <- mock(procedures_data)
+  testthat::local_mocked_bindings(get_arrow_dataset = m)
 
   procedures_lookup <- data.frame(
     code = c("P1", "P2"),
@@ -113,8 +136,8 @@ test_that("prepare_procedures_data adds 'Other' row when pcnt_total < 1", {
 
   # act
   result <- prepare_procedures_data(
-    procedures_data,
     procedures_lookup,
+    geography = "nhp",
     provider = "RCF",
     strategy = "strategy1",
     selected_year = 202324
@@ -138,8 +161,13 @@ test_that("prepare_procedures_data does not add 'Other' row when pcnt_total = 1"
     fyear = c(202324, 202324),
     procedure_code = c("P1", "P2"),
     n = c(100, 50),
-    pcnt = c(0.6, 0.4)
+    pcnt = c(0.6, 0.4),
+    total = c(400, 400),
+    rn = c(1, 2)
   )
+
+  m <- mock(procedures_data)
+  testthat::local_mocked_bindings(get_arrow_dataset = m)
 
   procedures_lookup <- data.frame(
     code = c("P1", "P2"),
@@ -148,8 +176,8 @@ test_that("prepare_procedures_data does not add 'Other' row when pcnt_total = 1"
 
   # act
   result <- prepare_procedures_data(
-    procedures_data,
     procedures_lookup,
+    geography = "nhp",
     provider = "RCF",
     strategy = "strategy1",
     selected_year = 202324
@@ -170,8 +198,13 @@ test_that("prepare_diagnoses_data returns NULL when no data matches filter", {
     fyear = c(202324, 202324),
     diagnosis = c("D1", "D2"),
     n = c(100, 200),
-    pcnt = c(0.5, 0.5)
+    pcnt = c(0.5, 0.5),
+    total = c(200, 400),
+    rn = c(1, 1)
   )
+
+  m <- mock(diagnoses_data)
+  testthat::local_mocked_bindings(get_arrow_dataset = m)
 
   diagnoses_lookup <- data.frame(
     diagnosis_code = c("D1", "D2"),
@@ -180,8 +213,8 @@ test_that("prepare_diagnoses_data returns NULL when no data matches filter", {
 
   # act
   result <- prepare_diagnoses_data(
-    diagnoses_data,
     diagnoses_lookup,
+    geography = "nhp",
     provider = "XYZ",
     strategy = "strategy1",
     selected_year = 202324
@@ -189,6 +222,9 @@ test_that("prepare_diagnoses_data returns NULL when no data matches filter", {
 
   # assert
   expect_null(result)
+
+  expect_called(m, 1)
+  expect_args(m, 1, "nhp", "diagnoses")
 })
 
 test_that("prepare_diagnoses_data filters and joins data correctly", {
@@ -199,8 +235,13 @@ test_that("prepare_diagnoses_data filters and joins data correctly", {
     fyear = c(202324, 202324, 202324),
     diagnosis = c("D1", "D2", "D3"),
     n = c(100, 200, 50),
-    pcnt = c(0.4, 0.6, 0.5)
+    pcnt = c(0.4, 0.6, 0.5),
+    total = c(200, 400, 500),
+    rn = c(1, 1, 1)
   )
+
+  m <- mock(diagnoses_data)
+  testthat::local_mocked_bindings(get_arrow_dataset = m)
 
   diagnoses_lookup <- data.frame(
     diagnosis_code = c("D1", "D2", "D3"),
@@ -209,8 +250,8 @@ test_that("prepare_diagnoses_data filters and joins data correctly", {
 
   # act
   result <- prepare_diagnoses_data(
-    diagnoses_data,
     diagnoses_lookup,
+    geography = "nhp",
     provider = "RCF",
     strategy = "strategy1",
     selected_year = 202324
@@ -232,8 +273,13 @@ test_that("prepare_diagnoses_data handles unknown diagnosis codes", {
     fyear = c(202324, 202324),
     diagnosis = c("D1", "UNKNOWN"),
     n = c(100, 50),
-    pcnt = c(0.6, 0.4)
+    pcnt = c(0.6, 0.4),
+    total = c(200, 400),
+    rn = c(1, 1)
   )
+
+  m <- mock(diagnoses_data)
+  testthat::local_mocked_bindings(get_arrow_dataset = m)
 
   diagnoses_lookup <- data.frame(
     diagnosis_code = c("D1"),
@@ -242,8 +288,8 @@ test_that("prepare_diagnoses_data handles unknown diagnosis codes", {
 
   # act
   result <- prepare_diagnoses_data(
-    diagnoses_data,
     diagnoses_lookup,
+    geography = "nhp",
     provider = "RCF",
     strategy = "strategy1",
     selected_year = 202324
@@ -265,8 +311,13 @@ test_that("prepare_diagnoses_data adds 'Other' row when pcnt_total < 1", {
     fyear = c(202324, 202324),
     diagnosis = c("D1", "D2"),
     n = c(100, 50),
-    pcnt = c(0.4, 0.2)
+    pcnt = c(0.4, 0.2),
+    total = c(200, 400),
+    rn = c(1, 1)
   )
+
+  m <- mock(diagnoses_data)
+  testthat::local_mocked_bindings(get_arrow_dataset = m)
 
   diagnoses_lookup <- data.frame(
     diagnosis_code = c("D1", "D2"),
@@ -275,8 +326,8 @@ test_that("prepare_diagnoses_data adds 'Other' row when pcnt_total < 1", {
 
   # act
   result <- prepare_diagnoses_data(
-    diagnoses_data,
     diagnoses_lookup,
+    geography = "nhp",
     provider = "RCF",
     strategy = "strategy1",
     selected_year = 202324
@@ -300,8 +351,13 @@ test_that("prepare_diagnoses_data does not add 'Other' row when pcnt_total = 1",
     fyear = c(202324, 202324),
     diagnosis = c("D1", "D2"),
     n = c(100, 50),
-    pcnt = c(0.6, 0.4)
+    pcnt = c(0.6, 0.4),
+    total = c(200, 400),
+    rn = c(1, 1)
   )
+
+  m <- mock(diagnoses_data)
+  testthat::local_mocked_bindings(get_arrow_dataset = m)
 
   diagnoses_lookup <- data.frame(
     diagnosis_code = c("D1", "D2"),
@@ -310,8 +366,8 @@ test_that("prepare_diagnoses_data does not add 'Other' row when pcnt_total = 1",
 
   # act
   result <- prepare_diagnoses_data(
-    diagnoses_data,
     diagnoses_lookup,
+    geography = "nhp",
     provider = "RCF",
     strategy = "strategy1",
     selected_year = 202324
@@ -330,8 +386,13 @@ test_that("prepare_diagnoses_data filters by correct year", {
     fyear = c(202324, 202425, 202324),
     diagnosis = c("D1", "D2", "D3"),
     n = c(100, 200, 50),
-    pcnt = c(0.5, 0.5, 0.5)
+    pcnt = c(0.5, 0.5, 0.5),
+    total = c(200, 400, 500),
+    rn = c(1, 1, 1)
   )
+
+  m <- mock(diagnoses_data)
+  testthat::local_mocked_bindings(get_arrow_dataset = m)
 
   diagnoses_lookup <- data.frame(
     diagnosis_code = c("D1", "D2", "D3"),
@@ -340,8 +401,8 @@ test_that("prepare_diagnoses_data filters by correct year", {
 
   # act
   result <- prepare_diagnoses_data(
-    diagnoses_data,
     diagnoses_lookup,
+    geography = "nhp",
     provider = "RCF",
     strategy = "strategy1",
     selected_year = 202324
