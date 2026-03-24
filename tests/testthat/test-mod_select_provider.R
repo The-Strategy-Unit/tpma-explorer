@@ -27,8 +27,8 @@ test_that("providers reactive", {
   m <- mock("providers nhp", "providers la")
 
   testthat::local_mocked_bindings(
-    "read_json" = m,
-    .package = "jsonlite"
+    "read_json_file" = m,
+    .package = "yyjsonr"
   )
   testthat::local_mocked_bindings(
     "app_sys" = \(...) file.path("inst", ...),
@@ -55,14 +55,12 @@ test_that("providers reactive", {
       expect_args(
         m,
         1,
-        "inst/app/data/nhp-datasets.json",
-        simplify_vector = TRUE
+        "inst/app/reference/nhp-datasets.json"
       )
       expect_args(
         m,
         2,
-        "inst/app/data/la-datasets.json",
-        simplify_vector = TRUE
+        "inst/app/reference/la-datasets.json"
       )
     }
   )
@@ -79,11 +77,11 @@ test_that("it updates the select input", {
 
   # mock what will happen to providers as we change the selected geography
   testthat::local_mocked_bindings(
-    "read_json" = mock(
+    "read_json_file" = mock(
       list("A" = "a", "B" = "b"),
       list("C" = "c", "D" = "d")
     ),
-    .package = "jsonlite"
+    .package = "yyjsonr"
   )
 
   # act
@@ -102,7 +100,6 @@ test_that("it updates the select input", {
         1,
         session,
         "provider_select",
-        label = "Choose a trust:",
         choices = c("a" = "A", "b" = "B")
       )
 
@@ -114,7 +111,6 @@ test_that("it updates the select input", {
         2,
         session,
         "provider_select",
-        label = "Choose an LA:",
         choices = c("c" = "C", "d" = "D")
       )
     }
