@@ -1,4 +1,4 @@
-test_that("isolate_provider_peers", {
+est_that("isolate_provider_peers", {
   # arrange
   # nolint start
   peers <- tibble::tribble(
