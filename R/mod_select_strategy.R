@@ -155,7 +155,10 @@ mod_select_strategy_server <- function(id) {
     }) |>
       shiny::bindEvent(input$strategy_select)
 
-    shiny::onRestored(function(state) {
+    # handle the onRestored event for bookmarking
+    # cannot directly test onRestored, so separate into a function which can be
+    # tested.
+    restore <- function(state) {
       # Store the bookmarked value. The category dropdown will be updated below,
       # which will then result in the restored strategy being selected.
       pending_strategy(state$input$strategy_select)
@@ -165,7 +168,10 @@ mod_select_strategy_server <- function(id) {
         "strategy_category_select",
         selected = state$input$strategy_category_select
       )
-    })
+
+      invisible(NULL)
+    }
+    shiny::onRestored(restore)
 
     shiny::reactive(input$strategy_select)
   })

@@ -296,3 +296,38 @@ test_that("it updates the pending_strategy when strategy_select changes", {
     expect_equal(pending_strategy(), "b")
   })
 })
+
+test_that("onRestored works correctly", {
+  # arrange
+  setup_mod_select_strategy_server()
+  m_update <- mock()
+  m_restored <- mock()
+  local_mocked_bindings(
+    "updateSelectInput" = m_update,
+    "onRestored" = m_restored,
+    .package = "shiny"
+  )
+
+  # act
+  shiny::testServer(mod_select_strategy_server, {
+    # assert
+    expect_called(m_restored, 1)
+    expect_args(m_restored, 1, restore)
+
+    restore(list(
+      input = list(
+        strategy_category_select = "aa",
+        strategy_select = "a"
+      )
+    ))
+
+    expect_called(m_update, 1)
+    expect_args(
+      m_update,
+      1,
+      session,
+      "strategy_category_select",
+      selected = "aa"
+    )
+  })
+})

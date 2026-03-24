@@ -116,3 +116,41 @@ test_that("it updates the select input", {
     }
   )
 })
+
+test_that("onRestored works correctly", {
+  # arrange
+  m_update <- mock()
+  m_restored <- mock()
+  local_mocked_bindings(
+    "updateSelectInput" = m_update,
+    "onRestored" = m_restored,
+    .package = "shiny"
+  )
+
+  # act
+  shiny::testServer(
+    mod_select_provider_server,
+    args = list(
+      selected_geography = reactiveVal("nhp")
+    ),
+    {
+      # assert
+      expect_called(m_restored, 1)
+      expect_args(m_restored, 1, restore)
+
+      restore(list(
+        input = list(
+          provider_select = "a"
+        )
+      ))
+      expect_called(m_update, 1)
+      expect_args(
+        m_update,
+        1,
+        session,
+        "provider_select",
+        choices = c("a")
+      )
+    }
+  )
+})
