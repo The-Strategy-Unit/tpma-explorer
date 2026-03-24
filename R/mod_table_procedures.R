@@ -22,22 +22,6 @@ mod_table_procedures_ui <- function(id) {
   )
 }
 
-mod_table_procedures_data <- function(
-  selected_geography,
-  selected_provider,
-  selected_strategy,
-  selected_year
-) {
-  get_arrow_dataset(selected_geography, "procedures") |>
-    dplyr::filter(
-      .data$provider == selected_provider,
-      .data$strategy == selected_strategy,
-      .data$fyear == selected_year
-    ) |>
-    dplyr::select("procedure_code", "n", "total", "pcnt", "rn") |>
-    dplyr::collect()
-}
-
 #' Procedures Table Server
 #' @param id Internal parameter for `shiny`.
 #' @param selected_geography Reactive. Selected geography. Either `"nhp"` or
