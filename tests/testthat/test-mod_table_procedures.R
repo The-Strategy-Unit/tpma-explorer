@@ -15,7 +15,7 @@ test_that("it loads the procedures csv", {
   shiny::testServer(
     mod_table_procedures_server,
     args = list(
-      inputs_data = reactiveVal(),
+      selected_geography = reactiveVal("nhp"),
       selected_provider = reactiveVal("R00"),
       selected_strategy = reactiveVal("strategy"),
       selected_year = reactiveVal(1)
@@ -36,28 +36,6 @@ test_that("it loads the procedures csv", {
   )
 })
 
-test_that("procedures_data", {
-  # arrange
-
-  # act
-  shiny::testServer(
-    mod_table_procedures_server,
-    args = list(
-      inputs_data = reactiveVal(inputs_data_sample),
-      selected_provider = reactiveVal("R00"),
-      selected_strategy = reactiveVal("strategy"),
-      selected_year = reactiveVal(1)
-    ),
-    {
-      actual <- procedures_data()
-
-      # assert
-      expect_equal(actual, "procedures")
-    }
-  )
-})
-
-
 test_that("procedures_prepared", {
   # arrange
   testthat::local_mocked_bindings(
@@ -74,7 +52,7 @@ test_that("procedures_prepared", {
   shiny::testServer(
     mod_table_procedures_server,
     args = list(
-      inputs_data = reactiveVal(inputs_data_sample),
+      selected_geography = reactiveVal("nhp"),
       selected_provider = reactiveVal("R00"),
       selected_strategy = reactiveVal("strategy"),
       selected_year = reactiveVal(1)
@@ -85,7 +63,7 @@ test_that("procedures_prepared", {
       # assert
       expect_equal(actual, "procedures_prepared")
       expect_called(m, 1)
-      expect_args(m, 1, "procedures", "procedures_lookup", "R00", "strategy", 1)
+      expect_args(m, 1, "procedures_lookup", "nhp", "R00", "strategy", 1)
     }
   )
 })
@@ -100,7 +78,7 @@ test_that("procedures_table (no rows)", {
   shiny::testServer(
     mod_table_procedures_server,
     args = list(
-      inputs_data = reactiveVal(list(procedures = "procedures")),
+      selected_geography = reactiveVal("nhp"),
       selected_provider = reactiveVal("R00"),
       selected_strategy = reactiveVal("strategy"),
       selected_year = reactiveVal(1)
@@ -134,7 +112,7 @@ test_that("procedures_table (with rows)", {
   shiny::testServer(
     mod_table_procedures_server,
     args = list(
-      inputs_data = reactiveVal(list(procedures = "procedures")),
+      selected_geography = reactiveVal("nhp"),
       selected_provider = reactiveVal("R00"),
       selected_strategy = reactiveVal("strategy"),
       selected_year = reactiveVal(1)
