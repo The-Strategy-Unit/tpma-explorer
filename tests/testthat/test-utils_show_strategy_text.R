@@ -1,15 +1,22 @@
 test_that("fetch_strategy_text works", {
   # arrange
-  m <- function(req) {
+  mock_http <- function(req) {
     httr2::response(status_code = 200, body = charToRaw("strategy text"))
   }
-  httr2::local_mocked_responses(m)
+  httr2::local_mocked_responses(mock_http)
+
+  mock_write_file <- mock("file")
+  local_mocked_bindings(
+    "write_file" = mock_write_file,
+    .package = "readr"
+  )
 
   # act
-  text <- fetch_strategy_text("stub", "filename.md")
+  fetch_strategy_text("stub", "filename.md")
 
   # assert
-  expect_equal(text, "strategy text")
+  expect_called(mock_write_file, 1)
+  expect_args(mock_write_file, 1, "strategy text", "filename.md")
 })
 
 test_that("fetch_strategy_text calls correct url", {
@@ -34,28 +41,6 @@ test_that("fetch_strategy_text calls correct url", {
     req$url,
     "https://raw.githubusercontent.com/The-Strategy-Unit/nhp_inputs/refs/heads/main/inst/app/strategy_text/stub.md" # nolint
   )
-})
-
-test_that("fetch_strategy_text writes the file correctly", {
-  # arrange
-  local_mocked_bindings(
-    "req_perform" = identity,
-    "resp_body_string" = \(...) "strategy text",
-    .package = "httr2"
-  )
-
-  m <- mock()
-  local_mocked_bindings(
-    "write_file" = m,
-    .package = "readr"
-  )
-
-  # act
-  req <- fetch_strategy_text("stub", "filename.md")
-
-  # assert
-  expect_called(m, 1)
-  expect_args(m, 1, "strategy text", "filename.md")
 })
 
 test_that("get_strategy_text reads from file if it exists", {
