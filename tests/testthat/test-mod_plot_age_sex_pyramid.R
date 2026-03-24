@@ -11,16 +11,16 @@ test_that("age_sex_data", {
   # arrange
   m <- mock("age_sex_data")
   testthat::local_mocked_bindings("prepare_age_sex_data" = m)
-  expected <- tibble::tibble(provider = "R00", strategy = "a", fyear = 2)
 
   # act
   shiny::testServer(
     mod_plot_age_sex_pyramid_server,
     args = list(
-      inputs_data = reactiveVal(inputs_data_sample),
+      selected_geography = reactiveVal("geography"),
       selected_provider = reactiveVal("R00"),
       selected_strategy = reactiveVal("a"),
-      selected_year = reactiveVal(2)
+      selected_year = reactiveVal(2),
+      16
     ),
     {
       actual <- age_sex_data()
@@ -29,25 +29,26 @@ test_that("age_sex_data", {
       expect_equal(actual, "age_sex_data")
 
       expect_called(m, 1)
-      expect_args(m, 1, expected)
+      expect_args(m, 1, "geography", "R00", "a", 2)
     }
   )
 })
 
 test_that("age_sex_pyramid (no rows)", {
   # arrange
-  testthat::local_mocked_bindings("prepare_age_sex_data" = \(...) {
-    tibble::tibble()
-  })
+  testthat::local_mocked_bindings(
+    "prepare_age_sex_data" = \(...) tibble::tibble()
+  )
 
   # act
   shiny::testServer(
     mod_plot_age_sex_pyramid_server,
     args = list(
-      inputs_data = reactiveVal(inputs_data_sample),
+      selected_geography = reactiveVal("geography"),
       selected_provider = reactiveVal("R00"),
       selected_strategy = reactiveVal("a"),
-      selected_year = reactiveVal(2)
+      selected_year = reactiveVal(2),
+      16
     ),
     {
       # assert
@@ -62,9 +63,11 @@ test_that("age_sex_pyramid (no rows)", {
 
 test_that("age_sex_pyramid (with rows)", {
   # arrange
+  expected <- tibble::tibble(provider = "R00", strategy = "a", fyear = 2)
+
   m <- mock("plot")
   testthat::local_mocked_bindings(
-    "prepare_age_sex_data" = identity,
+    "prepare_age_sex_data" = \(...) expected,
     "plot_age_sex_pyramid" = m
   )
 
@@ -75,16 +78,15 @@ test_that("age_sex_pyramid (with rows)", {
     .package = "shiny"
   )
 
-  expected <- tibble::tibble(provider = "R00", strategy = "a", fyear = 2)
-
   # act
   shiny::testServer(
     mod_plot_age_sex_pyramid_server,
     args = list(
-      inputs_data = reactiveVal(inputs_data_sample),
+      selected_geography = reactiveVal("geography"),
       selected_provider = reactiveVal("R00"),
       selected_strategy = reactiveVal("a"),
-      selected_year = reactiveVal(2)
+      selected_year = reactiveVal(2),
+      16
     ),
     {
       actual <- output$age_sex_pyramid
@@ -93,7 +95,7 @@ test_that("age_sex_pyramid (with rows)", {
       expect_equal(actual, "plot")
 
       expect_called(m, 1)
-      expect_args(m, 1, expected)
+      expect_args(m, 1, expected, 16)
     }
   )
 })

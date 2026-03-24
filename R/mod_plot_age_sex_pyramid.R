@@ -48,15 +48,7 @@ mod_plot_age_sex_pyramid_server <- function(
       strategy <- shiny::req(selected_strategy())
       year <- shiny::req(selected_year())
 
-      get_arrow_dataset(geography, "age_sex") |>
-        dplyr::filter(
-          .data$provider == .env$provider,
-          .data$strategy == .env$strategy,
-          .data$fyear == .env$year
-        ) |>
-        dplyr::select("sex", "age_group", "n") |>
-        dplyr::collect() |>
-        prepare_age_sex_data()
+      prepare_age_sex_data(geography, provider, strategy, year)
     })
 
     output$age_sex_pyramid <- shiny::renderPlot({
@@ -67,7 +59,7 @@ mod_plot_age_sex_pyramid_server <- function(
         "No data available for these selections."
       ))
 
-      plot_age_sex_pyramid(age_sex_data = df, base_size)
+      plot_age_sex_pyramid(df, base_size)
     })
   })
 }

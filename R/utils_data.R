@@ -1,9 +1,20 @@
 #' Prepare Age-Sex Data
-#' @param age_sex_data A data.frame. Read from Azure. Counts for each strategy
-#'     split by provider, year, age group and sex.
+#' @param geography Character. Either "nhp" or "la", used to determine the file path.
+#' @param provider Character. Provider identifier.
+#' @param strategy Character. Strategy identifier.
+#' @param year Numeric. Financial year.
 #' @return A data.frame.
 #' @export
-prepare_age_sex_data <- function(age_sex_data) {
+prepare_age_sex_data <- function(geography, provider, strategy, year) {
+  age_sex_data <- get_arrow_dataset(geography, "age_sex") |>
+    dplyr::filter(
+      .data$provider == .env$provider,
+      .data$strategy == .env$strategy,
+      .data$fyear == .env$year
+    ) |>
+    dplyr::select("sex", "age_group", "n") |>
+    dplyr::collect()
+
   age_fct <- age_sex_data[["age_group"]] |> # nolint: object_usage_linter.
     unique() |>
     sort()
