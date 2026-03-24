@@ -4,7 +4,10 @@
 \alias{download_all_data}
 \title{Download Inputs Datasets for Specific Geography}
 \usage{
-download_all_data()
+download_all_data(
+  data_version = Sys.getenv("DATA_VERSION", "dev"),
+  redownload = FALSE
+)
 }
 \description{
 Download Inputs Datasets for Specific Geography

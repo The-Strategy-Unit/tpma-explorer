@@ -43,7 +43,7 @@ get_providers_lookup <- function(selected_geography) {
   app_sys("app", "reference", filename) |>
     yyjsonr::read_json_file() |>
     tibble::enframe("provider", "provider_label") |> # label for plotting
-    tidyr::unnest(.data$provider_label) |>
+    tidyr::unnest("provider_label") |>
     dplyr::mutate(
       dplyr::across(
         "provider_label",

@@ -40,69 +40,78 @@ get_container <- function(
 #'     exists. By default, FALSE.
 #' @export
 download_geo_data <- function(geography_folder, data_version = Sys.getenv("DATA_VERSION", "dev"), redownload = FALSE) {
-  data_types <- purrr::set_names(c(
+  data_path <- file.path(app_sys("app"), "data", geography_folder)
+
+  if (dir.exists(data_path)) {
+    if (!redownload) {
+      return(invisible(NULL))
+    }
+  } else {
+    dir.create(data_path, recursive = TRUE)
+  }
+
+  `_download_geo_data`(geography_folder, data_path, data_version)
+}
+
+# nolint start
+`_download_geo_data` <- function(
+  # nolint end
+  geography_folder,
+  data_path,
+  data_version = Sys.getenv("DATA_VERSION", "dev")
+) {
+  container_dir <- file.path(data_version, geography_folder)
+
+  inputs_container <- get_container()
+
+  c(
     "age_sex",
     "diagnoses",
     "procedures",
     "rates"
-  ))
-
-  data_path <- file.path(app_sys("app"), "data", geography_folder)
-
-  if (dir.exists(data_path) && !redownload) {
-    return(invisible(NULL))
-  }
-
-  if (!dir.exists(data_path)) {
-    dir.create(data_path, recursive = TRUE)
-  }
-
-  container_dir <- file.path(data_version, geography_folder)
-
-  col_renames <- c(provider = "lad23cd")
-
-  inputs_container <- get_container()
-
-  data_types |>
-    purrr::map(
-      \(data_type) {
-        file_name <- file.path(
-          data_path,
-          paste0(data_type, ".parquet")
-        )
-
-        azkit::read_azure_parquet(
-          inputs_container,
-          data_type,
-          container_dir
-        ) |>
-          dplyr::rename(dplyr::any_of(col_renames)) |>
-          dplyr::arrange(
-            dplyr::across(
-              c(
-                "fyear",
-                "strategy",
-                "provider",
-                tidyselect::any_of(c("sex", "age_group"))
-              )
-            )
-          ) |>
-          tidyr::drop_na("strategy") |>
-          arrow::write_parquet(file_name)
-
-        file_name
-      }
-    )
+  ) |>
+    purrr::set_names() |>
+    purrr::walk(`_download_geo_data_file`, data_path, inputs_container, container_dir)
 
   invisible(NULL)
 }
 
+# nolint start
+`_download_geo_data_file` <- function(
+  # nolint end
+  data_type,
+  data_path,
+  inputs_container,
+  container_dir
+) {
+  file_name <- file.path(
+    data_path,
+    paste0(data_type, ".parquet")
+  )
+
+  col_renames <- c(provider = "lad23cd")
+
+  azkit::read_azure_parquet(
+    inputs_container,
+    data_type,
+    container_dir
+  ) |>
+    dplyr::rename(dplyr::any_of(col_renames)) |>
+    tidyr::drop_na("strategy") |>
+    arrow::write_parquet(file_name)
+
+  file_name
+}
+
 #' Download Inputs Datasets for Specific Geography
 #' @export
-download_all_data <- function() {
-  c("provider", "lad23cd") |>
-    purrr::set_names() |>
-    purrr::map(download_geo_data)
+download_all_data <- function(data_version = Sys.getenv("DATA_VERSION", "dev"), redownload = FALSE) {
+  purrr::map(
+    c("provider", "lad23cd"),
+    download_geo_data,
+    data_version = data_version,
+    redownload = redownload
+  )
 
   invisible(NULL)
 }

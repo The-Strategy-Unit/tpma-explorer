@@ -36,6 +36,42 @@ test_that("get_peers_lookup", {
   expect_error(get_peers_lookup("other"))
 })
 
+test_that("get_providers_lookup", {
+  # arrange
+  nhp <- list(
+    "R00" = "ABC (R00)",
+    "R01" = "DEF (R01)"
+  )
+
+  la <- list(
+    "E00000001" = "LA A (E00000001)",
+    "E00000002" = "LA B (E00000002)"
+  )
+
+  m <- mock(nhp, la)
+  local_mocked_bindings(read_json_file = m, .package = "yyjsonr")
+  local_mocked_bindings(app_sys = file.path)
+
+  expected_nhp <- tibble::tibble(
+    provider = c("R00", "R01"),
+    provider_label = c("R00", "R01")
+  )
+  expected_la <- tibble::tibble(
+    provider = c("E00000001", "E00000002"),
+    provider_label = c("LA A", "LA B")
+  )
+
+  # act
+  actual_nhp <- get_providers_lookup("nhp")
+  actual_la <- get_providers_lookup("la")
+
+  # assert
+  expect_equal(actual_nhp, expected_nhp)
+  expect_equal(actual_la, expected_la)
+
+  expect_error(get_providers_lookup("other"))
+})
+
 test_that("get_rates_data", {
   # arrange
   # nolint start
