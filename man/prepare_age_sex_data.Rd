@@ -4,11 +4,16 @@
 \alias{prepare_age_sex_data}
 \title{Prepare Age-Sex Data}
 \usage{
-prepare_age_sex_data(age_sex_data)
+prepare_age_sex_data(geography, provider, strategy, year)
 }
 \arguments{
-\item{age_sex_data}{A data.frame. Read from Azure. Counts for each strategy
-split by provider, year, age group and sex.}
+\item{geography}{Character. Either "nhp" or "la", used to determine the file path.}
+
+\item{provider}{Character. Provider identifier.}
+
+\item{strategy}{Character. Strategy identifier.}
+
+\item{year}{Numeric. Financial year.}
 }
 \value{
 A data.frame.

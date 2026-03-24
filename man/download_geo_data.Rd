@@ -21,9 +21,6 @@ default, uses the value of the "DATA_VERSION" environment variable, or
 \item{redownload}{Logical. Whether to redownload the data if it already
 exists. By default, FALSE.}
 }
-\value{
-A list. The filenames of the downloaded datasets.
-}
 \description{
 Download Inputs Datasets for Specific Geography
 }
