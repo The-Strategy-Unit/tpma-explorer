@@ -4,7 +4,7 @@
 #' @param selected_year Integer. Selected year in the form `202324`.
 #' @param selected_strategy Character. Strategy variable name, e.g. `"alcohol_partially_attributable_acute"`.
 #' @param providers_lookup Dataframe. A lookup from a provider code to its name.
-#' @param peers_lookup Dataframe. A lookup from a provider to its peers.
+#' @param peers_lookup Character. A vector of peer provider codes.
 #' @return A data.frame.
 #' @export
 generate_rates_funnel_data <- function(
@@ -18,7 +18,7 @@ generate_rates_funnel_data <- function(
   df <- get_arrow_dataset(selected_geography, "rates") |>
     dplyr::filter(
       .data$strategy == .env$selected_strategy,
-      .data$fyear == .env$selected_year,
+      .data$fyear == .env$selected_year
     ) |>
     dplyr::collect()
 

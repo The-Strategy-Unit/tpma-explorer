@@ -24,7 +24,7 @@ generate_rates_funnel_data(
 
 \item{providers_lookup}{Dataframe. A lookup from a provider code to its name.}
 
-\item{peers_lookup}{Dataframe. A lookup from a provider to its peers.}
+\item{peers_lookup}{Character. A vector of peer provider codes.}
 }
 \value{
 A data.frame.
