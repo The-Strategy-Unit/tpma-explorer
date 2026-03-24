@@ -68,7 +68,7 @@ test_that("strategy_text", {
         "strategy_b"
       )
     },
-    "fetch_strategy_text" = m
+    "read_strategy_text" = m
   )
 
   # act
@@ -109,7 +109,7 @@ test_that("strategy_text is rendered", {
         "strategy_b"
       )
     },
-    "fetch_strategy_text" = \(...) "strategy text",
+    "read_strategy_text" = \(...) "strategy text",
     "md_string_to_html" = m
   )
 

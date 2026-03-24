@@ -41,7 +41,7 @@ mod_show_strategy_text_server <- function(
 
     strategy_text <- shiny::reactive({
       s <- shiny::req(strategy_stub())
-      fetch_strategy_text(s)
+      read_strategy_text(s)
     })
 
     output$strategy_text <- shiny::renderText({
