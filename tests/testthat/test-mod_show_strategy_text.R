@@ -14,8 +14,8 @@ test_that("mod_show_strategy_text_get_descriptions_lookup", {
   )
   m <- mock(sample_descriptions_lookup)
   local_mocked_bindings(
-    "read_json" = m,
-    .package = "jsonlite"
+    "read_json_file" = m,
+    .package = "yyjsonr"
   )
 
   # act
@@ -60,7 +60,7 @@ test_that("strategy_stub", {
 
 test_that("strategy_text", {
   # arrange
-  m <- mock("text_a", "text_b")
+  m <- mock("text_a", "text_b", "text_a")
   local_mocked_bindings(
     "mod_show_strategy_text_get_descriptions_lookup" = \() {
       c(
@@ -83,7 +83,6 @@ test_that("strategy_text", {
       selected_strategy("strategy_b")
       actual2 <- strategy_text()
 
-      # validate caching: this should not call fetch_strategy_text again
       selected_strategy("strategy_a_chronic")
       actual3 <- strategy_text()
 
@@ -92,9 +91,10 @@ test_that("strategy_text", {
       expect_equal(actual2, "text_b")
       expect_equal(actual3, "text_a")
 
-      expect_called(m, 2)
+      expect_called(m, 3)
       expect_args(m, 1, "strategy_a")
       expect_args(m, 2, "strategy_b")
+      expect_args(m, 3, "strategy_a")
     }
   )
 })
