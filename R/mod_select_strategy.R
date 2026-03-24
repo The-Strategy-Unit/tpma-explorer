@@ -167,7 +167,6 @@ mod_select_strategy_server <- function(id) {
       # which will then result in the restored strategy being selected.
       pending_strategy(state$input$strategy_select)
 
-      cat("on restored\n")
       shiny::updateSelectInput(
         session,
         "strategy_category_select",
