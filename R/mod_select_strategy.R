@@ -111,6 +111,12 @@ mod_select_strategy_server <- function(id) {
           .data$activity_type == input$strategy_activity_type_select,
           .data$is_care_shift | !input$strategy_care_shift_checkbox
         )
+    })
+
+    shiny::observe({
+      category_choices <- strategies_filtered() |>
+        dplyr::distinct(.data$category_name, .data$category) |>
+        tibble::deframe()
 
       shiny::updateSelectInput(
         session,
@@ -120,10 +126,10 @@ mod_select_strategy_server <- function(id) {
     })
 
     shiny::observe({
-      shiny::req(input$strategy_category_select)
+      strategy_category <- shiny::req(input$strategy_category_select)
 
       strategy_choices <- strategies_filtered() |>
-        dplyr::filter(.data$category == input$strategy_category_select) |>
+        dplyr::filter(.data$category == .env$strategy_category) |>
         dplyr::select("strategy_name", "strategy") |>
         tibble::deframe()
 
@@ -145,8 +151,7 @@ mod_select_strategy_server <- function(id) {
       shiny::bindEvent(input$strategy_category_select)
 
     shiny::observe({
-      selected_strategy <- input$strategy_select
-      pending_strategy(selected_strategy)
+      pending_strategy(input$strategy_select)
     }) |>
       shiny::bindEvent(input$strategy_select)
 
