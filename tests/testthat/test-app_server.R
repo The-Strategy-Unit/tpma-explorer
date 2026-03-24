@@ -7,6 +7,7 @@ test_that("mod_select_geography", {
     app_server,
     {
       # assert
+      expect_equal(selected_geography(), "nhp")
       expect_called(mocks$mod_select_geography_server, 1)
       expect_args(mocks$mod_select_geography_server, 1, "mod_select_geography")
     }
@@ -22,6 +23,7 @@ test_that("mod_select_provider", {
     app_server,
     {
       # assert
+      expect_equal(selected_provider(), "ABC")
       expect_called(mocks$mod_select_provider_server, 1)
       expect_args(
         mocks$mod_select_provider_server,
@@ -42,6 +44,7 @@ test_that("mod_select_strategy", {
     app_server,
     {
       # assert
+      expect_equal(selected_strategy(), "strategy")
       expect_called(mocks$mod_select_strategy_server, 1)
       expect_args(
         mocks$mod_select_strategy_server,
@@ -61,10 +64,8 @@ test_that("selected_year (env var not set)", {
     app_server,
     {
       # assert
-      withr::local_envvar("BASELINE_YEAR" = "")
+      withr::local_envvar("BASELINE_YEAR" = NULL)
       expect_equal(selected_year(), 202324)
-      expect_called(mocks$get_all_geo_data, 1)
-      expect_args(mocks$get_all_geo_data, 1, "nhp")
     }
   )
 })
@@ -81,39 +82,6 @@ test_that("selected_year (env var set)", {
       # assert
       withr::local_envvar("BASELINE_YEAR" = "3")
       expect_equal(selected_year(), 3)
-      expect_called(mocks$get_all_geo_data, 0)
-    }
-  )
-})
-
-test_that("inputs_data", {
-  # arrange
-  mocks <- setup_app_server_tests()
-
-  # act
-  shiny::testServer(
-    app_server,
-    {
-      # assert
-      withr::local_envvar("BASELINE_YEAR" = "")
-      expect_equal(inputs_data(), inputs_data_sample)
-      expect_called(mocks$get_all_geo_data, 1)
-      expect_args(mocks$get_all_geo_data, 1, "nhp")
-
-      # test caching - not changing geography, so shouldn't call again
-      inputs_data()
-      expect_called(mocks$get_all_geo_data, 1)
-
-      # test caching - changing geography, so should call again
-      selected_geography("la")
-      inputs_data()
-      expect_called(mocks$get_all_geo_data, 2)
-      expect_args(mocks$get_all_geo_data, 2, "la")
-
-      # test caching - changing geography back, so shouldn't call again
-      selected_geography("nhp")
-      inputs_data()
-      expect_called(mocks$get_all_geo_data, 2)
     }
   )
 })
@@ -170,11 +138,11 @@ test_that("mod_plot_rates_server", {
         mocks$mod_plot_rates_server,
         1,
         "mod_plot_rates",
-        inputs_data,
         selected_geography,
         selected_provider,
         selected_strategy,
-        selected_year
+        selected_year,
+        16
       )
     }
   )
@@ -194,7 +162,7 @@ test_that("mod_table_procedures_server", {
         mocks$mod_table_procedures_server,
         1,
         "mod_table_procedures",
-        inputs_data,
+        selected_geography,
         selected_provider,
         selected_strategy,
         selected_year
@@ -217,7 +185,7 @@ test_that("mod_table_diagnoses_server", {
         mocks$mod_table_diagnoses_server,
         1,
         "mod_table_diagnoses",
-        inputs_data,
+        selected_geography,
         selected_provider,
         selected_strategy,
         selected_year
@@ -240,10 +208,11 @@ test_that("mod_plot_age_sex_pyramid_server", {
         mocks$mod_plot_age_sex_pyramid_server,
         1,
         "mod_plot_age_sex_pyramid",
-        inputs_data,
+        selected_geography,
         selected_provider,
         selected_strategy,
-        selected_year
+        selected_year,
+        16
       )
     }
   )
