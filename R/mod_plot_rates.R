@@ -40,51 +40,16 @@ mod_plot_rates_server <- function(
       geography <- shiny::req(selected_geography())
       provider <- shiny::req(selected_provider())
 
-      get_peers_lookup(geography) |>
-        dplyr::filter(
-          .data$procode == provider & .data$peer != provider
-        ) |>
-        dplyr::pull(.data$peer)
+      get_peers_lookup(geography, provider)
     })
-
-    #  Prepare data ----
 
     providers_lookup <- shiny::reactive({
       selected_geography <- shiny::req(selected_geography())
-      filename <- switch(
-        selected_geography,
-        "nhp" = "nhp-datasets.json",
-        "la" = "la-datasets.json"
-      )
-
-      shiny::req(filename)
-
-      providers_lookup <- app_sys("app", "reference", filename) |>
-        yyjsonr::read_json_file() |>
-        tibble::enframe("provider", "provider_label") |> # label for plotting
-        tidyr::unnest(.data$provider_label)
-
-      if (selected_geography == "la") {
-        providers_lookup <- providers_lookup |>
-          dplyr::mutate(
-            provider_label = stringr::str_remove(
-              .data$provider_label,
-              " \\(\\w{1}\\d{8}\\)$" # e.g. remove ' (E06000014)' from the end
-            )
-          )
-      }
-
-      if (selected_geography == "nhp") {
-        # For now, use the trust code as its label
-        providers_lookup <- providers_lookup |>
-          dplyr::mutate(provider_label = .data$provider)
-      }
-
-      providers_lookup |>
-        dplyr::mutate(provider_label = stringr::str_squish(.data$provider_label))
+      get_providers_lookup(selected_geography)
     }) |>
       shiny::bindEvent(selected_geography())
 
+    #  Prepare data ----
     rates_trend_data <- shiny::reactive({
       geography <- shiny::req(selected_geography())
       provider <- shiny::req(selected_provider())
@@ -118,19 +83,11 @@ mod_plot_rates_server <- function(
     # Prepare variables ----
 
     y_axis_limits <- shiny::reactive({
-      td_rate <- shiny::req(rates_trend_data())$rate
-
+      td <- shiny::req(rates_trend_data())
       bd <- shiny::req(rates_funnel_data())
-      bd$z <- rates_funnel_calculations()$z_i
+      fc <- rates_funnel_calculations()
 
-      fd_rate <- bd |>
-        dplyr::filter(
-          .data$denominator >= 0.05 * max(.data$denominator),
-          abs(.data$z) < 4
-        ) |>
-        dplyr::pull("rate")
-
-      c(0, max(c(td_rate, fd_rate)))
+      get_rates_y_axis_limits(td, bd, fc)
     })
 
     strategy_config <- shiny::reactive({

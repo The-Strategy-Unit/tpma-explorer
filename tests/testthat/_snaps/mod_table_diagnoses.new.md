@@ -4,23 +4,25 @@
       ui
     Output
       <div class="container-fluid">
-        <div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container" data-bslib-card-init data-full-screen="false" data-require-bs-caller="card()" data-require-bs-version="5" id="bslib-card-X">
+        <div class="card bslib-card bslib-mb-spacing html-fill-container" data-bslib-card-init data-full-screen="false" data-require-bs-caller="card()" data-require-bs-version="5" id="bslib-card-X">
           <div class="card-header bslib-gap-spacing">
-            Rates Trend
+            Diagnoses summary
             <bslib-tooltip placement="right" bsOptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
-              <template><p>How activity for the selected TPMA has changed over time for the chosen unit (red) and peers.
-      Data is age-sex standardised. Years of availability will depend on the selected unit and TPMA.</p>
+              <template><p>Top-six diagnoses by activity count for the selected unit and TPMA.
+      Remaining diagnoses and those with a count less than 5 are absorbed into ‘Other’.
+      The table may show fewer than six diagnosis categories, or be fully suppressed.</p>
       </template>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi bi-info-circle " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img" ><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
       <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path></svg>
             </bslib-tooltip>
           </div>
           <div class="card-body bslib-gap-spacing html-fill-item html-fill-container" style="margin-top:auto;margin-bottom:auto;flex:1 1 auto;">
-            <div data-spinner-id="spinner-26267cfc88868cc85b708404a87cdf70" class="shiny-spinner-output-container shiny-spinner-hideui">
+            <div data-spinner-id="spinner-56561617d76c5f983929f7b98e3c47ac" class="shiny-spinner-output-container shiny-spinner-hideui">
               <div class="load-container shiny-spinner-hidden load1">
-                <div id="spinner-26267cfc88868cc85b708404a87cdf70" class="loader">Loading...</div>
+                <div id="spinner-56561617d76c5f983929f7b98e3c47ac" class="loader">Loading...</div>
               </div>
-              <div class="shiny-plot-output html-fill-item" id="test-rates_trend_plot" style="width:100%;height:400px;"></div>
+              <div style="height:400px" class="shiny-spinner-placeholder"></div>
+              <div class="shiny-html-output gt_shiny" id="test-diagnoses_table"></div>
             </div>
           </div>
           <bslib-tooltip placement="auto" bsOptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">

@@ -19,3 +19,4 @@
           <script type="application/json" data-for="test-strategy_select" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
         </div>
       </div>
+

@@ -36,7 +36,7 @@ mod_plot_rates_box_server <- function(id, rates, y_axis_limits, base_size) {
         nrow(rates) > 0,
         "No data available for these selections."
       ))
-      plot_rates_box(rates_box_data = rates, y_axis_limits(), base_size)
+      plot_rates_box(rates, y_axis_limits(), base_size)
     })
   })
 }
