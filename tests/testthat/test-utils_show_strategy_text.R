@@ -105,7 +105,7 @@ test_that("get_strategy_text fetches file if it doesn't exist", {
   expect_equal(text, "strategy text")
 
   expect_called(fetch_strategy_mock, 1)
-  expect_args(fetch_strategy_mock, 1, "stub", "data/strategy_text/stub.md")
+  expect_args(fetch_strategy_mock, 1, "stub", "app_data/strategy_text/stub.md")
 })
 
 test_that("get_strategy_text creates the directory if it doesn't exist", {
@@ -138,7 +138,7 @@ test_that("get_strategy_text creates the directory if it doesn't exist", {
   expect_equal(text, "strategy text")
 
   expect_called(dir_exists_mock, 1)
-  expect_args(dir_exists_mock, 1, "data/strategy_text")
+  expect_args(dir_exists_mock, 1, "app_data/strategy_text")
   expect_called(dir_create_mock, 1)
-  expect_args(dir_create_mock, 1, "data/strategy_text", recursive = TRUE)
+  expect_args(dir_create_mock, 1, "app_data/strategy_text", recursive = TRUE)
 })

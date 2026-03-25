@@ -182,8 +182,8 @@ test_that("get_arrow_dataset", {
   expect_equal(actual1, "dataset")
   expect_equal(actual2, "dataset")
   expect_called(m, 2)
-  expect_args(m, 1, "data/provider/dataset.parquet")
-  expect_args(m, 2, "data/lad23cd/dataset.parquet")
+  expect_args(m, 1, "app_data/provider/dataset.parquet")
+  expect_args(m, 2, "app_data/lad23cd/dataset.parquet")
 
   expect_equal(.arrow_dataset_cache[["provider::dataset"]], "dataset")
   expect_equal(.arrow_dataset_cache[["lad23cd::dataset"]], "dataset")

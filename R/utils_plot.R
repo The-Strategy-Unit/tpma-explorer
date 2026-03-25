@@ -50,9 +50,12 @@ generate_rates_funnel_data <- function(
 }
 
 #' Generate Rates Trend Data
+#'
 #' @param selected_geography Character. Selected geography, either `"nhp"` or `"la"`.
 #' @param selected_provider Character. Provider code, e.g. `"RCF"`.
 #' @param selected_strategy Character. Strategy variable name, e.g. `"alcohol_partially_attributable_acute"`.
+#' @param peers_lookup Character. A vector of peer provider codes.
+#'
 #' @return A data.frame.
 #' @export
 generate_rates_trend_data <- function(

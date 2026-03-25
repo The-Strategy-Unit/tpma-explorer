@@ -40,7 +40,7 @@ get_container <- function(
 #'     exists. By default, FALSE.
 #' @export
 download_geo_data <- function(geography_folder, data_version = Sys.getenv("DATA_VERSION", "dev"), redownload = FALSE) {
-  data_path <- file.path("data", geography_folder)
+  data_path <- file.path("app_data", geography_folder)
 
   if (fs::dir_exists(data_path)) {
     if (!redownload) {
@@ -104,6 +104,16 @@ download_geo_data <- function(geography_folder, data_version = Sys.getenv("DATA_
 }
 
 #' Download Inputs Datasets for Specific Geography
+#'
+#' Downloads all datasets for both "provider" and "lad23cd" geographies. See
+#' `download_geo_data()` for more details.
+#'
+#' @param data_version Character. The version of the data to download. By
+#'    default, uses the value of the "DATA_VERSION" environment variable, or
+#'   "dev" if that variable is not set.
+#' @param redownload Logical. Whether to redownload the data if it already
+#'    exists. By default, FALSE.
+#'
 #' @export
 download_all_data <- function(data_version = Sys.getenv("DATA_VERSION", "dev"), redownload = FALSE) {
   purrr::map(

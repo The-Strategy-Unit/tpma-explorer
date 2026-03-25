@@ -255,5 +255,4 @@ pyrightconfig.json
 
 .cache/
 
-data/
-
+app_data/

@@ -3,6 +3,7 @@
 #' Reads the appropriate peers lookup file based on the selected geography.
 #'
 #' @param selected_geography Character. The selected geography, e.g. "nhp" or "la".
+#' @param provider Character. The provider code for which to find peers, e.g. "RCF".
 #'
 #' @return A data.frame with provider codes and their corresponding peers.
 #'

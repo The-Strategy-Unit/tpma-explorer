@@ -129,7 +129,7 @@ get_arrow_dataset <- function(geography, dataset_name) {
   key <- paste0(geo_dir, "::", dataset_name)
 
   if (!exists(key, envir = .arrow_dataset_cache, inherits = FALSE)) {
-    path <- file.path("data", geo_dir, paste0(dataset_name, ".parquet"))
+    path <- file.path("app_data", geo_dir, paste0(dataset_name, ".parquet"))
     assign(key, arrow::open_dataset(path), envir = .arrow_dataset_cache)
   }
 

@@ -113,7 +113,7 @@ test_that("download_geo_data continues if path already exists but redownload is 
 
   expect_called(m_dir_create, 0)
   expect_called(m__download_geo_data, 1)
-  expect_args(m__download_geo_data, 1, "nhp", "data/nhp", "dev")
+  expect_args(m__download_geo_data, 1, "nhp", "app_data/nhp", "dev")
 })
 
 test_that("download_geo_data creates path if it does not exist", {
@@ -135,7 +135,7 @@ test_that("download_geo_data creates path if it does not exist", {
 
   expect_called(m_dir_create, 1)
   expect_called(m__download_geo_data, 1)
-  expect_args(m_dir_create, 1, "data/nhp", recursive = TRUE)
+  expect_args(m_dir_create, 1, "app_data/nhp", recursive = TRUE)
 })
 
 test_that("_download_geo_data calls _download_geo_data_file for each data type", {
@@ -148,7 +148,7 @@ test_that("_download_geo_data calls _download_geo_data_file for each data type",
   )
 
   # act
-  `_download_geo_data`("nhp", "app/data/nhp", "dev")
+  `_download_geo_data`("nhp", "app_data/nhp", "dev")
 
   # assert
   expect_called(m_container, 1)
@@ -158,7 +158,7 @@ test_that("_download_geo_data calls _download_geo_data_file for each data type",
     m_download_geo_data_file,
     1,
     "age_sex",
-    "app/data/nhp",
+    "app_data/nhp",
     "container",
     "dev/nhp"
   )
@@ -166,7 +166,7 @@ test_that("_download_geo_data calls _download_geo_data_file for each data type",
     m_download_geo_data_file,
     2,
     "diagnoses",
-    "app/data/nhp",
+    "app_data/nhp",
     "container",
     "dev/nhp"
   )
@@ -174,7 +174,7 @@ test_that("_download_geo_data calls _download_geo_data_file for each data type",
     m_download_geo_data_file,
     3,
     "procedures",
-    "app/data/nhp",
+    "app_data/nhp",
     "container",
     "dev/nhp"
   )
@@ -182,7 +182,7 @@ test_that("_download_geo_data calls _download_geo_data_file for each data type",
     m_download_geo_data_file,
     4,
     "rates",
-    "app/data/nhp",
+    "app_data/nhp",
     "container",
     "dev/nhp"
   )
@@ -211,10 +211,10 @@ test_that("_download_geo_data_file works", {
   )
 
   # act
-  actual <- `_download_geo_data_file`("data", "app/data/nhp", "container", "dev/nhp")
+  actual <- `_download_geo_data_file`("data", "app_data/nhp", "container", "dev/nhp")
 
   # assert
-  expect_equal(actual, "app/data/nhp/data.parquet")
+  expect_equal(actual, "app_data/nhp/data.parquet")
 
   expect_called(m_read_azure_parquet, 1)
   expect_args(
@@ -229,7 +229,7 @@ test_that("_download_geo_data_file works", {
     m_write_parquet,
     1,
     expected_data,
-    "app/data/nhp/data.parquet"
+    "app_data/nhp/data.parquet"
   )
 })
 

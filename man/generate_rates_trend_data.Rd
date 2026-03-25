@@ -17,6 +17,8 @@ generate_rates_trend_data(
 \item{selected_provider}{Character. Provider code, e.g. \code{"RCF"}.}
 
 \item{selected_strategy}{Character. Strategy variable name, e.g. \code{"alcohol_partially_attributable_acute"}.}
+
+\item{peers_lookup}{Character. A vector of peer provider codes.}
 }
 \value{
 A data.frame.

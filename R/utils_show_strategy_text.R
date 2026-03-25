@@ -35,7 +35,7 @@ fetch_strategy_text <- function(strategy_stub, filename) {
 #' @details Markdown files containing strategy descriptions are read from
 #'     [NHP Inputs](https://github.com/The-Strategy-Unit/nhp_inputs/).
 read_strategy_text <- function(strategy_stub) {
-  strategy_text_dir <- file.path("data", "strategy_text")
+  strategy_text_dir <- file.path("app_data", "strategy_text")
   if (!fs::dir_exists(strategy_text_dir)) {
     fs::dir_create(strategy_text_dir, recurse = TRUE)
   }

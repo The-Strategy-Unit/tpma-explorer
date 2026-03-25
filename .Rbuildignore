@@ -15,4 +15,4 @@
 ^rsconnect$
 ^shiny_bookmarks$
 ^tpma-explorer\.Rproj$
-^data/$
+^app_data/$
