@@ -43,7 +43,7 @@ test_that("fetch_strategy_text calls correct url", {
   )
 })
 
-test_that("get_strategy_text reads from file if it exists", {
+test_that("read_strategy_text reads from file if it exists", {
   # arrange
   dir_exists_mock <- mock(TRUE)
   dir_create_mock <- mock()
@@ -51,8 +51,12 @@ test_that("get_strategy_text reads from file if it exists", {
   fetch_strategy_mock <- mock()
   read_file_mock <- mock("strategy text")
 
-  mockery::stub(read_strategy_text, "dir.exists", dir_exists_mock)
-  mockery::stub(read_strategy_text, "dir.create", dir_create_mock)
+  local_mocked_bindings(
+    "dir_exists" = dir_exists_mock,
+    "dir_create" = dir_create_mock,
+    "file_exists" = file_exists_mock,
+    .package = "fs"
+  )
 
   local_mocked_bindings(
     "fetch_strategy_text" = fetch_strategy_mock
@@ -79,12 +83,15 @@ test_that("get_strategy_text fetches file if it doesn't exist", {
   fetch_strategy_mock <- mock()
   read_file_mock <- mock("strategy text")
 
-  mockery::stub(read_strategy_text, "dir.exists", dir_exists_mock)
-  mockery::stub(read_strategy_text, "dir.create", dir_create_mock)
+  local_mocked_bindings(
+    "dir_exists" = dir_exists_mock,
+    "dir_create" = dir_create_mock,
+    "file_exists" = file_exists_mock,
+    .package = "fs"
+  )
 
   local_mocked_bindings(
-    "fetch_strategy_text" = fetch_strategy_mock,
-    "app_sys" = file.path
+    "fetch_strategy_text" = fetch_strategy_mock
   )
   local_mocked_bindings(
     "read_lines" = read_file_mock,
@@ -98,7 +105,7 @@ test_that("get_strategy_text fetches file if it doesn't exist", {
   expect_equal(text, "strategy text")
 
   expect_called(fetch_strategy_mock, 1)
-  expect_args(fetch_strategy_mock, 1, "stub", "app/data/strategy_text/stub.md")
+  expect_args(fetch_strategy_mock, 1, "stub", "data/strategy_text/stub.md")
 })
 
 test_that("get_strategy_text creates the directory if it doesn't exist", {
@@ -109,12 +116,15 @@ test_that("get_strategy_text creates the directory if it doesn't exist", {
   fetch_strategy_mock <- mock()
   read_file_mock <- mock("strategy text")
 
-  mockery::stub(read_strategy_text, "dir.exists", dir_exists_mock)
-  mockery::stub(read_strategy_text, "dir.create", dir_create_mock)
+  local_mocked_bindings(
+    "dir_exists" = dir_exists_mock,
+    "dir_create" = dir_create_mock,
+    "file_exists" = file_exists_mock,
+    .package = "fs"
+  )
 
   local_mocked_bindings(
-    "fetch_strategy_text" = fetch_strategy_mock,
-    "app_sys" = file.path
+    "fetch_strategy_text" = fetch_strategy_mock
   )
   local_mocked_bindings(
     "read_lines" = read_file_mock,
@@ -128,7 +138,7 @@ test_that("get_strategy_text creates the directory if it doesn't exist", {
   expect_equal(text, "strategy text")
 
   expect_called(dir_exists_mock, 1)
-  expect_args(dir_exists_mock, 1, "app/data/strategy_text")
+  expect_args(dir_exists_mock, 1, "data/strategy_text")
   expect_called(dir_create_mock, 1)
-  expect_args(dir_create_mock, 1, "app/data/strategy_text", recursive = TRUE)
+  expect_args(dir_create_mock, 1, "data/strategy_text", recursive = TRUE)
 })

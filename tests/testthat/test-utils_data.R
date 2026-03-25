@@ -169,7 +169,6 @@ test_that("md_string_to_html", {
 test_that("get_arrow_dataset", {
   # arrange
   m <- mock("dataset", cycle = TRUE)
-  local_mocked_bindings("app_sys" = file.path)
   local_mocked_bindings(
     "open_dataset" = m,
     .package = "arrow"
@@ -183,8 +182,8 @@ test_that("get_arrow_dataset", {
   expect_equal(actual1, "dataset")
   expect_equal(actual2, "dataset")
   expect_called(m, 2)
-  expect_args(m, 1, "app/data/provider/dataset.parquet")
-  expect_args(m, 2, "app/data/lad23cd/dataset.parquet")
+  expect_args(m, 1, "data/provider/dataset.parquet")
+  expect_args(m, 2, "data/lad23cd/dataset.parquet")
 
   expect_equal(.arrow_dataset_cache[["provider::dataset"]], "dataset")
   expect_equal(.arrow_dataset_cache[["lad23cd::dataset"]], "dataset")

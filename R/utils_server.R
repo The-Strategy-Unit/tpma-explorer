@@ -40,14 +40,14 @@ get_container <- function(
 #'     exists. By default, FALSE.
 #' @export
 download_geo_data <- function(geography_folder, data_version = Sys.getenv("DATA_VERSION", "dev"), redownload = FALSE) {
-  data_path <- file.path(app_sys("app"), "data", geography_folder)
+  data_path <- file.path("data", geography_folder)
 
-  if (dir.exists(data_path)) {
+  if (fs::dir_exists(data_path)) {
     if (!redownload) {
       return(invisible(NULL))
     }
   } else {
-    dir.create(data_path, recursive = TRUE)
+    fs::dir_create(data_path, recurse = TRUE)
   }
 
   `_download_geo_data`(geography_folder, data_path, data_version)

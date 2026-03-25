@@ -80,8 +80,11 @@ test_that("download_geo_data exits if path already exists", {
   m_dir_create <- mock()
   m__download_geo_data <- mock()
 
-  stub(download_geo_data, "dir.exists", \(...) TRUE)
-  stub(download_geo_data, "dir.create", m_dir_create)
+  local_mocked_bindings(
+    "dir_exists" = \(...) TRUE,
+    "dir_create" = m_dir_create,
+    .package = "fs"
+  )
   local_mocked_bindings("_download_geo_data" = m__download_geo_data)
 
   # act
@@ -96,11 +99,13 @@ test_that("download_geo_data continues if path already exists but redownload is 
   m_dir_create <- mock()
   m__download_geo_data <- mock()
 
-  stub(download_geo_data, "dir.exists", \(...) TRUE)
-  stub(download_geo_data, "dir.create", m_dir_create)
   local_mocked_bindings(
-    "_download_geo_data" = m__download_geo_data,
-    "app_sys" = file.path
+    "dir_exists" = \(...) TRUE,
+    "dir_create" = m_dir_create,
+    .package = "fs"
+  )
+  local_mocked_bindings(
+    "_download_geo_data" = m__download_geo_data
   )
 
   # act
@@ -108,7 +113,7 @@ test_that("download_geo_data continues if path already exists but redownload is 
 
   expect_called(m_dir_create, 0)
   expect_called(m__download_geo_data, 1)
-  expect_args(m__download_geo_data, 1, "nhp", "app/data/nhp", "dev")
+  expect_args(m__download_geo_data, 1, "nhp", "data/nhp", "dev")
 })
 
 test_that("download_geo_data creates path if it does not exist", {
@@ -116,11 +121,13 @@ test_that("download_geo_data creates path if it does not exist", {
   m_dir_create <- mock()
   m__download_geo_data <- mock()
 
-  stub(download_geo_data, "dir.exists", \(...) FALSE)
-  stub(download_geo_data, "dir.create", m_dir_create)
   local_mocked_bindings(
-    "_download_geo_data" = m__download_geo_data,
-    "app_sys" = file.path
+    "dir_exists" = \(...) FALSE,
+    "dir_create" = m_dir_create,
+    .package = "fs"
+  )
+  local_mocked_bindings(
+    "_download_geo_data" = m__download_geo_data
   )
 
   # act
@@ -128,7 +135,7 @@ test_that("download_geo_data creates path if it does not exist", {
 
   expect_called(m_dir_create, 1)
   expect_called(m__download_geo_data, 1)
-  expect_args(m_dir_create, 1, "app/data/nhp", recursive = TRUE)
+  expect_args(m_dir_create, 1, "data/nhp", recursive = TRUE)
 })
 
 test_that("_download_geo_data calls _download_geo_data_file for each data type", {
