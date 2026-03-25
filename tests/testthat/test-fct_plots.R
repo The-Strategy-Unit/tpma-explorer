@@ -36,7 +36,7 @@ test_that("plot_rates_trend", {
   # nolint end
 
   selected_year <- 202324
-  y_axis_limits <- c(0, 0.16)
+  y_axis_limits <- c(0, 0.30)
   x_axis_title <- "Financial year"
   y_axis_title <- "Rate per 100,000 population"
   y_labels <- scales::label_percent(accuracy = 0.1)
