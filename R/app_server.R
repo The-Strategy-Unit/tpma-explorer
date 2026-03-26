@@ -31,6 +31,17 @@ app_server <- function(input, output, session) {
   }) |>
     shiny::bindCache(selected_geography())
 
+  # Show/hide sidebar ----
+
+  shiny::observe({
+    if (input$page_navbar == "Visualisations") {
+      bslib::toggle_sidebar("page_sidebar", open = TRUE)
+    } else {
+      bslib::toggle_sidebar("page_sidebar", open = FALSE)
+    }
+  }) |>
+    shiny::bindEvent(input$page_navbar)
+
   # Open UI accordion ----
   shiny::observe({
     shiny::req(selected_provider())
