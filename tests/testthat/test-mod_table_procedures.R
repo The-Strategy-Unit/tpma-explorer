@@ -1,4 +1,6 @@
 test_that("ui", {
+  skip_if(interactive(), "This test will fail in interactive mode")
+
   setup_ui_test()
 
   ui <- mod_table_procedures_ui("test")

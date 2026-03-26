@@ -1,4 +1,6 @@
 test_that("entable_encounters (diagnoses)", {
+  skip_if(interactive(), "This test will fail in interactive mode")
+
   # arrange
   withr::local_seed(1)
   df <- tibble::tribble(
@@ -17,6 +19,8 @@ test_that("entable_encounters (diagnoses)", {
 })
 
 test_that("entable_encounters (procedures)", {
+  skip_if(interactive(), "This test will fail in interactive mode")
+
   # arrange
   withr::local_seed(1)
   df <- tibble::tribble(

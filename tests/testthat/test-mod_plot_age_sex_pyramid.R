@@ -1,5 +1,7 @@
 # nolint start
 test_that("ui", {
+  skip_if(interactive(), "This test will fail in interactive mode")
+
   setup_ui_test()
 
   ui <- mod_plot_age_sex_pyramid_ui("test")
