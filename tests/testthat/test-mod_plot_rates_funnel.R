@@ -1,4 +1,6 @@
 test_that("ui", {
+  skip_if(interactive(), "This test will fail in interactive mode")
+
   setup_ui_test()
 
   ui <- mod_plot_rates_funnel_ui("test")
@@ -17,7 +19,8 @@ test_that("rates_funnel_plot (no rows)", {
       rates = \() tibble::tibble(),
       funnel_calculations = \() "funnel calculations",
       y_axis_limits = \() c(0, 100),
-      x_axis_title = \() "X Axis"
+      x_axis_title = \() "X Axis",
+      base_size = 16
     ),
     {
       # assert
@@ -53,7 +56,8 @@ test_that("rates_funnel_plot (with rows)", {
       rates = \() sample_data,
       funnel_calculations = \() "funnel calculations",
       y_axis_limits = \() c(0, 100),
-      x_axis_title = \() "X Axis"
+      x_axis_title = \() "X Axis",
+      base_size = 16
     ),
     {
       actual <- output$rates_funnel_plot
@@ -62,7 +66,7 @@ test_that("rates_funnel_plot (with rows)", {
       expect_equal(actual, "plot")
 
       expect_called(m, 1)
-      expect_args(m, 1, sample_data, "funnel calculations", c(0, 100), "X Axis")
+      expect_args(m, 1, sample_data, "funnel calculations", c(0, 100), "X Axis", 16)
     }
   )
 })

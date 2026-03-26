@@ -1,7 +1,7 @@
 #' Run the Shiny Application
 #' @export
 run_app <- function() {
-  shiny::shinyOptions(cache = cachem::cache_disk(".cache"))
+  download_all_data()
 
   shiny::shinyApp(
     ui = app_ui,

@@ -50,7 +50,7 @@ mod_plot_rates_funnel_server <- function(
       shiny::req(x_axis_title())
 
       plot_rates_funnel(
-        rates_funnel_data = rates,
+        rates,
         funnel_calculations(),
         y_axis_limits(),
         x_axis_title(),

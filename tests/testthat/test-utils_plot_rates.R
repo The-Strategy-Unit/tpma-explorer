@@ -1,25 +1,75 @@
 test_that("get_peers_lookup", {
   # arrange
-  m <- mock("peers", cycle = TRUE)
-  local_mocked_bindings(
-    "read_csv" = m,
-    .package = "readr"
+  expected_nhp <- c(
+    "R1H",
+    "RJE",
+    "RRK",
+    "RHQ",
+    "RR8",
+    "RVV",
+    "RTR",
+    "RX1",
+    "RHM",
+    "RXF"
   )
-  local_mocked_bindings("app_sys" = file.path)
+  expected_la <- c(
+    "E06000003",
+    "E08000018",
+    "E08000017",
+    "E06000006",
+    "E08000024",
+    "E08000016",
+    "E08000037",
+    "E07000034",
+    "E08000036",
+    "E08000023"
+  )
 
   # act
-  actual_nhp <- get_peers_lookup("nhp")
-  actual_la <- get_peers_lookup("la")
+  actual_nhp <- get_peers_lookup("nhp", "R0A")
+  actual_la <- get_peers_lookup("la", "E06000001")
 
   # assert
-  expect_equal(actual_nhp, "peers")
-  expect_equal(actual_la, "peers")
-
-  expect_called(m, 2)
-  expect_args(m, 1, "app/data/nhp-peers.csv", "col_types" = "c")
-  expect_args(m, 2, "app/data/la-peers.csv", "col_types" = "c")
+  expect_equal(actual_nhp, expected_nhp)
+  expect_equal(actual_la, expected_la)
 
   expect_error(get_peers_lookup("other"))
+})
+
+test_that("get_providers_lookup", {
+  # arrange
+  nhp <- list(
+    "R00" = "ABC (R00)",
+    "R01" = "DEF (R01)"
+  )
+
+  la <- list(
+    "E00000001" = "LA A (E00000001)",
+    "E00000002" = "LA B (E00000002)"
+  )
+
+  m <- mock(nhp, la)
+  local_mocked_bindings(read_json_file = m, .package = "yyjsonr")
+  local_mocked_bindings(app_sys = file.path)
+
+  expected_nhp <- tibble::tibble(
+    provider = c("R00", "R01"),
+    provider_label = c("R00", "R01")
+  )
+  expected_la <- tibble::tibble(
+    provider = c("E00000001", "E00000002"),
+    provider_label = c("LA A", "LA B")
+  )
+
+  # act
+  actual_nhp <- get_providers_lookup("nhp")
+  actual_la <- get_providers_lookup("la")
+
+  # assert
+  expect_equal(actual_nhp, expected_nhp)
+  expect_equal(actual_la, expected_la)
+
+  expect_error(get_providers_lookup("other"))
 })
 
 test_that("get_rates_data", {
@@ -90,4 +140,49 @@ test_that("get_rates_trend_data", {
 
   # assert
   expect_equal(actual, expected)
+})
+
+
+test_that("y_axis_limits (funnel values are max)", {
+  # arrange
+  td <- tibble::tibble(
+    rate = 1:10
+  )
+
+  bd <- tibble::tibble(
+    denominator = c(1, 10, 15, 100),
+    rate = c(50, 40, 30, 20)
+  )
+
+  fc <- list(
+    z_i = c(2, 10, 2, 2)
+  )
+
+  # act
+  actual <- get_rates_y_axis_limits(td, bd, fc)
+
+  # assert
+  expect_equal(actual, c(0, 30))
+})
+
+test_that("y_axis_limits (trend values are max)", {
+  # arrange
+  td <- tibble::tibble(
+    rate = 300
+  )
+
+  bd <- tibble::tibble(
+    denominator = c(1, 10, 15, 100),
+    rate = c(50, 40, 30, 20)
+  )
+
+  fc <- list(
+    z_i = c(2, 10, 2, 2)
+  )
+
+  # act
+  actual <- get_rates_y_axis_limits(td, bd, fc)
+
+  # assert
+  expect_equal(actual, c(0, 300))
 })

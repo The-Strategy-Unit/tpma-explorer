@@ -1,4 +1,6 @@
 test_that("ui", {
+  skip_if(interactive(), "This test will fail in interactive mode")
+
   setup_ui_test()
 
   ui <- mod_plot_rates_box_ui("test")
@@ -49,7 +51,8 @@ test_that("rates_box_plot (with rows)", {
     mod_plot_rates_box_server,
     args = list(
       rates = \() sample_data,
-      y_axis_limits = \() c(0, 100)
+      y_axis_limits = \() c(0, 100),
+      base_size = 16
     ),
     {
       actual <- output$rates_box_plot
@@ -58,7 +61,7 @@ test_that("rates_box_plot (with rows)", {
       expect_equal(actual, "plot")
 
       expect_called(m, 1)
-      expect_args(m, 1, sample_data, c(0, 100))
+      expect_args(m, 1, sample_data, c(0, 100), 16)
     }
   )
 })

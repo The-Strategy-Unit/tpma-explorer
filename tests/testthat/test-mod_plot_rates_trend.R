@@ -1,4 +1,6 @@
 test_that("ui", {
+  skip_if(interactive(), "This test will fail in interactive mode")
+
   setup_ui_test()
 
   ui <- mod_plot_rates_trend_ui("test")
@@ -18,7 +20,8 @@ test_that("rates_trend_plot (no rows)", {
       y_axis_limits = \() c(0, 100),
       y_axis_title = \() "Y Axis",
       y_labels = \() "Y Labels",
-      selected_year = \() 202324
+      selected_year = \() 202324,
+      base_size = 16
     ),
     {
       # assert
@@ -55,7 +58,8 @@ test_that("rates_trend_plot (with rows)", {
       y_axis_limits = \() c(0, 100),
       y_axis_title = \() "Y Axis",
       y_labels = \() "Y Labels",
-      selected_year = \() 202324
+      selected_year = \() 202324,
+      base_size = 16
     ),
     {
       actual <- output$rates_trend_plot
@@ -64,7 +68,7 @@ test_that("rates_trend_plot (with rows)", {
       expect_equal(actual, "plot")
 
       expect_called(m, 1)
-      expect_args(m, 1, sample_data, 202324, c(0, 100), "Y Axis", "Y Labels")
+      expect_args(m, 1, sample_data, 202324, c(0, 100), "Y Axis", "Y Labels", 16)
     }
   )
 })

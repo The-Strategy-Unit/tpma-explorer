@@ -1,17 +1,33 @@
 setup_mod_select_strategy_server <- function(.env = parent.frame()) {
-  strategies <- list(
-    ip = tibble::tibble(
-      name = c("Strategy A", "Strategy B"),
-      strategy = c("a", "b")
+  strategies <- tibble::tibble(
+    strategy = c("a", "b", "c", "d", "e", "f"),
+    strategy_name = c(
+      "Strategy A",
+      "Strategy B",
+      "Strategy C",
+      "Strategy D",
+      "Strategy E",
+      "Strategy F"
     ),
-    op = tibble::tibble(
-      name = c("Strategy C", "Strategy D"),
-      strategy = c("c", "d")
+    activity_type = c("ip", "ip", "op", "op", "ae", "ae"),
+    activity_type_name = c(
+      "Inpatients",
+      "Inpatients",
+      "Outpatients",
+      "Outpatients",
+      "Accident & Emergency",
+      "Accident & Emergency"
     ),
-    ae = tibble::tibble(
-      name = c("Strategy E", "Strategy F"),
-      strategy = c("e", "f")
-    )
+    category = c("aa", "ef", "aa", "ef", "aa", "ef"),
+    category_name = c(
+      "Admission avoidance",
+      "Efficiency",
+      "Admission avoidance",
+      "Efficiency",
+      "Admission avoidance",
+      "Efficiency"
+    ),
+    is_care_shift = c(TRUE, FALSE, TRUE, FALSE, TRUE, FALSE)
   )
   m <- mockery::mock(strategies)
 

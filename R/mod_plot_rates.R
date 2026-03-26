@@ -14,8 +14,6 @@ mod_plot_rates_ui <- function(id) {
 
 #' Plot Rates Server
 #' @param id Internal parameter for `shiny`.
-#' @param inputs_data A reactive. Contains a list with data.frames, which we can
-#'     extract the rates data from.
 #' @param selected_geography Character. Selected geography, either `"nhp"` or
 #'     `"la"`.
 #' @param selected_provider Character. Provider code, e.g. `"RCF"`.
@@ -26,7 +24,6 @@ mod_plot_rates_ui <- function(id) {
 #' @noRd
 mod_plot_rates_server <- function(
   id,
-  inputs_data,
   selected_geography,
   selected_provider,
   selected_strategy,
@@ -40,74 +37,45 @@ mod_plot_rates_server <- function(
   # return the shiny module
   shiny::moduleServer(id, function(input, output, session) {
     peers_lookup <- shiny::reactive({
-      get_peers_lookup(selected_geography())
-    }) |>
-      shiny::bindCache(selected_geography())
+      geography <- shiny::req(selected_geography())
+      provider <- shiny::req(selected_provider())
 
-    #  Prepare data ----
-    rates_data <- shiny::reactive({
-      strategy <- shiny::req(selected_strategy())
-
-      get_rates_data(
-        inputs_data()[["rates"]],
-        strategy
-      )
+      get_peers_lookup(geography, provider)
     })
 
     providers_lookup <- shiny::reactive({
       selected_geography <- shiny::req(selected_geography())
-      filename <- switch(
-        selected_geography,
-        "nhp" = "nhp-datasets.json",
-        "la" = "la-datasets.json"
-      )
-
-      shiny::req(filename)
-
-      providers_lookup <- app_sys("app", "data", filename) |>
-        yyjsonr::read_json_file() |>
-        tibble::enframe("provider", "provider_label") |> # label for plotting
-        tidyr::unnest(.data$provider_label)
-
-      if (selected_geography == "la") {
-        providers_lookup <- providers_lookup |>
-          dplyr::mutate(
-            provider_label = stringr::str_remove(
-              .data$provider_label,
-              " \\(\\w{1}\\d{8}\\)$" # e.g. remove ' (E06000014)' from the end
-            )
-          )
-      }
-
-      if (selected_geography == "nhp") {
-        # For now, use the trust code as its label
-        providers_lookup <- providers_lookup |>
-          dplyr::mutate(provider_label = .data$provider)
-      }
-
-      providers_lookup |>
-        dplyr::mutate(provider_label = stringr::str_squish(.data$provider_label))
+      get_providers_lookup(selected_geography)
     }) |>
       shiny::bindEvent(selected_geography())
 
+    #  Prepare data ----
     rates_trend_data <- shiny::reactive({
-      df <- shiny::req(rates_data())
-      providers_lookup <- shiny::req(providers_lookup())
-      peers_lookup <- shiny::req(peers_lookup())
+      geography <- shiny::req(selected_geography())
       provider <- shiny::req(selected_provider())
       strategy <- shiny::req(selected_strategy())
 
-      generate_rates_baseline_data(df, provider, providers_lookup, peers_lookup)
+      generate_rates_trend_data(geography, provider, strategy, peers_lookup())
     })
 
-    rates_baseline_data <- shiny::reactive({
-      df <- shiny::req(rates_trend_data())
-      year <- year <- shiny::req(selected_year())
-      df |> dplyr::filter(.data[["fyear"]] == .env[["year"]])
+    rates_funnel_data <- shiny::reactive({
+      geography <- shiny::req(selected_geography())
+      provider <- shiny::req(selected_provider())
+      strategy <- shiny::req(selected_strategy())
+      year <- shiny::req(selected_year())
+
+      generate_rates_funnel_data(
+        geography,
+        provider,
+        strategy,
+        year,
+        providers_lookup(),
+        peers_lookup()
+      )
     })
 
     rates_funnel_calculations <- shiny::reactive({
-      df <- shiny::req(rates_baseline_data())
+      df <- shiny::req(rates_funnel_data())
 
       uprime_calculations(df)
     })
@@ -115,19 +83,11 @@ mod_plot_rates_server <- function(
     # Prepare variables ----
 
     y_axis_limits <- shiny::reactive({
-      td_rate <- shiny::req(rates_trend_data())$rate
+      td <- shiny::req(rates_trend_data())
+      bd <- shiny::req(rates_funnel_data())
+      fc <- rates_funnel_calculations()
 
-      bd <- shiny::req(rates_baseline_data())
-      bd$z <- rates_funnel_calculations()$z_i
-
-      fd_rate <- bd |>
-        dplyr::filter(
-          .data$denominator >= 0.05 * max(.data$denominator),
-          abs(.data$z) < 4
-        ) |>
-        dplyr::pull("rate")
-
-      c(0, max(c(td_rate, fd_rate)))
+      get_rates_y_axis_limits(td, bd, fc)
     })
 
     strategy_config <- shiny::reactive({
@@ -162,7 +122,7 @@ mod_plot_rates_server <- function(
     )
     mod_plot_rates_funnel_server(
       "mod_plot_rates_funnel",
-      rates_baseline_data,
+      rates_funnel_data,
       rates_funnel_calculations,
       y_axis_limits,
       funnel_x_title,
@@ -170,7 +130,7 @@ mod_plot_rates_server <- function(
     )
     mod_plot_rates_box_server(
       "mod_plot_rates_box",
-      rates_baseline_data,
+      rates_funnel_data,
       y_axis_limits,
       base_size
     )

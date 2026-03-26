@@ -5,19 +5,18 @@
 \title{Prepare Data for Diagnoses Table}
 \usage{
 prepare_diagnoses_data(
-  diagnoses_data,
   diagnoses_lookup,
+  geography,
   provider,
   strategy,
   selected_year
 )
 }
 \arguments{
-\item{diagnoses_data}{A data.frame. Diagnosis data read in from Azure. Annual
-diagnosis counts by provider and strategy.}
-
 \item{diagnoses_lookup}{A data.frame. Type, code and description for
 diagnoses}
+
+\item{geography}{Character. Geography type, either \code{"nhp"} or \code{"la"}.}
 
 \item{provider}{Character. Provider code, e.g. \code{"RCF"}.}
 

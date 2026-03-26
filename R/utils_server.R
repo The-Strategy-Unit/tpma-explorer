@@ -29,53 +29,99 @@ get_container <- function(
     AzureStor::storage_container(container_name)
 }
 
-#' Read Inputs Datasets for All Geographies
-#' @param geography Character. The geography level for which the user wants to
-#'     select a provider. Either "nhp" or "la".
-#' @param fyear Numeric. The financial year to filter the data to.
-#' @return A list. One element for each dataframes of data.
+
+#' Download Inputs Datasets for Specific Geography
+#' @param geography_folder Character. The geography level of the data to
+#'     download. Either "provider" or "lad23cd".
+#' @param data_version Character. The version of the data to download. By
+#'     default, uses the value of the "DATA_VERSION" environment variable, or
+#'     "dev" if that variable is not set.
+#' @param redownload Logical. Whether to redownload the data if it already
+#'     exists. By default, FALSE.
 #' @export
-get_all_geo_data <- function(geography, fyear) {
+download_geo_data <- function(geography_folder, data_version = Sys.getenv("DATA_VERSION", "dev"), redownload = FALSE) {
+  data_path <- file.path("app_data", geography_folder)
+
+  if (fs::dir_exists(data_path)) {
+    if (!redownload) {
+      return(invisible(NULL))
+    }
+  } else {
+    fs::dir_create(data_path, recurse = TRUE)
+  }
+
+  `_download_geo_data`(geography_folder, data_path, data_version)
+}
+
+# nolint start
+`_download_geo_data` <- function(
+  # nolint end
+  geography_folder,
+  data_path,
+  data_version = Sys.getenv("DATA_VERSION", "dev")
+) {
+  container_dir <- file.path(data_version, geography_folder)
+
   inputs_container <- get_container()
 
-  data_types <- purrr::set_names(c(
+  c(
     "age_sex",
     "diagnoses",
     "procedures",
     "rates"
-  ))
+  ) |>
+    purrr::set_names() |>
+    purrr::walk(`_download_geo_data_file`, data_path, inputs_container, container_dir)
 
-  geography_folder <- switch(
-    geography,
-    "nhp" = "provider",
-    "la" = "lad23cd"
-  )
+  invisible(NULL)
+}
 
-  stopifnot(
-    "Unknown geography" = !is.null(geography_folder)
-  )
-
-  container_dir <- file.path(
-    Sys.getenv("DATA_VERSION"),
-    geography_folder
+# nolint start
+`_download_geo_data_file` <- function(
+  # nolint end
+  data_type,
+  data_path,
+  inputs_container,
+  container_dir
+) {
+  file_name <- file.path(
+    data_path,
+    paste0(data_type, ".parquet")
   )
 
   col_renames <- c(provider = "lad23cd")
 
-  data_types |>
-    purrr::map(
-      \(data_type) {
-        azkit::read_azure_parquet(
-          inputs_container,
-          data_type,
-          container_dir
-        ) |>
-          dplyr::rename(dplyr::any_of(col_renames)) # standardise
-      }
-    ) |>
-    purrr::modify_at(
-      data_types[data_types != "rates"],
-      dplyr::filter,
-      .data[["fyear"]] == .env[["fyear"]]
-    )
+  azkit::read_azure_parquet(
+    inputs_container,
+    data_type,
+    container_dir
+  ) |>
+    dplyr::rename(dplyr::any_of(col_renames)) |>
+    tidyr::drop_na("strategy") |>
+    arrow::write_parquet(file_name)
+
+  file_name
+}
+
+#' Download Inputs Datasets for Specific Geography
+#'
+#' Downloads all datasets for both "provider" and "lad23cd" geographies. See
+#' `download_geo_data()` for more details.
+#'
+#' @param data_version Character. The version of the data to download. By
+#'    default, uses the value of the "DATA_VERSION" environment variable, or
+#'   "dev" if that variable is not set.
+#' @param redownload Logical. Whether to redownload the data if it already
+#'    exists. By default, FALSE.
+#'
+#' @export
+download_all_data <- function(data_version = Sys.getenv("DATA_VERSION", "dev"), redownload = FALSE) {
+  purrr::map(
+    c("provider", "lad23cd"),
+    download_geo_data,
+    data_version = data_version,
+    redownload = redownload
+  )
+
+  invisible(NULL)
 }

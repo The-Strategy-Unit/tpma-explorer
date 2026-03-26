@@ -17,7 +17,7 @@ mod_show_strategy_text_ui <- function(id) {
 #' @return a character vector of the strategy stubs.
 #' @noRd
 mod_show_strategy_text_get_descriptions_lookup <- function() {
-  yyjsonr::read_json_file(app_sys("app", "data", "descriptions.json"))
+  yyjsonr::read_json_file(app_sys("app", "reference", "descriptions.json"))
 }
 
 #' Show Strategy Description Server
@@ -41,9 +41,8 @@ mod_show_strategy_text_server <- function(
 
     strategy_text <- shiny::reactive({
       s <- shiny::req(strategy_stub())
-      fetch_strategy_text(s)
-    }) |>
-      shiny::bindCache(strategy_stub())
+      read_strategy_text(s)
+    })
 
     output$strategy_text <- shiny::renderText({
       t <- shiny::req(strategy_text())

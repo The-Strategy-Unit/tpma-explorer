@@ -1,4 +1,6 @@
 test_that("ui", {
+  skip_if(interactive(), "This test will fail in interactive mode")
+
   setup_ui_test()
 
   ui <- mod_table_diagnoses_ui("test")
@@ -15,7 +17,7 @@ test_that("it loads the diagnoses csv", {
   shiny::testServer(
     mod_table_diagnoses_server,
     args = list(
-      inputs_data = reactiveVal(),
+      selected_geography = reactiveVal("nhp"),
       selected_provider = reactiveVal("R00"),
       selected_strategy = reactiveVal("strategy"),
       selected_year = reactiveVal(1)
@@ -28,31 +30,10 @@ test_that("it loads the diagnoses csv", {
         m,
         1,
         readr::read_csv(
-          app_sys("app", "data", "diagnoses.csv"),
+          app_sys("app", "reference", "diagnoses.csv"),
           col_types = "c"
         )
       )
-    }
-  )
-})
-
-test_that("diagnoses_data", {
-  # arrange
-
-  # act
-  shiny::testServer(
-    mod_table_diagnoses_server,
-    args = list(
-      inputs_data = reactiveVal(inputs_data_sample),
-      selected_provider = reactiveVal("R00"),
-      selected_strategy = reactiveVal("strategy"),
-      selected_year = reactiveVal(1)
-    ),
-    {
-      actual <- diagnoses_data()
-
-      # assert
-      expect_equal(actual, "diagnoses")
     }
   )
 })
@@ -74,7 +55,7 @@ test_that("diagnoses_prepared", {
   shiny::testServer(
     mod_table_diagnoses_server,
     args = list(
-      inputs_data = reactiveVal(inputs_data_sample),
+      selected_geography = reactiveVal("nhp"),
       selected_provider = reactiveVal("R00"),
       selected_strategy = reactiveVal("strategy"),
       selected_year = reactiveVal(1)
@@ -85,7 +66,7 @@ test_that("diagnoses_prepared", {
       # assert
       expect_equal(actual, "diagnoses_prepared")
       expect_called(m, 1)
-      expect_args(m, 1, "diagnoses", "diagnoses_lookup", "R00", "strategy", 1)
+      expect_args(m, 1, "diagnoses_lookup", "nhp", "R00", "strategy", 1)
     }
   )
 })
@@ -100,7 +81,7 @@ test_that("diagnoses_table (no rows)", {
   shiny::testServer(
     mod_table_diagnoses_server,
     args = list(
-      inputs_data = reactiveVal(list(diagnoses = "diagnoses")),
+      selected_geography = reactiveVal("nhp"),
       selected_provider = reactiveVal("R00"),
       selected_strategy = reactiveVal("strategy"),
       selected_year = reactiveVal(1)
@@ -134,7 +115,7 @@ test_that("diagnoses_table (with rows)", {
   shiny::testServer(
     mod_table_diagnoses_server,
     args = list(
-      inputs_data = reactiveVal(list(diagnoses = "diagnoses")),
+      selected_geography = reactiveVal("nhp"),
       selected_provider = reactiveVal("R00"),
       selected_strategy = reactiveVal("strategy"),
       selected_year = reactiveVal(1)

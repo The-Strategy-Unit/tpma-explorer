@@ -4,10 +4,12 @@
 \alias{get_peers_lookup}
 \title{Get Peers Lookup}
 \usage{
-get_peers_lookup(selected_geography)
+get_peers_lookup(selected_geography, provider)
 }
 \arguments{
 \item{selected_geography}{Character. The selected geography, e.g. "nhp" or "la".}
+
+\item{provider}{Character. The provider code for which to find peers, e.g. "RCF".}
 }
 \value{
 A data.frame with provider codes and their corresponding peers.

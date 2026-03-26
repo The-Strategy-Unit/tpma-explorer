@@ -19,17 +19,8 @@ app_server <- function(input, output, session) {
     "mod_select_strategy"
   )
   selected_year <- shiny::reactive({
-    as.numeric(Sys.getenv("BASELINE_YEAR"))
+    as.numeric(Sys.getenv("BASELINE_YEAR", 202324))
   })
-
-  # Data ----
-  inputs_data <- shiny::reactive({
-    sg <- shiny::req(selected_geography())
-    year <- shiny::req(selected_year())
-
-    get_all_geo_data(sg, year)
-  }) |>
-    shiny::bindCache(selected_geography())
 
   # Open UI accordion ----
   shiny::observe({
@@ -45,7 +36,6 @@ app_server <- function(input, output, session) {
   )
   mod_plot_rates_server(
     "mod_plot_rates",
-    inputs_data,
     selected_geography,
     selected_provider,
     selected_strategy,
@@ -54,21 +44,21 @@ app_server <- function(input, output, session) {
   )
   mod_table_procedures_server(
     "mod_table_procedures",
-    inputs_data,
+    selected_geography,
     selected_provider,
     selected_strategy,
     selected_year
   )
   mod_table_diagnoses_server(
     "mod_table_diagnoses",
-    inputs_data,
+    selected_geography,
     selected_provider,
     selected_strategy,
     selected_year
   )
   mod_plot_age_sex_pyramid_server(
     "mod_plot_age_sex_pyramid",
-    inputs_data,
+    selected_geography,
     selected_provider,
     selected_strategy,
     selected_year,

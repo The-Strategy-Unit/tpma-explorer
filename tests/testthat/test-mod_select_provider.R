@@ -1,4 +1,6 @@
 test_that("ui", {
+  skip_if(interactive(), "This test will fail in interactive mode")
+
   setup_ui_test()
 
   ui <- mod_select_provider_ui("test")
@@ -27,8 +29,8 @@ test_that("providers reactive", {
   m <- mock("providers nhp", "providers la")
 
   testthat::local_mocked_bindings(
-    "read_json" = m,
-    .package = "jsonlite"
+    "read_json_file" = m,
+    .package = "yyjsonr"
   )
   testthat::local_mocked_bindings(
     "app_sys" = \(...) file.path("inst", ...),
@@ -55,14 +57,12 @@ test_that("providers reactive", {
       expect_args(
         m,
         1,
-        "inst/app/data/nhp-datasets.json",
-        simplify_vector = TRUE
+        "inst/app/reference/nhp-datasets.json"
       )
       expect_args(
         m,
         2,
-        "inst/app/data/la-datasets.json",
-        simplify_vector = TRUE
+        "inst/app/reference/la-datasets.json"
       )
     }
   )
@@ -79,11 +79,11 @@ test_that("it updates the select input", {
 
   # mock what will happen to providers as we change the selected geography
   testthat::local_mocked_bindings(
-    "read_json" = mock(
+    "read_json_file" = mock(
       list("A" = "a", "B" = "b"),
       list("C" = "c", "D" = "d")
     ),
-    .package = "jsonlite"
+    .package = "yyjsonr"
   )
 
   # act
@@ -102,7 +102,6 @@ test_that("it updates the select input", {
         1,
         session,
         "provider_select",
-        label = "Choose a trust:",
         choices = c("a" = "A", "b" = "B")
       )
 
@@ -114,8 +113,45 @@ test_that("it updates the select input", {
         2,
         session,
         "provider_select",
-        label = "Choose an LA:",
         choices = c("c" = "C", "d" = "D")
+      )
+    }
+  )
+})
+
+test_that("onRestored works correctly", {
+  # arrange
+  m_update <- mock()
+  m_restored <- mock()
+  local_mocked_bindings(
+    "updateSelectInput" = m_update,
+    "onRestored" = m_restored,
+    .package = "shiny"
+  )
+
+  # act
+  shiny::testServer(
+    mod_select_provider_server,
+    args = list(
+      selected_geography = reactiveVal("nhp")
+    ),
+    {
+      # assert
+      expect_called(m_restored, 1)
+      expect_args(m_restored, 1, restore)
+
+      restore(list(
+        input = list(
+          provider_select = "a"
+        )
+      ))
+      expect_called(m_update, 1)
+      expect_args(
+        m_update,
+        1,
+        session,
+        "provider_select",
+        choices = c("a")
       )
     }
   )

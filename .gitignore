@@ -1,6 +1,5 @@
 ### Repo-specific ###
 
-.vscode/
 README.html
 README_files/
 shiny_bookmarks/
@@ -255,3 +254,5 @@ pyrightconfig.json
 /.quarto/
 
 .cache/
+
+app_data/

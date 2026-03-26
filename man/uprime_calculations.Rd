@@ -7,8 +7,7 @@
 uprime_calculations(df)
 }
 \arguments{
-\item{df}{A data.frame. Rates data read in from Azure and
-processed \link{generate_rates_baseline_data}.}
+\item{df}{A data.frame. Rates data}
 }
 \value{
 A list containing items to produce a U-Prime funnel chart.

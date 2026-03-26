@@ -2,21 +2,41 @@ test_that("plot_rates_trend", {
   # arrange
   # nolint start
   rates_trend_data <- tibble::tribble(
-    ~fyear , ~rate ,
-    201516 , 0.10  ,
-    201617 , 0.12  ,
-    201718 , 0.11  ,
-    201819 , 0.09  ,
-    201920 , 0.08  ,
-    202021 , 0.07  ,
-    202122 , 0.06  ,
-    202223 , 0.05  ,
-    202324 , 0.04
+    ~fyear , ~rate , ~ provider , ~ is_peer ,
+    201516 , 0.10  , "a"        , "peer"    ,
+    201617 , 0.12  , "a"        , "peer"    ,
+    201718 , 0.11  , "a"        , "peer"    ,
+    201819 , 0.09  , "a"        , "peer"    ,
+    201920 , 0.08  , "a"        , "peer"    ,
+    202021 , 0.07  , "a"        , "peer"    ,
+    202122 , 0.06  , "a"        , "peer"    ,
+    202223 , 0.05  , "a"        , "peer"    ,
+    202324 , 0.04  , "a"        , "peer"    ,
+
+    201516 , 0.20  , "b"        , "self"    ,
+    201617 , 0.24  , "b"        , "self"    ,
+    201718 , 0.22  , "b"        , "self"    ,
+    201819 , 0.18  , "b"        , "self"    ,
+    201920 , 0.16  , "b"        , "self"    ,
+    202021 , 0.14  , "b"        , "self"    ,
+    202122 , 0.12  , "b"        , "self"    ,
+    202223 , 0.10  , "b"        , "self"    ,
+    202324 , 0.08  , "b"        , "self"    ,
+
+    201516 , 0.30  , "a"        , "other"   ,
+    201617 , 0.36  , "a"        , "other"   ,
+    201718 , 0.33  , "a"        , "other"   ,
+    201819 , 0.27  , "a"        , "other"   ,
+    201920 , 0.24  , "a"        , "other"   ,
+    202021 , 0.21  , "a"        , "other"   ,
+    202122 , 0.18  , "a"        , "other"   ,
+    202223 , 0.15  , "a"        , "other"   ,
+    202324 , 0.12  , "a"        , "other"
   )
   # nolint end
 
   selected_year <- 202324
-  y_axis_limits <- c(0, 0.16)
+  y_axis_limits <- c(0, 0.30)
   x_axis_title <- "Financial year"
   y_axis_title <- "Rate per 100,000 population"
   y_labels <- scales::label_percent(accuracy = 0.1)
@@ -40,16 +60,16 @@ test_that("plot_rates_funnel", {
   withr::local_seed(1)
   # nolint start
   rates_funnel_data <- tibble::tribble(
-    ~rate , ~denominator , ~national_rate , ~is_peer , ~provider ,
-    0.10  ,         1000 ,           0.08 , TRUE     , "a"       ,
-    0.12  ,         1200 ,           0.08 , TRUE     , "b"       ,
-    0.11  ,         1400 ,           0.08 , FALSE    , "c"       ,
-    0.09  ,         1600 ,           0.08 , TRUE     , "d"       ,
-    0.08  ,         1800 ,           0.08 , NA       , "e"       ,
-    0.07  ,         2000 ,           0.08 , NA       , "f"       ,
-    0.06  ,         2200 ,           0.08 , NA       , "g"       ,
-    0.05  ,         2400 ,           0.08 , NA       , "h"       ,
-    0.04  ,         2600 ,           0.08 , TRUE     , "i"
+    ~rate , ~denominator , ~national_rate , ~is_peer , ~provider , ~provider_label ,
+    0.10  ,         1000 ,           0.08 , "peer"   , "a"       , "A"             ,
+    0.12  ,         1200 ,           0.08 , "peer"   , "b"       , "B"             ,
+    0.11  ,         1400 ,           0.08 , "self"   , "c"       , "C"             ,
+    0.09  ,         1600 ,           0.08 , "peer"   , "d"       , "D"             ,
+    0.08  ,         1800 ,           0.08 , "other"  , "e"       , "E"             ,
+    0.07  ,         2000 ,           0.08 , "other"  , "f"       , "F"             ,
+    0.06  ,         2200 ,           0.08 , "other"  , "g"       , "G"             ,
+    0.05  ,         2400 ,           0.08 , "other"  , "h"       , "H"             ,
+    0.04  ,         2600 ,           0.08 , "peer"   , "i"       , "I"
   )
   # nolint end
 
@@ -74,15 +94,15 @@ test_that("plot_rates_box", {
   # nolint start
   rates_box_data <- tibble::tribble(
     ~rate , ~denominator , ~national_rate , ~is_peer , ~provider ,
-    0.10  ,         1000 ,           0.08 , TRUE     , "a"       ,
-    0.12  ,         1200 ,           0.08 , TRUE     , "b"       ,
-    0.11  ,         1400 ,           0.08 , FALSE    , "c"       ,
-    0.09  ,         1600 ,           0.08 , TRUE     , "d"       ,
-    0.08  ,         1800 ,           0.08 , NA       , "e"       ,
-    0.07  ,         2000 ,           0.08 , NA       , "f"       ,
-    0.06  ,         2200 ,           0.08 , NA       , "g"       ,
-    0.05  ,         2400 ,           0.08 , NA       , "h"       ,
-    0.04  ,         2600 ,           0.08 , TRUE     , "i"
+    0.10  ,         1000 ,           0.08 , "peer"   , "a"       ,
+    0.12  ,         1200 ,           0.08 , "peer"   , "b"       ,
+    0.11  ,         1400 ,           0.08 , "self"   , "c"       ,
+    0.09  ,         1600 ,           0.08 , "peer"   , "d"       ,
+    0.08  ,         1800 ,           0.08 , "other"  , "e"       ,
+    0.07  ,         2000 ,           0.08 , "other"  , "f"       ,
+    0.06  ,         2200 ,           0.08 , "other"  , "g"       ,
+    0.05  ,         2400 ,           0.08 , "other"  , "h"       ,
+    0.04  ,         2600 ,           0.08 , "peer"   , "i"
   )
   # nolint end
 
@@ -96,16 +116,6 @@ test_that("plot_rates_box", {
 
   # assert
   vdiffr::expect_doppelganger("plot_rates_box", actual)
-})
-
-test_that("theme_rates (has_y_axis = TRUE)", {
-  actual <- theme_rates(TRUE)
-  expect_snapshot(actual)
-})
-
-test_that("theme_rates (has_y_axis = FALSE)", {
-  actual <- theme_rates(FALSE)
-  expect_snapshot(actual)
 })
 
 test_that("plot_age_sex_pyramid", {
@@ -183,4 +193,14 @@ test_that("plot_age_sex_pyramid", {
 
   # assert
   vdiffr::expect_doppelganger("plot_age_sex_pyramid", actual)
+})
+
+test_that("theme_rates (has_y_axis = TRUE)", {
+  actual <- theme_rates(16, TRUE)
+  expect_snapshot(actual)
+})
+
+test_that("theme_rates (has_y_axis = FALSE)", {
+  actual <- theme_rates(16, FALSE)
+  expect_snapshot(actual)
 })

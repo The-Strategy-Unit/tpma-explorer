@@ -15,14 +15,15 @@ BugReports: https://github.com/The-Strategy-Unit/tpma-explorer/issues
 Depends:
     R (>= 4.1.0)
 Imports:
+    arrow,
     azkit,
     AzureAuth,
     AzureStor,
     bsicons,
     bslib,
-    cachem,
     config,
     dplyr,
+    fs,
     ggbeeswarm,
     ggplot2,
     ggrepel,

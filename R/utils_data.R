@@ -1,9 +1,20 @@
 #' Prepare Age-Sex Data
-#' @param age_sex_data A data.frame. Read from Azure. Counts for each strategy
-#'     split by provider, year, age group and sex.
+#' @param geography Character. Either "nhp" or "la", used to determine the file path.
+#' @param provider Character. Provider identifier.
+#' @param strategy Character. Strategy identifier.
+#' @param year Numeric. Financial year.
 #' @return A data.frame.
 #' @export
-prepare_age_sex_data <- function(age_sex_data) {
+prepare_age_sex_data <- function(geography, provider, strategy, year) {
+  age_sex_data <- get_arrow_dataset(geography, "age_sex") |>
+    dplyr::filter(
+      .data$provider == .env$provider,
+      .data$strategy == .env$strategy,
+      .data$fyear == .env$year
+    ) |>
+    dplyr::select("sex", "age_group", "n") |>
+    dplyr::collect()
+
   age_fct <- age_sex_data[["age_group"]] |> # nolint: object_usage_linter.
     unique() |>
     sort()
@@ -98,4 +109,29 @@ md_file_to_html <- function(...) {
 #' @export
 md_string_to_html <- function(text) {
   shiny::HTML(markdown::mark_html(text, output = FALSE, template = FALSE))
+}
+
+
+# ------------------------------------------------------------------------------
+.arrow_dataset_cache <- new.env(parent = emptyenv())
+
+#' Get an Arrow Dataset
+#'
+#' This function loads a parquet file as an Arrow dataset and caches it in
+#' memory for future use.
+#'
+#' @param geography Character. Either "nhp" or "la", used to determine the file
+#'     path.
+#' @param dataset_name Character. The name of the dataset, e.g. "rates".
+#' @return An Arrow dataset object.
+get_arrow_dataset <- function(geography, dataset_name) {
+  geo_dir <- switch(geography, "nhp" = "provider", "la" = "lad23cd")
+  key <- paste0(geo_dir, "::", dataset_name)
+
+  if (!exists(key, envir = .arrow_dataset_cache, inherits = FALSE)) {
+    path <- file.path("app_data", geo_dir, paste0(dataset_name, ".parquet"))
+    assign(key, arrow::open_dataset(path), envir = .arrow_dataset_cache)
+  }
+
+  get(key, envir = .arrow_dataset_cache, inherits = FALSE)
 }

@@ -24,8 +24,8 @@ mod_table_diagnoses_ui <- function(id) {
 
 #' Diagnoses Table Server
 #' @param id Internal parameter for `shiny`.
-#' @param inputs_data A reactive. Contains a list with data.frames, which we can
-#'     extract the diagnoses data from.
+#' @param selected_geography A reactive. Selected geography. Either `"nhp"` or
+#'     `"la"`.
 #' @param selected_provider Reactive. Provider code, e.g. `"RCF"`.
 #' @param selected_strategy Reactive. Strategy variable name, e.g.
 #'     `"alcohol_partially_attributable_acute"`.
@@ -33,32 +33,28 @@ mod_table_diagnoses_ui <- function(id) {
 #' @noRd
 mod_table_diagnoses_server <- function(
   id,
-  inputs_data,
+  selected_geography,
   selected_provider,
   selected_strategy,
   selected_year
 ) {
   # load static data items
   diagnoses_lookup <- readr::read_csv(
-    app_sys("app", "data", "diagnoses.csv"),
+    app_sys("app", "reference", "diagnoses.csv"),
     col_types = "c"
   )
 
   # return the shiny module
   shiny::moduleServer(id, function(input, output, session) {
-    diagnoses_data <- shiny::reactive({
-      inputs_data()[["diagnoses"]]
-    })
-
     diagnoses_prepared <- shiny::reactive({
-      df <- shiny::req(diagnoses_data())
+      geography <- shiny::req(selected_geography())
       provider <- shiny::req(selected_provider())
       strategy <- shiny::req(selected_strategy())
       year <- shiny::req(selected_year())
 
       prepare_diagnoses_data(
-        df,
         diagnoses_lookup,
+        geography,
         provider,
         strategy,
         year
@@ -66,13 +62,16 @@ mod_table_diagnoses_server <- function(
     })
 
     output$diagnoses_table <- gt::render_gt({
+      df <- diagnoses_prepared()
+
       shiny::validate(
         shiny::need(
-          !is.null(diagnoses_prepared()) && nrow(diagnoses_prepared()) > 0,
+          !is.null(df) && nrow(df) > 0,
           "No diagnoses to display."
         )
       )
-      diagnoses_prepared() |> entable_encounters()
+
+      entable_encounters(df)
     })
   })
 }

@@ -62,14 +62,14 @@ mod_select_strategy_ui <- function(id) {
 #' @noRd
 mod_select_strategy_get_strategies <- function() {
   # Read local lookups
-  categories <- app_sys("app", "data", "mitigator-categories.csv") |>
+  categories <- app_sys("app", "reference", "mitigator-categories.csv") |>
     readr::read_csv(
       col_types = readr::cols(
         .default = "c",
         is_care_shift = readr::col_logical()
       )
     )
-  strategies <- app_sys("app", "data", "mitigators.json") |>
+  strategies <- app_sys("app", "reference", "mitigators.json") |>
     yyjsonr::read_json_file()
 
   strategies |>
@@ -126,14 +126,12 @@ mod_select_strategy_server <- function(id) {
     })
 
     shiny::observe({
-      shiny::req(input$strategy_category_select)
+      strategy_category <- shiny::req(input$strategy_category_select)
 
       strategy_choices <- strategies_filtered() |>
-        dplyr::filter(.data$category == input$strategy_category_select) |>
+        dplyr::filter(.data$category == .env$strategy_category) |>
         dplyr::select("strategy_name", "strategy") |>
         tibble::deframe()
-
-      shiny::req(strategy_choices)
 
       # A bookmark restore will have changed this reactiveVal to a strategy
       # value, otherwise it remains NULL
@@ -153,12 +151,14 @@ mod_select_strategy_server <- function(id) {
       shiny::bindEvent(input$strategy_category_select)
 
     shiny::observe({
-      selected_strategy <- input$strategy_select
-      pending_strategy(selected_strategy)
+      pending_strategy(input$strategy_select)
     }) |>
       shiny::bindEvent(input$strategy_select)
 
-    shiny::onRestored(function(state) {
+    # handle the onRestored event for bookmarking
+    # cannot directly test onRestored, so separate into a function which can be
+    # tested.
+    restore <- function(state) {
       # Store the bookmarked value. The category dropdown will be updated below,
       # which will then result in the restored strategy being selected.
       pending_strategy(state$input$strategy_select)
@@ -168,7 +168,10 @@ mod_select_strategy_server <- function(id) {
         "strategy_category_select",
         selected = state$input$strategy_category_select
       )
-    })
+
+      invisible(NULL)
+    }
+    shiny::onRestored(restore)
 
     shiny::reactive(input$strategy_select)
   })

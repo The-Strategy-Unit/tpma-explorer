@@ -2,25 +2,35 @@ test_that("prepare_age_sex_data", {
   # arrange
   # nolint start
   age_sex_data <- tibble::tribble(
-    ~age_group , ~sex , ~n ,
-    "0-4"      ,    1 ,  5 ,
-    "5-9"      ,    1 , 10 ,
-    "10-14"    ,    1 , 20 ,
-    "0-4"      ,    2 ,  7 ,
-    "5-9"      ,    2 , 12 ,
-    "10-14"    ,    2 , 22 ,
+    ~age_group , ~sex , ~n , ~ provider, ~ strategy, ~ fyear,
+    "0-4"      ,  "1" ,  5 , "R00"     , "a"      , 2 ,
+    "5-9"      ,  "1" , 10 , "R00"     , "a"      , 2 ,
+    "10-14"    ,  "1" , 20 , "R00"     , "a"      , 2 ,
+    "0-4"      ,  "2" ,  7 , "R00"     , "a"      , 2 ,
+    "5-9"      ,  "2" , 12 , "R00"     , "a"      , 2 ,
+    "10-14"    ,  "2" , 22 , "R00"     , "a"      , 2 ,
+    # rows that should be filtered out:
+    "0-4"      ,  "1" , 10 , "R01"     , "a"      , 2 ,
+    "5-9"      ,  "1" , 20 , "R00"     , "b"      , 2 ,
+    "10-14"    ,  "1" , 40 , "R00"     , "a"      , 3
   )
   # nolint end
+
+  m <- mock(age_sex_data)
+  testthat::local_mocked_bindings(
+    "get_arrow_dataset" = m
+  )
+
   expected <- structure(
     list(
-      age_group = structure(
-        c(1L, 3L, 2L, 1L, 3L, 2L),
-        levels = c("0-4", "10-14", "5-9"),
-        class = "factor"
-      ),
       sex = structure(
         c(1L, 1L, 1L, 2L, 2L, 2L),
         levels = c("Males", "Females"),
+        class = "factor"
+      ),
+      age_group = structure(
+        c(1L, 3L, 2L, 1L, 3L, 2L),
+        levels = c("0-4", "10-14", "5-9"),
         class = "factor"
       ),
       n = c(-5, -10, -20, 7, 12, 22)
@@ -30,10 +40,12 @@ test_that("prepare_age_sex_data", {
   )
 
   # act
-  actual <- prepare_age_sex_data(age_sex_data)
+  actual <- prepare_age_sex_data("provider", "R00", "a", 2)
 
   # assert
   expect_equal(actual, expected)
+  expect_called(m, 1)
+  expect_args(m, 1, "provider", "age_sex")
 })
 
 test_that("get_golem_config", {
@@ -152,4 +164,27 @@ test_that("md_string_to_html", {
 
   expect_called(m2, 1)
   expect_args(m2, 1, "content")
+})
+
+test_that("get_arrow_dataset", {
+  # arrange
+  m <- mock("dataset", cycle = TRUE)
+  local_mocked_bindings(
+    "open_dataset" = m,
+    .package = "arrow"
+  )
+
+  # act
+  actual1 <- get_arrow_dataset("nhp", "dataset")
+  actual2 <- get_arrow_dataset("la", "dataset")
+
+  # assert
+  expect_equal(actual1, "dataset")
+  expect_equal(actual2, "dataset")
+  expect_called(m, 2)
+  expect_args(m, 1, "app_data/provider/dataset.parquet")
+  expect_args(m, 2, "app_data/lad23cd/dataset.parquet")
+
+  expect_equal(.arrow_dataset_cache[["provider::dataset"]], "dataset")
+  expect_equal(.arrow_dataset_cache[["lad23cd::dataset"]], "dataset")
 })

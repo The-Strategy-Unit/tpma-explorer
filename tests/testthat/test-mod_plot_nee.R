@@ -1,4 +1,6 @@
 test_that("ui", {
+  skip_if(interactive(), "This test will fail in interactive mode")
+
   setup_ui_test()
 
   ui <- mod_plot_nee_ui("test")
@@ -44,7 +46,10 @@ test_that("nee (no rows)", {
     ),
     {
       # assert
-      expect_error(output$nee)
+      expect_equal(
+        output$nee_text,
+        "This TPMA was not part of that exercise. No estimate is available."
+      )
     }
   )
 })
@@ -52,16 +57,9 @@ test_that("nee (no rows)", {
 
 test_that("nee (with rows)", {
   # arrange
-  m <- mock("plot")
-  testthat::local_mocked_bindings(
-    "plot_nee" = m
-  )
-
-  # replace renderPlot to avoid actual plotting, replace with renderText so we
-  # can simply check the output
-  testthat::local_mocked_bindings(
-    "renderPlot" = shiny::renderText,
-    .package = "shiny"
+  expected <- paste0(
+    "They predicted that a mean of <b>16%</b> of this type of activity could be mitigated, ",
+    "with an 80% prediction interval from <b>1%</b> to <b>40%</b>."
   )
 
   # act
@@ -71,13 +69,10 @@ test_that("nee (with rows)", {
       selected_strategy = reactiveVal("smoking")
     ),
     {
-      actual <- output$nee
+      actual <- output$nee_text
 
       # assert
-      expect_equal(actual, "plot")
-
-      expect_called(m, 1)
-      expect_call(m, 1, plot_nee(df))
+      expect_equal(actual, expected)
     }
   )
 })

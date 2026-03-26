@@ -21,7 +21,7 @@ mod_plot_nee_ui <- function(id) {
 mod_plot_nee_server <- function(id, selected_strategy) {
   # load static data items
   nee_data <- readr::read_csv(
-    app_sys("app", "data", "nee_table.csv"),
+    app_sys("app", "reference", "nee_table.csv"),
     col_types = "cddd"
   )
 
@@ -30,22 +30,22 @@ mod_plot_nee_server <- function(id, selected_strategy) {
     selected_nee_data <- shiny::reactive({
       strat <- shiny::req(selected_strategy())
 
-      nee_data |>
-        dplyr::filter(.data$param_name == strat)
+      dplyr::filter(
+        nee_data,
+        .data$param_name == strat
+      )
     })
 
     output$nee_text <- shiny::renderText({
       df <- selected_nee_data()
 
-      nee_aggregate <-
+      if (nrow(df) == 0) {
         "This TPMA was not part of that exercise. No estimate is available."
-
-      has_nee <- nrow(df) > 0
-      if (has_nee) {
-        nee_aggregate <- paste0(
+      } else {
+        paste0(
           "They predicted that a mean of <b>",
           round(100 - df$mean),
-          "%</b>  of this type of activity could be mitigated, ",
+          "%</b> of this type of activity could be mitigated, ",
           "with an 80% prediction interval from <b>",
           round(100 - df$percentile10),
           "%</b> to <b>",
@@ -53,8 +53,6 @@ mod_plot_nee_server <- function(id, selected_strategy) {
           "%</b>."
         )
       }
-
-      nee_aggregate
     })
   })
 }

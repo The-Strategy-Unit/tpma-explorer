@@ -75,154 +75,174 @@ test_that("get_container uses get_managed_token when in a managed environment", 
   expect_equal(actual, "container")
 })
 
-test_that("get_all_geo_data works for nhp geography", {
+test_that("download_geo_data exits if path already exists", {
   # arrange
-  data_types <- c(
+  m_dir_create <- mock()
+  m__download_geo_data <- mock()
+
+  local_mocked_bindings(
+    "dir_exists" = \(...) TRUE,
+    "dir_create" = m_dir_create,
+    .package = "fs"
+  )
+  local_mocked_bindings("_download_geo_data" = m__download_geo_data)
+
+  # act
+  download_geo_data("nhp", "dev", FALSE)
+
+  expect_called(m_dir_create, 0)
+  expect_called(m__download_geo_data, 0)
+})
+
+test_that("download_geo_data continues if path already exists but redownload is TRUE", {
+  # arrange
+  m_dir_create <- mock()
+  m__download_geo_data <- mock()
+
+  local_mocked_bindings(
+    "dir_exists" = \(...) TRUE,
+    "dir_create" = m_dir_create,
+    .package = "fs"
+  )
+  local_mocked_bindings(
+    "_download_geo_data" = m__download_geo_data
+  )
+
+  # act
+  download_geo_data("nhp", "dev", TRUE)
+
+  expect_called(m_dir_create, 0)
+  expect_called(m__download_geo_data, 1)
+  expect_args(m__download_geo_data, 1, "nhp", "app_data/nhp", "dev")
+})
+
+test_that("download_geo_data creates path if it does not exist", {
+  # arrange
+  m_dir_create <- mock()
+  m__download_geo_data <- mock()
+
+  local_mocked_bindings(
+    "dir_exists" = \(...) FALSE,
+    "dir_create" = m_dir_create,
+    .package = "fs"
+  )
+  local_mocked_bindings(
+    "_download_geo_data" = m__download_geo_data
+  )
+
+  # act
+  download_geo_data("nhp", "dev", TRUE)
+
+  expect_called(m_dir_create, 1)
+  expect_called(m__download_geo_data, 1)
+  expect_args(m_dir_create, 1, "app_data/nhp", recursive = TRUE)
+})
+
+test_that("_download_geo_data calls _download_geo_data_file for each data type", {
+  # arrange
+  m_container <- mock("container")
+  m_download_geo_data_file <- mock()
+  local_mocked_bindings(
+    "get_container" = m_container,
+    "_download_geo_data_file" = m_download_geo_data_file
+  )
+
+  # act
+  `_download_geo_data`("nhp", "app_data/nhp", "dev")
+
+  # assert
+  expect_called(m_container, 1)
+  expect_called(m_download_geo_data_file, 4)
+
+  expect_args(
+    m_download_geo_data_file,
+    1,
     "age_sex",
+    "app_data/nhp",
+    "container",
+    "dev/nhp"
+  )
+  expect_args(
+    m_download_geo_data_file,
+    2,
     "diagnoses",
+    "app_data/nhp",
+    "container",
+    "dev/nhp"
+  )
+  expect_args(
+    m_download_geo_data_file,
+    3,
     "procedures",
-    "rates"
+    "app_data/nhp",
+    "container",
+    "dev/nhp"
   )
-
-  mock_age_sex <- data.frame(provider = c("P1", "P2"), age = c(30, 40))
-  mock_diagnoses <- data.frame(
-    provider = c("P1", "P2"),
-    diagnosis = c("D1", "D2")
+  expect_args(
+    m_download_geo_data_file,
+    4,
+    "rates",
+    "app_data/nhp",
+    "container",
+    "dev/nhp"
   )
-  mock_procedures <- data.frame(
-    provider = c("P1", "P2"),
-    procedure = c("PR1", "PR2")
+})
+
+test_that("_download_geo_data_file works", {
+  # arrange
+  mock_data <- data.frame(
+    lad23cd = c("P1", "P2", "P3"),
+    age = c(30, 40, 50),
+    "strategy" = c("S1", "S2", NA_character_)
   )
-  mock_rates <- data.frame(provider = c("P1", "P2"), rate = c(0.1, 0.2))
+  expected_data <- mock_data[1:2, ]
+  names(expected_data)[[1]] <- "provider"
 
-  m_get_container <- mock("container")
-  m_read_azure_parquet <- mock(
-    mock_age_sex,
-    mock_diagnoses,
-    mock_procedures,
-    mock_rates
-  )
+  m_read_azure_parquet <- mock(mock_data)
+  m_write_parquet <- mock()
 
-  withr::local_envvar("DATA_VERSION" = "dev")
-
-  local_mocked_bindings("get_container" = m_get_container)
   local_mocked_bindings(
     "read_azure_parquet" = m_read_azure_parquet,
     .package = "azkit"
   )
-
-  # act
-  result <- get_all_geo_data("nhp")
-
-  # assert
-  expect_type(result, "list")
-  expect_length(result, 4)
-  expect_named(result, data_types)
-
-  # verify get_container was called correctly
-  expect_called(m_get_container, 1)
-  expect_args(m_get_container, 1)
-
-  # verify read_azure_parquet was called 4 times with correct arguments
-  expect_called(m_read_azure_parquet, 4)
-
-  for (i in seq_along(data_types)) {
-    expect_args(
-      m_read_azure_parquet,
-      i,
-      "container",
-      data_types[i],
-      "dev/provider"
-    )
-  }
-
-  # verify the data is returned correctly
-  expect_equal(result$age_sex, mock_age_sex)
-  expect_equal(result$diagnoses, mock_diagnoses)
-  expect_equal(result$procedures, mock_procedures)
-  expect_equal(result$rates, mock_rates)
-})
-
-test_that("get_all_geo_data works for la geography and renames lad23cd to provider", {
-  # arrange
-  data_types <- c(
-    "age_sex",
-    "diagnoses",
-    "procedures",
-    "rates"
-  )
-
-  mock_age_sex <- data.frame(lad23cd = c("P1", "P2"), age = c(30, 40))
-  mock_diagnoses <- data.frame(
-    lad23cd = c("P1", "P2"),
-    diagnosis = c("D1", "D2")
-  )
-  mock_procedures <- data.frame(
-    lad23cd = c("P1", "P2"),
-    procedure = c("PR1", "PR2")
-  )
-  mock_rates <- data.frame(lad23cd = c("P1", "P2"), rate = c(0.1, 0.2))
-
-  expected_age_sex <- dplyr::rename(mock_age_sex, provider = lad23cd)
-  expected_diagnoses <- dplyr::rename(mock_diagnoses, provider = lad23cd)
-  expected_procedures <- dplyr::rename(mock_procedures, provider = lad23cd)
-  expected_rates <- dplyr::rename(mock_rates, provider = lad23cd)
-
-  m_get_container <- mock("container")
-  m_read_azure_parquet <- mock(
-    mock_age_sex,
-    mock_diagnoses,
-    mock_procedures,
-    mock_rates
-  )
-
-  withr::local_envvar("DATA_VERSION" = "dev")
-
-  local_mocked_bindings("get_container" = m_get_container)
   local_mocked_bindings(
-    "read_azure_parquet" = m_read_azure_parquet,
-    .package = "azkit"
+    "write_parquet" = m_write_parquet,
+    .package = "arrow"
   )
 
   # act
-  result <- get_all_geo_data("la")
+  actual <- `_download_geo_data_file`("data", "app_data/nhp", "container", "dev/nhp")
 
   # assert
-  expect_type(result, "list")
-  expect_length(result, 4)
-  expect_named(result, data_types)
+  expect_equal(actual, "app_data/nhp/data.parquet")
 
-  # verify get_container was called correctly
-  expect_called(m_get_container, 1)
-  expect_args(m_get_container, 1)
-
-  # verify read_azure_parquet was called 4 times with correct arguments
-  expect_called(m_read_azure_parquet, 4)
-
-  for (i in seq_along(data_types)) {
-    expect_args(
-      m_read_azure_parquet,
-      i,
-      "container",
-      data_types[i],
-      "dev/lad23cd"
-    )
-  }
-
-  # verify lad23cd column was renamed to provider
-  expect_equal(result$age_sex, expected_age_sex)
-  expect_equal(result$diagnoses, expected_diagnoses)
-  expect_equal(result$procedures, expected_procedures)
-  expect_equal(result$rates, expected_rates)
+  expect_called(m_read_azure_parquet, 1)
+  expect_args(
+    m_read_azure_parquet,
+    1,
+    "container",
+    "data",
+    "dev/nhp"
+  )
+  expect_called(m_write_parquet, 1)
+  expect_args(
+    m_write_parquet,
+    1,
+    expected_data,
+    "app_data/nhp/data.parquet"
+  )
 })
 
-test_that("get_all_geo_data throws error for unknown geography", {
+test_that("download_all_data works", {
   # arrange
-  local_mocked_bindings("get_container" = mock())
+  m_download_geo_data <- mock()
+  local_mocked_bindings("download_geo_data" = m_download_geo_data)
 
-  # act and assert
-  expect_error(
-    get_all_geo_data("unknown_geography"),
-    "Unknown geography"
-  )
+  # act
+  download_all_data("data_version", TRUE)
+
+  # assert
+  expect_called(m_download_geo_data, 2)
+  expect_args(m_download_geo_data, 1, "provider", data_version = "data_version", redownload = TRUE)
+  expect_args(m_download_geo_data, 2, "lad23cd", data_version = "data_version", redownload = TRUE)
 })

@@ -4,19 +4,14 @@
 \alias{fetch_strategy_text}
 \title{Fetch Strategy Text from NHP Inputs}
 \usage{
-fetch_strategy_text(strategy_stub)
+fetch_strategy_text(strategy_stub, filename)
 }
 \arguments{
 \item{strategy_stub}{Character. Strategy variable name stub, e.g.
 \code{"alcohol_partially_attributable"}.}
-}
-\value{
-Character.
+
+\item{filename}{Character. The filename to save the fetched strategy text to.}
 }
 \description{
 Fetch Strategy Text from NHP Inputs
-}
-\details{
-Markdown files containing strategy descriptions are read from
-\href{https://github.com/The-Strategy-Unit/nhp_inputs/}{NHP Inputs}.
 }
