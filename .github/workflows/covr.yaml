@@ -23,10 +23,6 @@ jobs:
         with:
           cache: always
           extra-packages: |
-            any::lintr
-            any::cyclocomp
-            any::rcmdcheck
-            any::devtools
             any::covr
             local::.
 
