@@ -16,3 +16,4 @@
 ^shiny_bookmarks$
 ^tpma-explorer\.Rproj$
 ^app_data/$
+^vscode_app.R$

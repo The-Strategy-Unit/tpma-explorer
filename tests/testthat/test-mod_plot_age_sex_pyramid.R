@@ -2,7 +2,8 @@
 test_that("ui", {
   skip_if(interactive(), "This test will fail in interactive mode")
 
-  setup_ui_test()
+  # in helper-ui.R, ignore lint error "no visible global function definition for 'setup_ui_test'""
+  setup_ui_test() # nolint: object_usage_linter
 
   ui <- mod_plot_age_sex_pyramid_ui("test")
 
