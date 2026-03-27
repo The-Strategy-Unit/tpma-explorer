@@ -2,10 +2,10 @@
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/The-Strategy-Unit/tpma-explorer/actions/workflows/check.yaml/badge.svg)](https://github.com/The-Strategy-Unit/tpma-explorer/actions/workflows/check.yaml)
-[![codecov](https://codecov.io/gh/The-Strategy-Unit/tpma-explorer/branch/main/graph/badge.svg)](https://codecov.io/gh/The-Strategy-Unit/tpma-explorer)
-<!-- badges: end -->
-
+[![codecov](https://codecov.io/gh/The-Strategy-Unit/tpma-explorer/branch/main/graph/badge.svg)](https://codecov.io/gh/The-Strategy-Unit/tpma-explorer
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+)
+<!-- badges: end -->
 
 An app to explore opportunities to reduce hospital care, using data for Types of Potentially-Mitigatable Activity (TPMAs).
 
