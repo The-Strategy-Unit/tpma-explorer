@@ -41,5 +41,5 @@ In `R/` you can find:
 In `inst/` you can find:
 
 * `golem-config.yaml`, which contains configuration (copied from [nhp_inputs](https://github.com/The-Strategy-Unit/nhp_inputs/blob/main/inst/golem-config.yml))
-* lookup data files in `app/data/`
+* lookup data files in `app/reference/`
 * Markdown files under `app/text/`, which contain body and tooltip text
