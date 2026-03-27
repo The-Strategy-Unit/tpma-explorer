@@ -1,5 +1,6 @@
 setup_app_ui_tests <- function(.env = parent.frame()) {
-  setup_ui_test(.env)
+  # in helper-ui.R, ignore lint error "no visible global function definition for 'setup_ui_test'""
+  setup_ui_test(.env) # nolint: object_usage_linter
 
   mocks <- list(
     "mod_select_geography_ui" = mockery::mock("mod_select_geography"),

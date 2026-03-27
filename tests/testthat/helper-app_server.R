@@ -1,6 +1,4 @@
 setup_app_server_tests <- function(.env = parent.frame()) {
-  shiny::shinyOptions(cache = cachem::cache_mem())
-
   mocks <- list(
     mod_select_geography_server = mockery::mock(shiny::reactiveVal("nhp")),
     mod_select_provider_server = mockery::mock(shiny::reactiveVal("ABC")),
