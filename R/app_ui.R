@@ -9,6 +9,8 @@ app_ui <- function(request) {
     fillable = FALSE, # allow page scroll
 
     sidebar = bslib::sidebar(
+      id = "sidebar",
+      open = "closed",
       width = 400,
       bslib::accordion(
         id = "sidebar_accordion",
