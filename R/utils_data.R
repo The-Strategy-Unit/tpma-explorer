@@ -13,7 +13,10 @@ prepare_age_sex_data <- function(geography, provider, strategy, year) {
       .data$fyear == .env$year
     ) |>
     dplyr::select("sex", "age_group", "n") |>
-    dplyr::collect()
+    dplyr::collect() |>
+    dplyr::mutate(
+      dplyr::across("sex", as.character)
+    )
 
   age_fct <- age_sex_data[["age_group"]] |> # nolint: object_usage_linter.
     unique() |>
