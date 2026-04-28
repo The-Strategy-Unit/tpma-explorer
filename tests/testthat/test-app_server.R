@@ -104,6 +104,46 @@ test_that("sidebar accordion opens", {
   )
 })
 
+test_that("sidebar opens when Visualisations tab is selected", {
+  # arrange
+  mocks <- setup_app_server_tests()
+  m <- mock()
+  local_mocked_bindings(toggle_sidebar = m, .package = "bslib")
+
+  shiny::testServer(
+    app_server,
+    {
+      # act
+      session$setInputs(page_navbar = "Visualisations")
+      session$flushReact()
+
+      # assert
+      expect_called(m, 1)
+      expect_args(m, 1, "sidebar", open = TRUE)
+    }
+  )
+})
+
+test_that("sidebar closes when a non-Visualisations tab is selected", {
+  # arrange
+  mocks <- setup_app_server_tests()
+  m <- mock()
+  local_mocked_bindings(toggle_sidebar = m, .package = "bslib")
+
+  shiny::testServer(
+    app_server,
+    {
+      # act
+      session$setInputs(page_navbar = "Information")
+      session$flushReact()
+
+      # assert
+      expect_called(m, 1)
+      expect_args(m, 1, "sidebar", open = FALSE)
+    }
+  )
+})
+
 test_that("mod_show_strategy_text_server", {
   # arrange
   mocks <- setup_app_server_tests()
