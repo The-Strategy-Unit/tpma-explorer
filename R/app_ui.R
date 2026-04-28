@@ -5,7 +5,7 @@ app_ui <- function(request) {
   bslib::page_navbar(
     id = "page_navbar",
     title = "Explore opportunities to reduce hospital care",
-    selected = "Visualisations", # start with this panel open
+    selected = "Home", # start with this panel open
     fillable = FALSE, # allow page scroll
 
     sidebar = bslib::sidebar(
@@ -36,6 +36,43 @@ app_ui <- function(request) {
             icon = NULL
           )
         )
+      )
+    ),
+
+    bslib::nav_panel(
+      id = "nav_panel_home",
+      title = "Home",
+      icon = bsicons::bs_icon("house-door"),
+
+      bslib::card(
+        bslib::card_header(
+          class = "text-bg-info",
+          bsicons::bs_icon("info-circle"),
+          "Note"
+        ),
+        "This app is in continuous development.",
+        "Please give feedback by clicking the link in the top-right."
+      ),
+
+      bslib::card(
+        id = "card_home_welcome",
+        bslib::card_header("Welcome"),
+        md_file_to_html("app", "text", "home-welcome.md")
+      ),
+      bslib::card(
+        id = "card_home_tpmas",
+        bslib::card_header("Types of Potentially Mitigatable Activity (TPMAs)"),
+        md_file_to_html("app", "text", "home-tpmas.md")
+      ),
+      bslib::card(
+        id = "card_home_care_shift",
+        bslib::card_header("Care-shift opportunities"),
+        md_file_to_html("app", "text", "home-care-shift.md")
+      ),
+      bslib::card(
+        id = "card_home_reduction",
+        bslib::card_header("Reduction"),
+        md_file_to_html("app", "text", "home-reduction.md")
       )
     ),
 
@@ -72,6 +109,16 @@ app_ui <- function(request) {
       title = "Information",
       icon = bsicons::bs_icon("book"),
 
+      bslib::card(
+        bslib::card_header(
+          class = "text-bg-info",
+          bsicons::bs_icon("info-circle"),
+          "Note"
+        ),
+        "This app is in continuous development.",
+        "Please give feedback by clicking the link in the top-right."
+      ),
+
       bslib::layout_columns(
         col_widths = c(6, 6),
         fill = FALSE,
@@ -79,22 +126,22 @@ app_ui <- function(request) {
           col_widths = 12,
           fill = FALSE,
           bslib::card(
-            id = "card_purpose",
+            id = "card_info_purpose",
             bslib::card_header("Purpose"),
             md_file_to_html("app", "text", "info-purpose.md")
           ),
           bslib::card(
-            id = "card_related",
+            id = "card_info_related",
             bslib::card_header("Related"),
             md_file_to_html("app", "text", "info-related.md")
           ),
           bslib::card(
-            id = "card_data",
+            id = "card_info_data",
             bslib::card_header("Data"),
             md_file_to_html("app", "text", "info-data.md")
           ),
           bslib::card(
-            id = "card_data",
+            id = "card_info_definitions",
             bslib::card_header("Definitions"),
             md_file_to_html("app", "text", "info-definitions.md")
           )
@@ -103,17 +150,17 @@ app_ui <- function(request) {
           col_widths = 12,
           fill = FALSE,
           bslib::card(
-            id = "card_navigation",
+            id = "card_info_navigation",
             bslib::card_header("Navigation"),
             md_file_to_html("app", "text", "info-navigation.md")
           ),
           bslib::card(
-            id = "card_how_to_use",
+            id = "card_info_interface",
             bslib::card_header("Interface"),
             md_file_to_html("app", "text", "info-interface.md")
           ),
           bslib::card(
-            id = "card_author",
+            id = "card_info_author",
             bslib::card_header("Authors"),
             style = "display:inline;", # put items on the same line
             md_file_to_html("app", "text", "info-author.md"),
