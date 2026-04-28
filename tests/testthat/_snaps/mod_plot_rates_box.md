@@ -8,9 +8,9 @@
           <div class="card-header bslib-gap-spacing">
             Rates Box
             <bslib-tooltip placement="right" bsOptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
-              <template><p>Distribution of rates for all units, highlighting the selected unit (red) and peers.
+              <template><p>Distribution of rates for all units, showing only the selected unit (red) and peers (grey).
       The box identifies the limits of the central half of the data.
-      The line inside is the median value.
+      The horizontal line inside is the median value.
       Points beyond the ends of the vertical lines are considered outliers.
       Data is age-sex standardised.</p>
       </template>
