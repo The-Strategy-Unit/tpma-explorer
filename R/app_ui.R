@@ -71,7 +71,7 @@ app_ui <- function(request) {
       ),
       bslib::card(
         id = "card_home_reduction",
-        bslib::card_header("Reduction"),
+        bslib::card_header("How much hospital activity can be reduced?"),
         md_file_to_html("app", "text", "home-reduction.md")
       )
     ),
