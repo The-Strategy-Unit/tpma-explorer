@@ -144,16 +144,6 @@ app_ui <- function(request) {
           col_widths = 12,
           fill = FALSE,
           bslib::card(
-            id = "card_info_purpose",
-            bslib::card_header("Purpose"),
-            md_file_to_html("app", "text", "info-purpose.md")
-          ),
-          bslib::card(
-            id = "card_info_related",
-            bslib::card_header("Related"),
-            md_file_to_html("app", "text", "info-related.md")
-          ),
-          bslib::card(
             id = "card_info_data",
             bslib::card_header("Data"),
             md_file_to_html("app", "text", "info-data.md")
@@ -162,6 +152,17 @@ app_ui <- function(request) {
             id = "card_info_definitions",
             bslib::card_header("Definitions"),
             md_file_to_html("app", "text", "info-definitions.md")
+          ),
+          bslib::card(
+            id = "card_info_author",
+            bslib::card_header("Authors"),
+            style = "display:inline;", # put items on the same line
+            md_file_to_html("app", "text", "info-author.md"),
+            paste0(
+              "Version ",
+              as.character(utils::packageVersion(utils::packageName())),
+              "."
+            )
           )
         ),
         bslib::layout_columns(
@@ -176,17 +177,6 @@ app_ui <- function(request) {
             id = "card_info_interface",
             bslib::card_header("Interface"),
             md_file_to_html("app", "text", "info-interface.md")
-          ),
-          bslib::card(
-            id = "card_info_author",
-            bslib::card_header("Authors"),
-            style = "display:inline;", # put items on the same line
-            md_file_to_html("app", "text", "info-author.md"),
-            paste0(
-              "Version ",
-              as.character(utils::packageVersion(utils::packageName())),
-              "."
-            )
           )
         )
       )
