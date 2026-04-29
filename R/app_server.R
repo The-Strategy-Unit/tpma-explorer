@@ -2,7 +2,7 @@
 #' @param input,output,session Internal parameters for 'shiny'.
 #' @noRd
 app_server <- function(input, output, session) {
-  # Constants
+  # Constants ----
   # nolint start: object_name_linter.
   BASE_SIZE <- 16 # scaling for plot elements
   # nolint end
@@ -22,8 +22,20 @@ app_server <- function(input, output, session) {
     as.numeric(Sys.getenv("BASELINE_YEAR", 202324))
   })
 
-  # Open UI accordion ----
+  # Open sidebar ---
   shiny::observe({
+    if (input$page_navbar == "Visualisations") {
+      # Sidebar options only relevant to visualisations
+      bslib::toggle_sidebar("sidebar", open = TRUE)
+    } else {
+      bslib::toggle_sidebar("sidebar", open = FALSE)
+    }
+  }) |>
+    shiny::bindEvent(input$page_navbar)
+
+  # Open sidebar accordions ----
+  shiny::observe({
+    # Data must load before accordions open
     shiny::req(selected_provider())
     shiny::req(selected_strategy())
     bslib::accordion_panel_open(id = "sidebar_accordion", values = TRUE)

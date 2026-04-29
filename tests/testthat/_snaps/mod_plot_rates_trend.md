@@ -8,7 +8,7 @@
           <div class="card-header bslib-gap-spacing">
             Rates Trend
             <bslib-tooltip placement="right" bsOptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
-              <template><p>How activity for the selected TPMA has changed over time for the chosen unit (red) and peers.
+              <template><p>How activity for the selected TPMA has changed over time for the chosen unit (red) and peers (grey).
       Data is age-sex standardised. Years of availability will depend on the selected unit and TPMA.</p>
       </template>
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi bi-info-circle " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img" ><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
