@@ -5,7 +5,7 @@ app_ui <- function(request) {
   bslib::page_navbar(
     id = "page_navbar",
     title = "Explore opportunities to reduce hospital care",
-    selected = "Home", # start with this panel open
+    selected = "Context", # start with this panel open
     fillable = FALSE, # allow page scroll
 
     sidebar = bslib::sidebar(
@@ -40,9 +40,9 @@ app_ui <- function(request) {
     ),
 
     bslib::nav_panel(
-      id = "nav_panel_home",
-      title = "Home",
-      icon = bsicons::bs_icon("house-door"),
+      id = "nav_panel_context",
+      title = "Context",
+      icon = bsicons::bs_icon("book"),
 
       bslib::card(
         bslib::card_header(
@@ -56,40 +56,40 @@ app_ui <- function(request) {
       bslib::layout_columns(
         col_widths = c(6, 6),
         bslib::card(
-          id = "card_home_challenge",
+          id = "card_context_challenge",
           bslib::card_header("The challenge"),
-          md_file_to_html("app", "text", "home-challenge.md")
+          md_file_to_html("app", "text", "context-challenge.md")
         ),
         bslib::card(
-          id = "card_home_tool",
+          id = "card_context_tool",
           bslib::card_header("Explore opportunities"),
-          md_file_to_html("app", "text", "home-tool.md")
+          md_file_to_html("app", "text", "context-tool.md")
         )
       ),
       bslib::layout_columns(
         col_widths = c(6, 6),
         bslib::card(
-          id = "card_home_tpmas",
+          id = "card_context_tpmas",
           bslib::card_header("Types of Potentially Mitigatable Activity (TPMAs)"),
-          md_file_to_html("app", "text", "home-tpmas.md")
+          md_file_to_html("app", "text", "context-tpmas.md")
         ),
         bslib::card(
-          id = "card_home_example",
+          id = "card_context_example",
           bslib::card_header("Example"),
-          md_file_to_html("app", "text", "home-example.md")
+          md_file_to_html("app", "text", "context-example.md")
         )
       ),
       bslib::layout_columns(
         col_widths = c(6, 6),
         bslib::card(
-          id = "card_home_care_shift",
+          id = "card_context_care_shift",
           bslib::card_header("Opportunities to shift care from hospitals to community (care shift)"),
-          md_file_to_html("app", "text", "home-care-shift.md")
+          md_file_to_html("app", "text", "context-care-shift.md")
         ),
         bslib::card(
-          id = "card_home_reduction",
+          id = "card_context_reduction",
           bslib::card_header("How much hospital activity can be reduced?"),
-          md_file_to_html("app", "text", "home-reduction.md")
+          md_file_to_html("app", "text", "context-reduction.md")
         )
       )
     ),
@@ -125,7 +125,7 @@ app_ui <- function(request) {
     bslib::nav_panel(
       id = "nav_panel_info",
       title = "Information",
-      icon = bsicons::bs_icon("book"),
+      icon = bsicons::bs_icon("info-circle"),
 
       bslib::card(
         bslib::card_header(
