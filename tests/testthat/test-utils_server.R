@@ -221,8 +221,7 @@ test_that("_download_geo_data_file works", {
     m_read_azure_parquet,
     1,
     "container",
-    "data",
-    "dev/nhp"
+    "dev/nhp/data.parquet"
   )
   expect_called(m_write_parquet, 1)
   expect_args(

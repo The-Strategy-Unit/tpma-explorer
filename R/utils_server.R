@@ -93,8 +93,7 @@ download_geo_data <- function(geography_folder, data_version = Sys.getenv("DATA_
 
   azkit::read_azure_parquet(
     inputs_container,
-    data_type,
-    container_dir
+    glue::glue("{container_dir}/{data_type}.parquet")
   ) |>
     dplyr::rename(dplyr::any_of(col_renames)) |>
     tidyr::drop_na("strategy") |>
