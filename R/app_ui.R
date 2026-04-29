@@ -53,26 +53,44 @@ app_ui <- function(request) {
         "This app is in continuous development.",
         "Please give feedback by clicking the link in the top-right."
       ),
-
-      bslib::card(
-        id = "card_home_welcome",
-        bslib::card_header("Welcome"),
-        md_file_to_html("app", "text", "home-welcome.md")
+      bslib::layout_columns(
+        col_widths = c(6, 6),
+        bslib::card(
+          id = "card_home_challenge",
+          bslib::card_header("The challenge"),
+          md_file_to_html("app", "text", "home-challenge.md")
+        ),
+        bslib::card(
+          id = "card_home_tool",
+          bslib::card_header("Explore opportunities"),
+          md_file_to_html("app", "text", "home-tool.md")
+        )
       ),
-      bslib::card(
-        id = "card_home_tpmas",
-        bslib::card_header("Types of Potentially Mitigatable Activity (TPMAs)"),
-        md_file_to_html("app", "text", "home-tpmas.md")
+      bslib::layout_columns(
+        col_widths = c(6, 6),
+        bslib::card(
+          id = "card_home_tpmas",
+          bslib::card_header("Types of Potentially Mitigatable Activity (TPMAs)"),
+          md_file_to_html("app", "text", "home-tpmas.md")
+        ),
+        bslib::card(
+          id = "card_home_example",
+          bslib::card_header("Example"),
+          md_file_to_html("app", "text", "home-example.md")
+        )
       ),
-      bslib::card(
-        id = "card_home_care_shift",
-        bslib::card_header("Care-shift opportunities"),
-        md_file_to_html("app", "text", "home-care-shift.md")
-      ),
-      bslib::card(
-        id = "card_home_reduction",
-        bslib::card_header("How much hospital activity can be reduced?"),
-        md_file_to_html("app", "text", "home-reduction.md")
+      bslib::layout_columns(
+        col_widths = c(6, 6),
+        bslib::card(
+          id = "card_home_care_shift",
+          bslib::card_header("Opportunities to shift care from hospitals to community (care shift)"),
+          md_file_to_html("app", "text", "home-care-shift.md")
+        ),
+        bslib::card(
+          id = "card_home_reduction",
+          bslib::card_header("How much hospital activity can be reduced?"),
+          md_file_to_html("app", "text", "home-reduction.md")
+        )
       )
     ),
 

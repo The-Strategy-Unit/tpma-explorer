@@ -1,5 +1,5 @@
 The current evidence base means that the TPMAs are broad in definition.
-Whilst the activity shown in the tool has been be classified as 'potentially mitigable', no one would suggest that all such activity can or should be mitigated.
+Whilst the activity shown in the tool has been classified as 'potentially mitigable', no one would suggest that all such activity can or should be mitigated.
 
 A judgement is required of what proportion of the activity could be reduced.
 It should be informed by the knowledge and experience of those involved, alongside available evidence.
