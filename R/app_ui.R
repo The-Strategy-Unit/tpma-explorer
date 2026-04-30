@@ -5,7 +5,7 @@ app_ui <- function(request) {
   bslib::page_navbar(
     id = "page_navbar",
     title = "Explore opportunities to reduce hospital care",
-    selected = "Visualisations", # start with this panel open
+    selected = "Context", # start with this panel open
     fillable = FALSE, # allow page scroll
 
     sidebar = bslib::sidebar(
@@ -35,6 +35,61 @@ app_ui <- function(request) {
             title = "Bookmark your selections and get a URL for sharing",
             icon = NULL
           )
+        )
+      )
+    ),
+
+    bslib::nav_panel(
+      id = "nav_panel_context",
+      title = "Context",
+      icon = bsicons::bs_icon("book"),
+
+      bslib::card(
+        bslib::card_header(
+          class = "text-bg-info",
+          bsicons::bs_icon("info-circle"),
+          "Note"
+        ),
+        "This app is in continuous development.",
+        "Please give feedback by clicking the link in the top-right."
+      ),
+      bslib::layout_columns(
+        col_widths = c(6, 6),
+        bslib::card(
+          id = "card_context_challenge",
+          bslib::card_header("The challenge"),
+          md_file_to_html("app", "text", "context-challenge.md")
+        ),
+        bslib::card(
+          id = "card_context_tool",
+          bslib::card_header("Explore opportunities"),
+          md_file_to_html("app", "text", "context-tool.md")
+        )
+      ),
+      bslib::layout_columns(
+        col_widths = c(6, 6),
+        bslib::card(
+          id = "card_context_tpmas",
+          bslib::card_header("Types of Potentially Mitigatable Activity (TPMAs)"),
+          md_file_to_html("app", "text", "context-tpmas.md")
+        ),
+        bslib::card(
+          id = "card_context_example",
+          bslib::card_header("Example"),
+          md_file_to_html("app", "text", "context-example.md")
+        )
+      ),
+      bslib::layout_columns(
+        col_widths = c(6, 6),
+        bslib::card(
+          id = "card_context_care_shift",
+          bslib::card_header("Opportunities to shift care from hospitals to community (care shift)"),
+          md_file_to_html("app", "text", "context-care-shift.md")
+        ),
+        bslib::card(
+          id = "card_context_reduction",
+          bslib::card_header("How much hospital activity can be reduced?"),
+          md_file_to_html("app", "text", "context-reduction.md")
         )
       )
     ),
@@ -70,7 +125,17 @@ app_ui <- function(request) {
     bslib::nav_panel(
       id = "nav_panel_info",
       title = "Information",
-      icon = bsicons::bs_icon("book"),
+      icon = bsicons::bs_icon("info-circle"),
+
+      bslib::card(
+        bslib::card_header(
+          class = "text-bg-info",
+          bsicons::bs_icon("info-circle"),
+          "Note"
+        ),
+        "This app is in continuous development.",
+        "Please give feedback by clicking the link in the top-right."
+      ),
 
       bslib::layout_columns(
         col_widths = c(6, 6),
@@ -79,41 +144,17 @@ app_ui <- function(request) {
           col_widths = 12,
           fill = FALSE,
           bslib::card(
-            id = "card_purpose",
-            bslib::card_header("Purpose"),
-            md_file_to_html("app", "text", "info-purpose.md")
-          ),
-          bslib::card(
-            id = "card_related",
-            bslib::card_header("Related"),
-            md_file_to_html("app", "text", "info-related.md")
-          ),
-          bslib::card(
-            id = "card_data",
+            id = "card_info_data",
             bslib::card_header("Data"),
             md_file_to_html("app", "text", "info-data.md")
           ),
           bslib::card(
-            id = "card_data",
+            id = "card_info_definitions",
             bslib::card_header("Definitions"),
             md_file_to_html("app", "text", "info-definitions.md")
-          )
-        ),
-        bslib::layout_columns(
-          col_widths = 12,
-          fill = FALSE,
-          bslib::card(
-            id = "card_navigation",
-            bslib::card_header("Navigation"),
-            md_file_to_html("app", "text", "info-navigation.md")
           ),
           bslib::card(
-            id = "card_how_to_use",
-            bslib::card_header("Interface"),
-            md_file_to_html("app", "text", "info-interface.md")
-          ),
-          bslib::card(
-            id = "card_author",
+            id = "card_info_author",
             bslib::card_header("Authors"),
             style = "display:inline;", # put items on the same line
             md_file_to_html("app", "text", "info-author.md"),
@@ -122,6 +163,20 @@ app_ui <- function(request) {
               as.character(utils::packageVersion(utils::packageName())),
               "."
             )
+          )
+        ),
+        bslib::layout_columns(
+          col_widths = 12,
+          fill = FALSE,
+          bslib::card(
+            id = "card_info_navigation",
+            bslib::card_header("Navigation"),
+            md_file_to_html("app", "text", "info-navigation.md")
+          ),
+          bslib::card(
+            id = "card_info_interface",
+            bslib::card_header("Interface"),
+            md_file_to_html("app", "text", "info-interface.md")
           )
         )
       )
