@@ -21,8 +21,8 @@ The app is made with [Shiny](https://shiny.posit.co/) and is an R package follow
 To run the app, you must:
 
 * create an `.Renviron` file from the `.Renviron.example` template (restart R after making changes to this file)
-* run `devtools::install_deps(dependencies = TRUE)` to install required dependencies from the `DESCRIPTION`
-* run `dev/app.R` to launch the app locally for development purposes
+* run `pak::local_install_deps(dependencies = TRUE)` to install required and developmental dependencies from the `DESCRIPTION`
+* run `app.R` to launch the app locally for development purposes
 * run `dev/deploy.R` to deploy the app to Posit Connect when ready (to 'dev' following pull-requests, to 'prod' for releases)
 
 ### Data

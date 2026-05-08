@@ -21,6 +21,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Matt Dray \email{matt.dray@nhs.net}
   \item Tom Jemmett \email{thomas.jemmett@nhs.net}
 }
 
