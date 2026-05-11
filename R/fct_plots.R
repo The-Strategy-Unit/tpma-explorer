@@ -152,6 +152,7 @@ plot_rates_funnel <- function(
     ggplot2::theme(legend.position = "none") +
     ggplot2::scale_x_continuous(
       labels = scales::comma_format(),
+      expand = ggplot2::expansion(mult = c(0.02, 0.20)), # expansion to accommodate larger population figures
       guide = ggplot2::guide_axis(check.overlap = TRUE)
     ) +
     ggplot2::coord_cartesian(xlim = plot_x_range, ylim = y_axis_limits) +
