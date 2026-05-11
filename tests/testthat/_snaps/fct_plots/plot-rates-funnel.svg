@@ -52,8 +52,8 @@
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHw1NzYuMDA=)'>
 <text x='39.97' y='546.72' text-anchor='middle' style='font-size: 14.40px; fill: #4D4D4D; font-family: sans;' textLength='8.01px' lengthAdjust='spacingAndGlyphs'>0</text>
-<text x='274.42' y='546.72' text-anchor='middle' style='font-size: 14.40px; fill: #4D4D4D; font-family: sans;' textLength='36.04px' lengthAdjust='spacingAndGlyphs'>1,000</text>
 <text x='508.88' y='546.72' text-anchor='middle' style='font-size: 14.40px; fill: #4D4D4D; font-family: sans;' textLength='36.04px' lengthAdjust='spacingAndGlyphs'>2,000</text>
+<text x='274.42' y='546.72' text-anchor='middle' style='font-size: 14.40px; fill: #4D4D4D; font-family: sans;' textLength='36.04px' lengthAdjust='spacingAndGlyphs'>1,000</text>
 <text x='360.00' y='564.71' text-anchor='middle' style='font-size: 16.00px; font-family: sans;' textLength='108.53px' lengthAdjust='spacingAndGlyphs'>Population size</text>
 <text x='7.97' y='21.18' style='font-size: 19.20px; font-family: sans;' textLength='147.32px' lengthAdjust='spacingAndGlyphs'>plot_rates_funnel</text>
 </g>
