@@ -39,14 +39,14 @@
 <text x='67.12' y='211.12' text-anchor='end' style='font-size: 14.40px; fill: #4D4D4D; font-family: sans;' textLength='40.83px' lengthAdjust='spacingAndGlyphs'>20.0%</text>
 <text x='67.12' y='60.66' text-anchor='end' style='font-size: 14.40px; fill: #4D4D4D; font-family: sans;' textLength='40.83px' lengthAdjust='spacingAndGlyphs'>30.0%</text>
 <text x='115.89' y='546.72' text-anchor='middle' style='font-size: 14.40px; fill: #4D4D4D; font-family: sans;' textLength='36.04px' lengthAdjust='spacingAndGlyphs'>15/16</text>
-<text x='185.20' y='546.72' text-anchor='middle' style='font-size: 14.40px; fill: #4D4D4D; font-family: sans;' textLength='36.04px' lengthAdjust='spacingAndGlyphs'>16/17</text>
-<text x='254.52' y='546.72' text-anchor='middle' style='font-size: 14.40px; fill: #4D4D4D; font-family: sans;' textLength='36.04px' lengthAdjust='spacingAndGlyphs'>17/18</text>
-<text x='323.84' y='546.72' text-anchor='middle' style='font-size: 14.40px; fill: #4D4D4D; font-family: sans;' textLength='36.04px' lengthAdjust='spacingAndGlyphs'>18/19</text>
-<text x='393.16' y='546.72' text-anchor='middle' style='font-size: 14.40px; fill: #4D4D4D; font-family: sans;' textLength='36.04px' lengthAdjust='spacingAndGlyphs'>19/20</text>
-<text x='462.48' y='546.72' text-anchor='middle' style='font-size: 14.40px; fill: #4D4D4D; font-family: sans;' textLength='36.04px' lengthAdjust='spacingAndGlyphs'>20/21</text>
-<text x='531.80' y='546.72' text-anchor='middle' style='font-size: 14.40px; fill: #4D4D4D; font-family: sans;' textLength='36.04px' lengthAdjust='spacingAndGlyphs'>21/22</text>
-<text x='601.12' y='546.72' text-anchor='middle' style='font-size: 14.40px; fill: #4D4D4D; font-family: sans;' textLength='36.04px' lengthAdjust='spacingAndGlyphs'>22/23</text>
 <text x='670.44' y='546.72' text-anchor='middle' style='font-size: 14.40px; fill: #4D4D4D; font-family: sans;' textLength='36.04px' lengthAdjust='spacingAndGlyphs'>23/24</text>
+<text x='393.16' y='546.72' text-anchor='middle' style='font-size: 14.40px; fill: #4D4D4D; font-family: sans;' textLength='36.04px' lengthAdjust='spacingAndGlyphs'>19/20</text>
+<text x='254.52' y='546.72' text-anchor='middle' style='font-size: 14.40px; fill: #4D4D4D; font-family: sans;' textLength='36.04px' lengthAdjust='spacingAndGlyphs'>17/18</text>
+<text x='185.20' y='546.72' text-anchor='middle' style='font-size: 14.40px; fill: #4D4D4D; font-family: sans;' textLength='36.04px' lengthAdjust='spacingAndGlyphs'>16/17</text>
+<text x='323.84' y='546.72' text-anchor='middle' style='font-size: 14.40px; fill: #4D4D4D; font-family: sans;' textLength='36.04px' lengthAdjust='spacingAndGlyphs'>18/19</text>
+<text x='531.80' y='546.72' text-anchor='middle' style='font-size: 14.40px; fill: #4D4D4D; font-family: sans;' textLength='36.04px' lengthAdjust='spacingAndGlyphs'>21/22</text>
+<text x='462.48' y='546.72' text-anchor='middle' style='font-size: 14.40px; fill: #4D4D4D; font-family: sans;' textLength='36.04px' lengthAdjust='spacingAndGlyphs'>20/21</text>
+<text x='601.12' y='546.72' text-anchor='middle' style='font-size: 14.40px; fill: #4D4D4D; font-family: sans;' textLength='36.04px' lengthAdjust='spacingAndGlyphs'>22/23</text>
 <text x='393.16' y='564.71' text-anchor='middle' style='font-size: 16.00px; font-family: sans;' textLength='99.61px' lengthAdjust='spacingAndGlyphs'>Financial year</text>
 <text transform='translate(18.98,281.39) rotate(-90)' text-anchor='middle' style='font-size: 16.00px; font-family: sans;' textLength='201.95px' lengthAdjust='spacingAndGlyphs'>Rate per 100,000 population</text>
 <text x='74.29' y='21.18' style='font-size: 19.20px; font-family: sans;' textLength='138.77px' lengthAdjust='spacingAndGlyphs'>plot_rates_trend</text>

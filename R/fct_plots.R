@@ -46,7 +46,8 @@ plot_rates_trend <- function(
       labels = \(.x) {
         # Format as 23/24 to save space vs 2023/34
         stringr::str_replace(.x, "^\\d{2}(\\d{2})(\\d{2})$", "\\1/\\2")
-      }
+      },
+      guide = ggplot2::guide_axis(check.overlap = TRUE)
     ) +
     ggplot2::labs(x = x_axis_title) +
     theme_rates(base_size = base_size)
@@ -149,7 +150,10 @@ plot_rates_funnel <- function(
       )
     ) +
     ggplot2::theme(legend.position = "none") +
-    ggplot2::scale_x_continuous(labels = scales::comma_format()) +
+    ggplot2::scale_x_continuous(
+      labels = scales::comma_format(),
+      guide = ggplot2::guide_axis(check.overlap = TRUE)
+    ) +
     ggplot2::coord_cartesian(xlim = plot_x_range, ylim = y_axis_limits) +
     ggplot2::labs(x = x_axis_title) +
     theme_rates(base_size = base_size, has_y_axis = FALSE)
