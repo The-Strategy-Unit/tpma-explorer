@@ -1,13 +1,13 @@
 on:
   push:
     branches:
-      - 129-jarl-gha
+      - main
   pull_request:
     branches:
-      - 129-jarl-gha
+      - main
   workflow_dispatch:
 
-name: jarl Check
+name: Checking jarl lints
 
 permissions: read-all
 
