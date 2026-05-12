@@ -78,7 +78,7 @@ plot_rates_funnel <- function(
   cl3_line_type <- "dashed"
   cl3_colour <- "#9d928a"
 
-  plot_x_range <- c(0, max(rates_funnel_data[["denominator"]]) * 1.05)
+  plot_x_range <- c(0, max(rates_funnel_data[["denominator"]]) * 1.12)
   function_x_range <- plot_x_range * 1.2
 
   rates_funnel_data |>
@@ -155,7 +155,10 @@ plot_rates_funnel <- function(
       expand = ggplot2::expansion(mult = c(0.02, 0.20)), # expansion to accommodate larger population figures
       guide = ggplot2::guide_axis(check.overlap = TRUE)
     ) +
-    ggplot2::coord_cartesian(xlim = plot_x_range, ylim = y_axis_limits) +
+    ggplot2::coord_cartesian(
+      xlim = plot_x_range,
+      ylim = y_axis_limits
+    ) +
     ggplot2::labs(x = x_axis_title) +
     theme_rates(base_size = base_size, has_y_axis = FALSE)
 }
