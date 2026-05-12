@@ -1,13 +1,13 @@
 on:
   push:
     branches:
-      - test-actions
+      - 129-jarl-gha
   pull_request:
     branches:
-      - test-actions
+      - 129-jarl-gha
   workflow_dispatch:
 
-name: jarl-check
+name: jarl Check
 
 permissions: read-all
 
