@@ -13,9 +13,9 @@ permissions: read-all
 
 jobs:
   jarl-check:
-    name: jarl check --fix --fail-on-warnings
+    name: jarl check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: etiennebacher/setup-jarl@v0.1.0
-      - run: jarl check --fix
+      - run: jarl check --fix --fail-on-warnings
