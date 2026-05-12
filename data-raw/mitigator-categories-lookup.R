@@ -41,7 +41,7 @@ cs_lookup <- pi_lookup |>
       category_name
     ),
     category = stringr::str_to_snake(category_name),
-    is_care_shift = code %in% cs_tpma_codes
+    is_care_shift = dplyr::if_else(code %in% cs_tpma_codes, TRUE, FALSE)
   ) |>
   dplyr::select(strategy, category, category_name, is_care_shift)
 
