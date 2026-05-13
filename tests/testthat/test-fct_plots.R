@@ -1,39 +1,37 @@
 test_that("plot_rates_trend", {
   # arrange
-  # nolint start
   rates_trend_data <- tibble::tribble(
-    ~fyear , ~rate , ~ provider , ~ is_peer ,
-    201516 , 0.10  , "a"        , "peer"    ,
-    201617 , 0.12  , "a"        , "peer"    ,
-    201718 , 0.11  , "a"        , "peer"    ,
-    201819 , 0.09  , "a"        , "peer"    ,
-    201920 , 0.08  , "a"        , "peer"    ,
-    202021 , 0.07  , "a"        , "peer"    ,
-    202122 , 0.06  , "a"        , "peer"    ,
-    202223 , 0.05  , "a"        , "peer"    ,
-    202324 , 0.04  , "a"        , "peer"    ,
+    ~fyear , ~rate , ~provider , ~is_peer ,
+    201516 , 0.10  , "a"       , "peer"   ,
+    201617 , 0.12  , "a"       , "peer"   ,
+    201718 , 0.11  , "a"       , "peer"   ,
+    201819 , 0.09  , "a"       , "peer"   ,
+    201920 , 0.08  , "a"       , "peer"   ,
+    202021 , 0.07  , "a"       , "peer"   ,
+    202122 , 0.06  , "a"       , "peer"   ,
+    202223 , 0.05  , "a"       , "peer"   ,
+    202324 , 0.04  , "a"       , "peer"   ,
 
-    201516 , 0.20  , "b"        , "self"    ,
-    201617 , 0.24  , "b"        , "self"    ,
-    201718 , 0.22  , "b"        , "self"    ,
-    201819 , 0.18  , "b"        , "self"    ,
-    201920 , 0.16  , "b"        , "self"    ,
-    202021 , 0.14  , "b"        , "self"    ,
-    202122 , 0.12  , "b"        , "self"    ,
-    202223 , 0.10  , "b"        , "self"    ,
-    202324 , 0.08  , "b"        , "self"    ,
+    201516 , 0.20  , "b"       , "self"   ,
+    201617 , 0.24  , "b"       , "self"   ,
+    201718 , 0.22  , "b"       , "self"   ,
+    201819 , 0.18  , "b"       , "self"   ,
+    201920 , 0.16  , "b"       , "self"   ,
+    202021 , 0.14  , "b"       , "self"   ,
+    202122 , 0.12  , "b"       , "self"   ,
+    202223 , 0.10  , "b"       , "self"   ,
+    202324 , 0.08  , "b"       , "self"   ,
 
-    201516 , 0.30  , "a"        , "other"   ,
-    201617 , 0.36  , "a"        , "other"   ,
-    201718 , 0.33  , "a"        , "other"   ,
-    201819 , 0.27  , "a"        , "other"   ,
-    201920 , 0.24  , "a"        , "other"   ,
-    202021 , 0.21  , "a"        , "other"   ,
-    202122 , 0.18  , "a"        , "other"   ,
-    202223 , 0.15  , "a"        , "other"   ,
-    202324 , 0.12  , "a"        , "other"
+    201516 , 0.30  , "a"       , "other"  ,
+    201617 , 0.36  , "a"       , "other"  ,
+    201718 , 0.33  , "a"       , "other"  ,
+    201819 , 0.27  , "a"       , "other"  ,
+    201920 , 0.24  , "a"       , "other"  ,
+    202021 , 0.21  , "a"       , "other"  ,
+    202122 , 0.18  , "a"       , "other"  ,
+    202223 , 0.15  , "a"       , "other"  ,
+    202324 , 0.12  , "a"       , "other"
   )
-  # nolint end
 
   selected_year <- 202324
   y_axis_limits <- c(0, 0.30)
@@ -58,20 +56,19 @@ test_that("plot_rates_trend", {
 test_that("plot_rates_funnel", {
   # arrange
   withr::local_seed(1)
-  # nolint start
+
   rates_funnel_data <- tibble::tribble(
     ~rate , ~denominator , ~national_rate , ~is_peer , ~provider , ~provider_label ,
-    0.10  ,         1000 ,           0.08 , "peer"   , "a"       , "A"             ,
-    0.12  ,         1200 ,           0.08 , "peer"   , "b"       , "B"             ,
-    0.11  ,         1400 ,           0.08 , "self"   , "c"       , "C"             ,
-    0.09  ,         1600 ,           0.08 , "peer"   , "d"       , "D"             ,
-    0.08  ,         1800 ,           0.08 , "other"  , "e"       , "E"             ,
-    0.07  ,         2000 ,           0.08 , "other"  , "f"       , "F"             ,
-    0.06  ,         2200 ,           0.08 , "other"  , "g"       , "G"             ,
-    0.05  ,         2400 ,           0.08 , "other"  , "h"       , "H"             ,
-    0.04  ,         2600 ,           0.08 , "peer"   , "i"       , "I"
+    0.10  ,         1000 , 0.08           , "peer"   , "a"       , "A"             ,
+    0.12  ,         1200 , 0.08           , "peer"   , "b"       , "B"             ,
+    0.11  ,         1400 , 0.08           , "self"   , "c"       , "C"             ,
+    0.09  ,         1600 , 0.08           , "peer"   , "d"       , "D"             ,
+    0.08  ,         1800 , 0.08           , "other"  , "e"       , "E"             ,
+    0.07  ,         2000 , 0.08           , "other"  , "f"       , "F"             ,
+    0.06  ,         2200 , 0.08           , "other"  , "g"       , "G"             ,
+    0.05  ,         2400 , 0.08           , "other"  , "h"       , "H"             ,
+    0.04  ,         2600 , 0.08           , "peer"   , "i"       , "I"
   )
-  # nolint end
 
   funnel_calculations <- uprime_calculations(rates_funnel_data)
   y_axis_limits <- c(0, 0.16)
@@ -91,20 +88,19 @@ test_that("plot_rates_funnel", {
 
 test_that("plot_rates_box", {
   # arrange
-  # nolint start
+
   rates_box_data <- tibble::tribble(
     ~rate , ~denominator , ~national_rate , ~is_peer , ~provider ,
-    0.10  ,         1000 ,           0.08 , "peer"   , "a"       ,
-    0.12  ,         1200 ,           0.08 , "peer"   , "b"       ,
-    0.11  ,         1400 ,           0.08 , "self"   , "c"       ,
-    0.09  ,         1600 ,           0.08 , "peer"   , "d"       ,
-    0.08  ,         1800 ,           0.08 , "other"  , "e"       ,
-    0.07  ,         2000 ,           0.08 , "other"  , "f"       ,
-    0.06  ,         2200 ,           0.08 , "other"  , "g"       ,
-    0.05  ,         2400 ,           0.08 , "other"  , "h"       ,
-    0.04  ,         2600 ,           0.08 , "peer"   , "i"
+    0.10  ,         1000 , 0.08           , "peer"   , "a"       ,
+    0.12  ,         1200 , 0.08           , "peer"   , "b"       ,
+    0.11  ,         1400 , 0.08           , "self"   , "c"       ,
+    0.09  ,         1600 , 0.08           , "peer"   , "d"       ,
+    0.08  ,         1800 , 0.08           , "other"  , "e"       ,
+    0.07  ,         2000 , 0.08           , "other"  , "f"       ,
+    0.06  ,         2200 , 0.08           , "other"  , "g"       ,
+    0.05  ,         2400 , 0.08           , "other"  , "h"       ,
+    0.04  ,         2600 , 0.08           , "peer"   , "i"
   )
-  # nolint end
 
   y_axis_limits <- c(0, 0.16)
 
@@ -121,45 +117,45 @@ test_that("plot_rates_box", {
 test_that("plot_age_sex_pyramid", {
   # arrange
   age_sex_data <- tibble::tribble(
-    ~age_group, ~sex, ~n,
-    "0-4", "Males", -1,
-    "5-9", "Males", -2,
-    "10-14", "Males", -3,
-    "15-19", "Males", -4,
-    "20-24", "Males", -5,
-    "25-29", "Males", -6,
-    "30-34", "Males", -7,
-    "35-39", "Males", -8,
-    "40-44", "Males", -9,
-    "45-49", "Males", -10,
-    "50-54", "Males", -11,
-    "55-59", "Males", -12,
-    "60-64", "Males", -13,
-    "65-69", "Males", -14,
-    "70-74", "Males", -15,
-    "75-79", "Males", -16,
-    "80-84", "Males", -17,
-    "85-89", "Males", -18,
-    "90+", "Males", -19,
-    "0-4", "Females", 19,
-    "5-9", "Females", 18,
-    "10-14", "Females", 17,
-    "15-19", "Females", 16,
-    "20-24", "Females", 15,
-    "25-29", "Females", 14,
-    "30-34", "Females", 13,
-    "35-39", "Females", 12,
-    "40-44", "Females", 11,
-    "45-49", "Females", 10,
-    "50-54", "Females", 9,
-    "55-59", "Females", 8,
-    "60-64", "Females", 7,
-    "65-69", "Females", 6,
-    "70-74", "Females", 5,
-    "75-79", "Females", 4,
-    "80-84", "Females", 3,
-    "85-89", "Females", 2,
-    "90+", "Females", 1
+    ~age_group , ~sex      , ~n  ,
+    "0-4"      , "Males"   ,  -1 ,
+    "5-9"      , "Males"   ,  -2 ,
+    "10-14"    , "Males"   ,  -3 ,
+    "15-19"    , "Males"   ,  -4 ,
+    "20-24"    , "Males"   ,  -5 ,
+    "25-29"    , "Males"   ,  -6 ,
+    "30-34"    , "Males"   ,  -7 ,
+    "35-39"    , "Males"   ,  -8 ,
+    "40-44"    , "Males"   ,  -9 ,
+    "45-49"    , "Males"   , -10 ,
+    "50-54"    , "Males"   , -11 ,
+    "55-59"    , "Males"   , -12 ,
+    "60-64"    , "Males"   , -13 ,
+    "65-69"    , "Males"   , -14 ,
+    "70-74"    , "Males"   , -15 ,
+    "75-79"    , "Males"   , -16 ,
+    "80-84"    , "Males"   , -17 ,
+    "85-89"    , "Males"   , -18 ,
+    "90+"      , "Males"   , -19 ,
+    "0-4"      , "Females" ,  19 ,
+    "5-9"      , "Females" ,  18 ,
+    "10-14"    , "Females" ,  17 ,
+    "15-19"    , "Females" ,  16 ,
+    "20-24"    , "Females" ,  15 ,
+    "25-29"    , "Females" ,  14 ,
+    "30-34"    , "Females" ,  13 ,
+    "35-39"    , "Females" ,  12 ,
+    "40-44"    , "Females" ,  11 ,
+    "45-49"    , "Females" ,  10 ,
+    "50-54"    , "Females" ,   9 ,
+    "55-59"    , "Females" ,   8 ,
+    "60-64"    , "Females" ,   7 ,
+    "65-69"    , "Females" ,   6 ,
+    "70-74"    , "Females" ,   5 ,
+    "75-79"    , "Females" ,   4 ,
+    "80-84"    , "Females" ,   3 ,
+    "85-89"    , "Females" ,   2 ,
+    "90+"      , "Females" ,   1
   ) |>
     dplyr::mutate(
       age_group = factor(

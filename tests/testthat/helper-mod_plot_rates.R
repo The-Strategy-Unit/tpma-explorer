@@ -1,6 +1,5 @@
 setup_mod_plot_rates_ui_tests <- function(.env = parent.frame()) {
-  # in helper-ui.R, ignore lint error "no visible global function definition for 'setup_ui_test'""
-  setup_ui_test(.env) # nolint: object_usage_linter
+  setup_ui_test(.env)
 
   mocks <- list(
     "mod_plot_rates_trend_ui" = mockery::mock("mod_plot_rates_trend"),

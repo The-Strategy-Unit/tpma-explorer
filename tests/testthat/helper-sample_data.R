@@ -1,4 +1,3 @@
-# nolint start
 inputs_data_sample <- list(
   "age_sex" = tibble::tribble(
     ~provider , ~strategy , ~fyear ,
@@ -30,4 +29,3 @@ inputs_data_sample <- list(
     202324 , "national" , "Strategy B" ,          12 ,        11
   )
 )
-# nolint end

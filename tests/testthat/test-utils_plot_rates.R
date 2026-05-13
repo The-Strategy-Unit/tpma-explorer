@@ -74,7 +74,7 @@ test_that("get_providers_lookup", {
 
 test_that("get_rates_data", {
   # arrange
-  # nolint start
+
   inputs_data_sample <- tibble::tribble(
     ~fyear , ~provider  , ~strategy    , ~crude_rate , ~std_rate ,
     202223 , "a"        , "Strategy A" ,           1 ,         2 ,
@@ -106,7 +106,6 @@ test_that("get_rates_data", {
     202324 , "a"       , "Strategy B" ,     7 ,             11 ,
     202324 , "b"       , "Strategy B" ,     9 ,             11
   )
-  # nolint end
 
   # act
   actual_a <- get_rates_data(inputs_data_sample, "Strategy A")
@@ -119,7 +118,7 @@ test_that("get_rates_data", {
 
 test_that("get_rates_trend_data", {
   # arrange
-  # nolint start
+
   df <- tibble::tribble(
     ~fyear , ~provider , ~strategy    , ~rate , ~national_rate ,
     202223 , "a"       , "Strategy A" ,     2 ,              6 ,
@@ -133,7 +132,6 @@ test_that("get_rates_trend_data", {
     202223 , "a"       , "Strategy A" ,     2 ,              6 ,
     202324 , "a"       , "Strategy A" ,     8 ,             12
   )
-  # nolint end
 
   # act
   actual <- get_rates_trend_data(df, "a")
