@@ -1,4 +1,3 @@
-^\.lintr$
 ^\.cache$
 ^\.github$
 ^\.Renviron\.example$
