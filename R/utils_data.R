@@ -18,7 +18,7 @@ prepare_age_sex_data <- function(geography, provider, strategy, year) {
       dplyr::across("sex", as.character)
     )
 
-  age_fct <- age_sex_data[["age_group"]] |> # nolint: object_usage_linter.
+  age_fct <- age_sex_data[["age_group"]] |>
     unique() |>
     sort()
 

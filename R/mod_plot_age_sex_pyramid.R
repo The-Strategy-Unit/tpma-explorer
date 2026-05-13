@@ -31,9 +31,7 @@ mod_plot_age_sex_pyramid_ui <- function(id) {
 #' @param selected_year Reactive. Selected year in the form `202324`.
 #' @param base_size Numeric scalar. For scaling plot-element sizes.
 #' @noRd
-# nolint start: object_length_linter.
 mod_plot_age_sex_pyramid_server <- function(
-  # nolint end
   id,
   selected_geography,
   selected_provider,
