@@ -7,7 +7,7 @@ on:
       - main
   workflow_dispatch:
 
-name: Checking jarl lints
+name: Lint
 
 permissions: read-all
 
