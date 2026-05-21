@@ -17,3 +17,5 @@
 ^tpma-explorer\.Rproj$
 ^app_data/$
 ^vscode_app.R$
+^\.positai$
+^\.claude$
