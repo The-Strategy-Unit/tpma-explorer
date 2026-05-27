@@ -309,7 +309,7 @@
                 </div>
               </main>
             </div>
-            <aside id="sidebar" class="sidebar bslib-sidebar-input" hidden>
+            <aside id="sidebar" class="sidebar bslib-sidebar-input" hidden data-resizable>
               <div class="sidebar-content bslib-gap-spacing">
                 <div class="accordion bslib-accordion-input" data-require-bs-caller="accordion()" data-require-bs-version="5" id="sidebar_accordion">
                   <div class="accordion-item" data-value="Datasets">
