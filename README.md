@@ -42,14 +42,16 @@ The data will be re-fetched the next time the app starts up.
 
 ### Files
 
-In `R/` you can find:
+In:
 
-* Shiny modules (server and UI components) that are stored in `mod_*.R` scripts
-* functions to help prepare data in `utils_*.R` scripts
-* logic for user facing outputs (plots, tables) in `fct_*.R` scripts
-
-In `inst/` you can find:
-
-* `golem-config.yaml`, which contains configuration (copied from [nhp_inputs](https://github.com/The-Strategy-Unit/nhp_inputs/blob/main/inst/golem-config.yml))
-* lookup data files in `app/reference/`
-* Markdown files under `app/text/`, which contain body and tooltip text
+* `app_data/` you can find data downloaded from Azure (if `run_app()` has been run at least once)
+* `data-raw/` you can can find code used to generate lookups in `inst/app/reference/`
+* `dev/` you can find the `deploy.R` script to deploy to Posit Connect
+* `inst/` you can find:
+    * `golem-config.yaml`, which contains configuration (copied from [nhp_inputs](https://github.com/The-Strategy-Unit/nhp_inputs/blob/main/inst/golem-config.yml))
+    * lookup data files in `app/reference/`
+    * Markdown files under `app/text/`, which contain body and tooltip text
+* `R/` you can find:
+    * Shiny modules (server and UI components) that are stored in `mod_*.R` scripts
+    * functions to help prepare data in `utils_*.R` scripts
+    * logic for user facing outputs (plots, tables) in `fct_*.R` scripts
