@@ -29,6 +29,8 @@ To run the app, you must:
 
 Underlying data is generated via the NHP inputs-data pipeline in [the nhp_data repository](https://github.com/The-Strategy-Unit/nhp_data/) and is read into the app from the relevant Azure container (named in the `AZ_CONTAINER_INPUTS` environment variable).
 
+If the data updates and you need to invalidate the current cache, you can append `?reset_cache=true` to the app's URL to force a reset (authorised devs only).
+
 ### Files
 
 In `R/` you can find:
