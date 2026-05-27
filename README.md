@@ -37,7 +37,7 @@ Note that the data are downloaded to the `app_data/` folder when you `run_app()`
 
 Locally, you can force-redownload the data by (a) deleting `app_data/` and re-sourcing `app.R`, or (b) by running  `get_all_data()` with the argument `redownload = TRUE`.
 
-On the server, you can invalidate the current cache by appending `?reset_cache=true` to the app's URL (authorised devs only).
+On the server, authorised devs can invalidate the current cache by appending `?reset_cache=true` to the apps' canonical URLs (i.e. `https://connect.strategyunitwm.nhs.uk/tpma-explorer` and `/tpma-explorer-dev`).
 The data will be re-fetched the next time the app starts up.
 
 ### Files
