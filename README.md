@@ -27,9 +27,18 @@ To run the app, you must:
 
 ### Data
 
+#### Location
+
 Underlying data is generated via the NHP inputs-data pipeline in [the nhp_data repository](https://github.com/The-Strategy-Unit/nhp_data/) and is read into the app from the relevant Azure container (named in the `AZ_CONTAINER_INPUTS` environment variable).
 
-If the data updates and you need to invalidate the current cache, you can append `?reset_cache=true` to the app's URL to force a reset (authorised devs only).
+#### Invalidation
+
+Note that the data are downloaded to the `app_data/` folder when you `run_app()`.
+
+Locally, you can force-redownload the data by (a) deleting `app_data/` and re-sourcing `app.R`, or (b) by running  `get_all_data()` with the argument `redownload = TRUE`.
+
+On the server, you can invalidate the current cache by appending `?reset_cache=true` to the app's URL (authorised devs only).
+The data will be re-fetched the next time the app starts up.
 
 ### Files
 
