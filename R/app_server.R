@@ -80,4 +80,18 @@ app_server <- function(input, output, session) {
     "mod_plot_nee",
     selected_strategy
   )
+
+  # Reset cache with query param ?reset_cache=true
+  shiny::observe({
+    shiny::req("su-data-science" %in% session$groups)
+
+    u <- shiny::parseQueryString(session$clientData$url_search)
+
+    shiny::req(!is.null(u$reset_cache)) # value doesn't matter
+    cat("reset cache\n")
+
+    dc <- shiny::shinyOptions()$cache
+
+    dc$reset()
+  })
 }
