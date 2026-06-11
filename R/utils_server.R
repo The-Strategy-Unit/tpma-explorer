@@ -39,7 +39,11 @@ get_container <- function(
 #' @param redownload Logical. Whether to redownload the data if it already
 #'     exists. By default, FALSE.
 #' @export
-download_geo_data <- function(geography_folder, data_version = Sys.getenv("DATA_VERSION", "dev"), redownload = FALSE) {
+download_geo_data <- function(
+  geography_folder,
+  data_version = Sys.getenv("DATA_VERSION", "dev"),
+  redownload = FALSE
+) {
   data_path <- file.path("app_data", geography_folder)
 
   if (fs::dir_exists(data_path)) {
@@ -53,9 +57,8 @@ download_geo_data <- function(geography_folder, data_version = Sys.getenv("DATA_
   `_download_geo_data`(geography_folder, data_path, data_version)
 }
 
-# nolint start
+
 `_download_geo_data` <- function(
-  # nolint end
   geography_folder,
   data_path,
   data_version = Sys.getenv("DATA_VERSION", "dev")
@@ -71,14 +74,18 @@ download_geo_data <- function(geography_folder, data_version = Sys.getenv("DATA_
     "rates"
   ) |>
     purrr::set_names() |>
-    purrr::walk(`_download_geo_data_file`, data_path, inputs_container, container_dir)
+    purrr::walk(
+      `_download_geo_data_file`,
+      data_path,
+      inputs_container,
+      container_dir
+    )
 
   invisible(NULL)
 }
 
-# nolint start
+
 `_download_geo_data_file` <- function(
-  # nolint end
   data_type,
   data_path,
   inputs_container,
@@ -114,7 +121,10 @@ download_geo_data <- function(geography_folder, data_version = Sys.getenv("DATA_
 #'    exists. By default, FALSE.
 #'
 #' @export
-download_all_data <- function(data_version = Sys.getenv("DATA_VERSION", "dev"), redownload = FALSE) {
+download_all_data <- function(
+  data_version = Sys.getenv("DATA_VERSION", "dev"),
+  redownload = FALSE
+) {
   purrr::map(
     c("provider", "lad23cd"),
     download_geo_data,

@@ -39,7 +39,7 @@ test_that("fetch_strategy_text calls correct url", {
 
   expect_equal(
     req$url,
-    "https://raw.githubusercontent.com/The-Strategy-Unit/nhp_inputs/refs/heads/main/inst/app/strategy_text/stub.md" # nolint
+    "https://raw.githubusercontent.com/The-Strategy-Unit/nhp_inputs/refs/heads/main/inst/app/strategy_text/stub.md"
   )
 })
 
