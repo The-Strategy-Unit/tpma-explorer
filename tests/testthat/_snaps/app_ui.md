@@ -258,7 +258,7 @@
                                 <p>This app was built and is maintained by <a href="https://www.strategyunitwm.nhs.uk/">The Strategy Unit</a>.
       The source code can be found in <a href="https://github.com/The-Strategy-Unit/tpma-explorer/">the open tpma-explorer GitHub repository</a>.</p>
       
-                                Version 0.5.1.
+                                Version 0.6.0.
                               </div>
                               <script data-bslib-card-init>bslib.Card.initializeAllCards();</script>
                             </div>
@@ -309,7 +309,7 @@
                 </div>
               </main>
             </div>
-            <aside id="sidebar" class="sidebar bslib-sidebar-input" hidden>
+            <aside id="sidebar" class="sidebar bslib-sidebar-input" hidden data-resizable>
               <div class="sidebar-content bslib-gap-spacing">
                 <div class="accordion bslib-accordion-input" data-require-bs-caller="accordion()" data-require-bs-version="5" id="sidebar_accordion">
                   <div class="accordion-item" data-value="Datasets">
