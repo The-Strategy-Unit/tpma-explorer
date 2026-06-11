@@ -1,8 +1,7 @@
 test_that("ui", {
   skip_if(interactive(), "This test will fail in interactive mode")
 
-  # in helper-ui.R, ignore lint error "no visible global function definition for 'setup_ui_test'""
-  setup_ui_test() # nolint: object_usage_linter
+  setup_ui_test()
 
   ui <- mod_plot_rates_trend_ui("test")
 
@@ -69,7 +68,16 @@ test_that("rates_trend_plot (with rows)", {
       expect_equal(actual, "plot")
 
       expect_called(m, 1)
-      expect_args(m, 1, sample_data, 202324, c(0, 100), "Y Axis", "Y Labels", 16)
+      expect_args(
+        m,
+        1,
+        sample_data,
+        202324,
+        c(0, 100),
+        "Y Axis",
+        "Y Labels",
+        16
+      )
     }
   )
 })

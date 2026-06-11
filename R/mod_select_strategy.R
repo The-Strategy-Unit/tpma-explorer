@@ -96,7 +96,7 @@ mod_select_strategy_get_strategies <- function() {
 #' @noRd
 mod_select_strategy_server <- function(id) {
   # load static data items
-  strategies_lookup <- mod_select_strategy_get_strategies() # nolint: object_usage_linter.
+  strategies_lookup <- mod_select_strategy_get_strategies()
 
   # return the shiny module
   shiny::moduleServer(id, function(input, output, session) {

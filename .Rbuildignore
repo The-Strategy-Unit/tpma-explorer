@@ -1,3 +1,21 @@
+^\.cache$
+^\.github$
+^\.Renviron\.example$
+^\.Rproj\.user$
+^\.vscode$
+^air\.toml$
+^app\.R$
+^CODEOWNERS$
+^data-raw$
+^deploy\.R$
+^dev$
+^LICENSE\.md$
+^README\.md$
+^rsconnect$
+^shiny_bookmarks$
+^tpma-explorer\.Rproj$
+^app_data/$
+^vscode_app.R$
 ^\.lintr$
 ^\.cache$
 ^\.github$
@@ -17,3 +35,5 @@
 ^tpma-explorer\.Rproj$
 ^app_data/$
 ^vscode_app.R$
+^\.positai$
+^\.claude$

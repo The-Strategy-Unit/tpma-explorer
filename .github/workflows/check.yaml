@@ -7,7 +7,7 @@ name: Check package
 jobs:
   setup-r:
     runs-on: ubuntu-latest
-    name: Setup R and check/document/lint package
+    name: Setup R and check/document
     steps:
       - uses: actions/checkout@v6
 
@@ -21,20 +21,11 @@ jobs:
         with:
           cache: always
           extra-packages: |
-            any::lintr
             any::cyclocomp
             any::rcmdcheck
             any::devtools
             any::covr
             local::.
-
-      - name: Lint
-        id: lint
-        if: ${{ !cancelled() && steps.setup-deps.outcome != 'failure' }}
-        run: lintr::lint_package()
-        shell: Rscript {0}
-        env:
-          LINTR_ERROR_ON_LINT: true
 
       - uses: r-lib/actions/check-r-package@v2
         if: ${{ !cancelled() && steps.setup-deps.outcome != 'failure' }}

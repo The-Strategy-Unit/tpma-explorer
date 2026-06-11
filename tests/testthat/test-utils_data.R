@@ -1,20 +1,19 @@
 test_that("prepare_age_sex_data", {
   # arrange
-  # nolint start
+
   age_sex_data <- tibble::tribble(
-    ~age_group , ~sex , ~n , ~ provider, ~ strategy, ~ fyear,
-    "0-4"      ,  "1" ,  5 , "R00"     , "a"      , 2 ,
-    "5-9"      ,  "1" , 10 , "R00"     , "a"      , 2 ,
-    "10-14"    ,  "1" , 20 , "R00"     , "a"      , 2 ,
-    "0-4"      ,  "2" ,  7 , "R00"     , "a"      , 2 ,
-    "5-9"      ,  "2" , 12 , "R00"     , "a"      , 2 ,
-    "10-14"    ,  "2" , 22 , "R00"     , "a"      , 2 ,
+    ~age_group , ~sex , ~n , ~provider , ~strategy , ~fyear ,
+    "0-4"      , "1"  ,  5 , "R00"     , "a"       ,      2 ,
+    "5-9"      , "1"  , 10 , "R00"     , "a"       ,      2 ,
+    "10-14"    , "1"  , 20 , "R00"     , "a"       ,      2 ,
+    "0-4"      , "2"  ,  7 , "R00"     , "a"       ,      2 ,
+    "5-9"      , "2"  , 12 , "R00"     , "a"       ,      2 ,
+    "10-14"    , "2"  , 22 , "R00"     , "a"       ,      2 ,
     # rows that should be filtered out:
-    "0-4"      ,  "1" , 10 , "R01"     , "a"      , 2 ,
-    "5-9"      ,  "1" , 20 , "R00"     , "b"      , 2 ,
-    "10-14"    ,  "1" , 40 , "R00"     , "a"      , 3
+    "0-4"      , "1"  , 10 , "R01"     , "a"       ,      2 ,
+    "5-9"      , "1"  , 20 , "R00"     , "b"       ,      2 ,
+    "10-14"    , "1"  , 40 , "R00"     , "a"       ,      3
   )
-  # nolint end
 
   m <- mock(age_sex_data)
   testthat::local_mocked_bindings(

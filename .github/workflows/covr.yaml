@@ -9,7 +9,7 @@ name: Run Code Coverage
 jobs:
   coverage:
     runs-on: ubuntu-latest
-    name: Setup R and check/document/lint package
+    name: Setup R and check/document
     steps:
       - uses: actions/checkout@v6
 

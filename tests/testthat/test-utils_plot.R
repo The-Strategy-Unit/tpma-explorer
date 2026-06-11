@@ -1,20 +1,20 @@
 test_that("generate_rates_funnel_data", {
   # arrange
-  # nolint start
+
   rates <- tibble::tribble(
     ~provider  , ~fyear , ~strategy    , ~std_rate , ~crude_rate ,
-    "a"        , 202223 , "strategy_a" ,  1        , 0           ,
-    "b"        , 202223 , "strategy_a" ,  2        , 0           ,
-    "c"        , 202223 , "strategy_a" ,  3        , 0           ,
-    "d"        , 202223 , "strategy_a" ,  4        , 0           ,
-    "national" , 202223 , "strategy_a" ,  5        , 0           ,
-    "a"        , 202324 , "strategy_a" ,  6        , 0           ,
-    "b"        , 202324 , "strategy_a" ,  7        , 0           ,
-    "c"        , 202324 , "strategy_a" ,  8        , 0           ,
-    "d"        , 202324 , "strategy_a" ,  9        , 0           ,
-    "national" , 202324 , "strategy_a" , 10        , 0           ,
-    "a"        , 202223 , "strategy_B" , 11        , 0           ,
-    "a"        , 202324 , "strategy_B" , 12        , 0
+    "a"        , 202223 , "strategy_a" ,         1 ,           0 ,
+    "b"        , 202223 , "strategy_a" ,         2 ,           0 ,
+    "c"        , 202223 , "strategy_a" ,         3 ,           0 ,
+    "d"        , 202223 , "strategy_a" ,         4 ,           0 ,
+    "national" , 202223 , "strategy_a" ,         5 ,           0 ,
+    "a"        , 202324 , "strategy_a" ,         6 ,           0 ,
+    "b"        , 202324 , "strategy_a" ,         7 ,           0 ,
+    "c"        , 202324 , "strategy_a" ,         8 ,           0 ,
+    "d"        , 202324 , "strategy_a" ,         9 ,           0 ,
+    "national" , 202324 , "strategy_a" ,        10 ,           0 ,
+    "a"        , 202223 , "strategy_B" ,        11 ,           0 ,
+    "a"        , 202324 , "strategy_B" ,        12 ,           0
   )
 
   providers_lookup <- tibble::tribble(
@@ -27,18 +27,16 @@ test_that("generate_rates_funnel_data", {
   peers_lookup <- c("b", "c")
 
   m <- mock(rates)
-  # nolint end
+
   testthat::local_mocked_bindings(get_arrow_dataset = m)
 
-  # nolint start
   expected <- tibble::tribble(
     ~provider , ~fyear , ~strategy    , ~rate , ~national_rate , ~label , ~is_peer ,
-      "d"       , 202324 , "strategy_a" , 9    , 10             , "D"    , "other" ,
-      "b"       , 202324 , "strategy_a" , 7    , 10             , "B"    , "peer"  ,
-      "c"       , 202324 , "strategy_a" , 8    , 10             , "C"    , "peer"  ,
-      "a"       , 202324 , "strategy_a" , 6    , 10             , "A"    , "self"
+    "d"       , 202324 , "strategy_a" ,     9 ,             10 , "D"    , "other"  ,
+    "b"       , 202324 , "strategy_a" ,     7 ,             10 , "B"    , "peer"   ,
+    "c"       , 202324 , "strategy_a" ,     8 ,             10 , "C"    , "peer"   ,
+    "a"       , 202324 , "strategy_a" ,     6 ,             10 , "A"    , "self"
   )
-  # nolint end
 
   # act
   actual <- generate_rates_funnel_data(
@@ -59,21 +57,21 @@ test_that("generate_rates_funnel_data", {
 
 test_that("generate_rates_trend_data", {
   # arrange
-  # nolint start
+
   rates <- tibble::tribble(
     ~provider  , ~fyear , ~strategy    , ~std_rate , ~crude_rate ,
-    "a"        , 202223 , "strategy_a" ,  1        , 0           ,
-    "b"        , 202223 , "strategy_a" ,  2        , 0           ,
-    "c"        , 202223 , "strategy_a" ,  3        , 0           ,
-    "d"        , 202223 , "strategy_a" ,  4        , 0           ,
-    "national" , 202223 , "strategy_a" ,  5        , 0           ,
-    "a"        , 202324 , "strategy_a" ,  6        , 0           ,
-    "b"        , 202324 , "strategy_a" ,  7        , 0           ,
-    "c"        , 202324 , "strategy_a" ,  8        , 0           ,
-    "d"        , 202324 , "strategy_a" ,  9        , 0           ,
-    "national" , 202324 , "strategy_a" , 10        , 0           ,
-    "a"        , 202223 , "strategy_B" , 11        , 0           ,
-    "a"        , 202324 , "strategy_B" , 12        , 0
+    "a"        , 202223 , "strategy_a" ,         1 ,           0 ,
+    "b"        , 202223 , "strategy_a" ,         2 ,           0 ,
+    "c"        , 202223 , "strategy_a" ,         3 ,           0 ,
+    "d"        , 202223 , "strategy_a" ,         4 ,           0 ,
+    "national" , 202223 , "strategy_a" ,         5 ,           0 ,
+    "a"        , 202324 , "strategy_a" ,         6 ,           0 ,
+    "b"        , 202324 , "strategy_a" ,         7 ,           0 ,
+    "c"        , 202324 , "strategy_a" ,         8 ,           0 ,
+    "d"        , 202324 , "strategy_a" ,         9 ,           0 ,
+    "national" , 202324 , "strategy_a" ,        10 ,           0 ,
+    "a"        , 202223 , "strategy_B" ,        11 ,           0 ,
+    "a"        , 202324 , "strategy_B" ,        12 ,           0
   )
 
   providers_lookup <- tibble::tribble(
@@ -86,20 +84,19 @@ test_that("generate_rates_trend_data", {
   peers_lookup <- c("b", "c")
 
   m <- mock(rates)
-  # nolint end
+
   testthat::local_mocked_bindings(get_arrow_dataset = m)
 
-  # nolint start
   expected <- tibble::tribble(
     ~provider , ~fyear , ~strategy    , ~rate , ~is_peer ,
-    "a"       , 202223 , "strategy_a" , 1    , "self"   ,
-    "b"       , 202223 , "strategy_a" , 2    , "peer"   ,
-    "c"       , 202223 , "strategy_a" , 3    , "peer"   ,
-    "a"       , 202324 , "strategy_a" , 6    , "self"   ,
-    "b"       , 202324 , "strategy_a" , 7    , "peer"   ,
-    "c"       , 202324 , "strategy_a" , 8    , "peer"
+    "a"       , 202223 , "strategy_a" ,     1 , "self"   ,
+    "b"       , 202223 , "strategy_a" ,     2 , "peer"   ,
+    "c"       , 202223 , "strategy_a" ,     3 , "peer"   ,
+    "a"       , 202324 , "strategy_a" ,     6 , "self"   ,
+    "b"       , 202324 , "strategy_a" ,     7 , "peer"   ,
+    "c"       , 202324 , "strategy_a" ,     8 , "peer"
   )
-  # nolint end
+
   # act
   actual <- generate_rates_trend_data("nhp", "a", "strategy_a", peers_lookup)
 
@@ -112,7 +109,7 @@ test_that("generate_rates_trend_data", {
 
 test_that("uprime_calculations", {
   # arrange
-  # nolint start
+
   df <- tibble::tribble(
     ~denominator , ~rate , ~national_rate ,
             1000 , 2.0   , 1.9            ,
@@ -120,7 +117,6 @@ test_that("uprime_calculations", {
             1500 , 2.5   , 1.9            ,
             2500 , 1.8   , 1.9
   )
-  # nolint end
 
   # act
   actual <- uprime_calculations(df)
