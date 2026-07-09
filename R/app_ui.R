@@ -119,6 +119,16 @@ app_ui <- function(request) {
       icon = bsicons::bs_icon("grid"),
 
       bslib::card(
+        bslib::card_header(
+          class = "text-bg-info",
+          bsicons::bs_icon("info-circle"),
+          "Note"
+        ),
+        "This app is in continuous development.",
+        "Please give feedback by clicking the link in the top-right."
+      ),
+
+      bslib::card(
         bslib::card_header("TPMA Matrix"),
         shiny::uiOutput("tpma_table")
       )
