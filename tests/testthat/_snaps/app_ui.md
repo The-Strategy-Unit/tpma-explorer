@@ -18,19 +18,25 @@
             <div class="navbar-collapse collapse" id="navbar-collapse-X">
               <ul class="nav navbar-nav nav-underline shiny-tab-input" id="page_navbar" data-tabsetid="X">
                 <li class="active">
-                  <a href="#tab-X-1" data-toggle="tab" data-bs-toggle="tab" data-value="Context">
+                  <a href="#tab-X-1" data-toggle="tab" data-bs-toggle="tab" data-value="Overview">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi bi-grid " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img" ><path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"></path></svg>
+                    Overview
+                  </a>
+                </li>
+                <li>
+                  <a href="#tab-X-2" data-toggle="tab" data-bs-toggle="tab" data-value="Context">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi bi-book " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img" ><path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"></path></svg>
                     Context
                   </a>
                 </li>
                 <li>
-                  <a href="#tab-X-2" data-toggle="tab" data-bs-toggle="tab" data-value="Visualisations">
+                  <a href="#tab-X-3" data-toggle="tab" data-bs-toggle="tab" data-value="Visualisations">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi bi-graph-up " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img" ><path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0Zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07Z"></path></svg>
                     Visualisations
                   </a>
                 </li>
                 <li>
-                  <a href="#tab-X-3" data-toggle="tab" data-bs-toggle="tab" data-value="Information">
+                  <a href="#tab-X-4" data-toggle="tab" data-bs-toggle="tab" data-value="Information">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi bi-info-circle " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img" ><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
       <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path></svg>
                     Information
@@ -52,7 +58,28 @@
             <div class="main">
               <main class="bslib-page-main bslib-gap-spacing">
                 <div class="tab-content" data-tabsetid="X">
-                  <div class="tab-pane active" data-value="Context" id="tab-X-1">
+                  <div class="tab-pane active" data-value="Overview" id="tab-X-1">
+                    <div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container" data-bslib-card-init data-require-bs-caller="card()" data-require-bs-version="5">
+                      <div class="card-header bslib-gap-spacing text-bg-info">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi bi-info-circle " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img" ><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+      <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"></path></svg>
+                        Note
+                      </div>
+                      <div class="card-body bslib-gap-spacing html-fill-item html-fill-container" style="margin-top:auto;margin-bottom:auto;flex:1 1 auto;">
+                        This app is in continuous development.
+                        Please give feedback by clicking the link in the top-right.
+                      </div>
+                      <script data-bslib-card-init>bslib.Card.initializeAllCards();</script>
+                    </div>
+                    <div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container" data-bslib-card-init data-require-bs-caller="card()" data-require-bs-version="5">
+                      <div class="card-header bslib-gap-spacing">TPMA Matrix</div>
+                      <div class="card-body bslib-gap-spacing html-fill-item html-fill-container" style="margin-top:auto;margin-bottom:auto;flex:1 1 auto;">
+                        <div id="tpma_table" class="shiny-html-output"></div>
+                      </div>
+                      <script data-bslib-card-init>bslib.Card.initializeAllCards();</script>
+                    </div>
+                  </div>
+                  <div class="tab-pane" data-value="Context" id="tab-X-2">
                     <div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container" data-bslib-card-init data-require-bs-caller="card()" data-require-bs-version="5">
                       <div class="card-header bslib-gap-spacing text-bg-info">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi bi-info-circle " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img" ><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
@@ -183,7 +210,7 @@
                       </div>
                     </bslib-layout-columns>
                   </div>
-                  <div class="tab-pane" data-value="Visualisations" id="tab-X-2">
+                  <div class="tab-pane" data-value="Visualisations" id="tab-X-3">
                     <div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container" data-bslib-card-init data-require-bs-caller="card()" data-require-bs-version="5">
                       <div class="card-header bslib-gap-spacing text-bg-info">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi bi-info-circle " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img" ><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
@@ -207,7 +234,7 @@
                       <div class="bslib-grid-item bslib-gap-spacing html-fill-container">mod_plot_nee</div>
                     </bslib-layout-columns>
                   </div>
-                  <div class="tab-pane" data-value="Information" id="tab-X-3">
+                  <div class="tab-pane" data-value="Information" id="tab-X-4">
                     <div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container" data-bslib-card-init data-require-bs-caller="card()" data-require-bs-version="5">
                       <div class="card-header bslib-gap-spacing text-bg-info">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi bi-info-circle " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img" ><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
@@ -312,43 +339,61 @@
             </div>
             <aside id="sidebar" class="sidebar bslib-sidebar-input" hidden data-resizable>
               <div class="sidebar-content bslib-gap-spacing">
-                <div class="accordion bslib-accordion-input" data-require-bs-caller="accordion()" data-require-bs-version="5" id="sidebar_accordion">
-                  <div class="accordion-item" data-value="Datasets">
-                    <div class="accordion-header">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bslib-accordion-panel-X" aria-expanded="false" aria-controls="bslib-accordion-panel-X">
-                        <div class="accordion-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi bi-table " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img" ><path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"></path></svg></div>
-                        <div class="accordion-title">Datasets</div>
-                      </button>
-                    </div>
-                    <div id="bslib-accordion-panel-X" class="accordion-collapse collapse">
-                      <div class="accordion-body">
-                        mod_select_geography
-                        mod_select_provider
+                <div class="shiny-panel-conditional" data-display-if="input.page_navbar == &#39;Overview&#39;" data-ns-prefix="">
+                  <div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container" data-bslib-card-init data-require-bs-caller="card()" data-require-bs-version="5">
+                    <div class="card-body bslib-gap-spacing html-fill-item html-fill-container" style="margin-top:auto;margin-bottom:auto;flex:1 1 auto;"><p>The Government’s 10-Year Plan for Health sets an ambition to reduce reliance on hospitals and deliver care closer to where people live. But which forms of hospital care might be avoided or transferred into community settings? And how much hospital activity can be avoided?</p>
+      <p>By reviewing the evidence, talking to clinicians, and analysing data, we have identified 34 types of potentially mitigable hospital activity (TPMAs). These include care delivered in inpatient wards, outpatient clinics, and emergency departments. This activity can be mitigated through four mechanisms:</p>
+      <ul>
+      <li>prevention - acting upstream to improve people’s health and manage their health risks</li>
+      <li>de-adoption - stop providing treatments that are unlikely to benefit patients</li>
+      <li>redirection/substitution - delivering care in the same or a different form in the community</li>
+      <li>efficiency - improving the way we deliver care in hospital to reduce the time that patients spend there</li>
+      </ul>
+      <p>This tool allows you to explore these types of potentially mitigatable hospital activity: to see the level of these activities in your area or hospital, examine trends, and geographical variation.</p>
+      <p>This app is in continuous development. Please give feedback by clicking the link in the top-right.</p>
+      </div>
+                    <script data-bslib-card-init>bslib.Card.initializeAllCards();</script>
+                  </div>
+                </div>
+                <div class="shiny-panel-conditional" data-display-if="input.page_navbar != &#39;Overview&#39;" data-ns-prefix="">
+                  <div class="accordion bslib-accordion-input" data-require-bs-caller="accordion()" data-require-bs-version="5" id="sidebar_accordion">
+                    <div class="accordion-item" data-value="Datasets">
+                      <div class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bslib-accordion-panel-X" aria-expanded="false" aria-controls="bslib-accordion-panel-X">
+                          <div class="accordion-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi bi-table " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img" ><path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"></path></svg></div>
+                          <div class="accordion-title">Datasets</div>
+                        </button>
+                      </div>
+                      <div id="bslib-accordion-panel-X" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                          mod_select_geography
+                          mod_select_provider
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="accordion-item" data-value="Types of Potentially-Mitigatable Activity (TPMAs)">
-                    <div class="accordion-header">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bslib-accordion-panel-X" aria-expanded="false" aria-controls="bslib-accordion-panel-X">
-                        <div class="accordion-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi bi-hospital " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img" ><path d="M8.5 5.034v1.1l.953-.55.5.867L9 7l.953.55-.5.866-.953-.55v1.1h-1v-1.1l-.953.55-.5-.866L7 7l-.953-.55.5-.866.953.55v-1.1h1ZM13.25 9a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5ZM13 11.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5Zm.25 1.75a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5Zm-11-4a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 3 9.75v-.5A.25.25 0 0 0 2.75 9h-.5Zm0 2a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5ZM2 13.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5Z"></path>
+                    <div class="accordion-item" data-value="Types of Potentially-Mitigatable Activity (TPMAs)">
+                      <div class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bslib-accordion-panel-X" aria-expanded="false" aria-controls="bslib-accordion-panel-X">
+                          <div class="accordion-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi bi-hospital " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img" ><path d="M8.5 5.034v1.1l.953-.55.5.867L9 7l.953.55-.5.866-.953-.55v1.1h-1v-1.1l-.953.55-.5-.866L7 7l-.953-.55.5-.866.953.55v-1.1h1ZM13.25 9a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5ZM13 11.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5Zm.25 1.75a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5Zm-11-4a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 3 9.75v-.5A.25.25 0 0 0 2.75 9h-.5Zm0 2a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5ZM2 13.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5Z"></path>
       <path d="M5 1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1a1 1 0 0 1 1 1v4h3a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h3V3a1 1 0 0 1 1-1V1Zm2 14h2v-3H7v3Zm3 0h1V3H5v12h1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3Zm0-14H6v1h4V1Zm2 7v7h3V8h-3Zm-8 7V8H1v7h3Z"></path></svg></div>
-                        <div class="accordion-title">Types of Potentially-Mitigatable Activity (TPMAs)</div>
-                      </button>
+                          <div class="accordion-title">Types of Potentially-Mitigatable Activity (TPMAs)</div>
+                        </button>
+                      </div>
+                      <div id="bslib-accordion-panel-X" class="accordion-collapse collapse">
+                        <div class="accordion-body">mod_select_strategy</div>
+                      </div>
                     </div>
-                    <div id="bslib-accordion-panel-X" class="accordion-collapse collapse">
-                      <div class="accordion-body">mod_select_strategy</div>
-                    </div>
-                  </div>
-                  <div class="accordion-item" data-value="Bookmark">
-                    <div class="accordion-header">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bslib-accordion-panel-X" aria-expanded="false" aria-controls="bslib-accordion-panel-X">
-                        <div class="accordion-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi bi-bookmark " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img" ><path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"></path></svg></div>
-                        <div class="accordion-title">Bookmark</div>
-                      </button>
-                    </div>
-                    <div id="bslib-accordion-panel-X" class="accordion-collapse collapse">
-                      <div class="accordion-body">
-                        <button id="._bookmark_" type="button" class="btn btn-default action-button" title="Bookmark your selections and get a URL for sharing"><span class="action-label">Generate shareable URL</span></button>
+                    <div class="accordion-item" data-value="Bookmark">
+                      <div class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bslib-accordion-panel-X" aria-expanded="false" aria-controls="bslib-accordion-panel-X">
+                          <div class="accordion-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi bi-bookmark " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img" ><path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"></path></svg></div>
+                          <div class="accordion-title">Bookmark</div>
+                        </button>
+                      </div>
+                      <div id="bslib-accordion-panel-X" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                          <button id="._bookmark_" type="button" class="btn btn-default action-button" title="Bookmark your selections and get a URL for sharing"><span class="action-icon"><i aria-label="link icon" class="glyphicon glyphicon-link" role="presentation"></i></span><span class="action-label">Generate shareable URL</span></button>
+                        </div>
                       </div>
                     </div>
                   </div>
