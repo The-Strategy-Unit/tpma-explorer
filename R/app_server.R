@@ -21,9 +21,9 @@ app_server <- function(input, output, session) {
   })
 
   # Open sidebar ---
+  # Sidebar options only relevant to visualisations and overview
   shiny::observe({
-    if (input$page_navbar == "Visualisations") {
-      # Sidebar options only relevant to visualisations
+    if (input$page_navbar %in% c("Overview", "Visualisations")) {
       bslib::toggle_sidebar("sidebar", open = TRUE)
     } else {
       bslib::toggle_sidebar("sidebar", open = FALSE)
