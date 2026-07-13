@@ -7,3 +7,20 @@ This activity can be mitigated through four mechanisms: prevention, de-adoption,
 This tool allows you to explore these types of potentially mitigatable hospital activity: to see the level of these activities in your area or hospital, examine trends, and geographical variation.
 
 This app is in continuous development. Please give feedback by clicking the link in the top-right.
+
+<br><br>
+
+<div class="tag-key-item">
+  <span class="setting-tag tag-ip">IP</span>
+  <span class="tag-key-label">Inpatient</span>
+</div>
+
+<div class="tag-key-item">
+  <span class="setting-tag tag-op">OP</span>
+  <span class="tag-key-label">Outpatient</span>
+</div>
+
+<div class="tag-key-item">
+  <span class="setting-tag tag-ae">A&amp;E</span>
+  <span class="tag-key-label">Accident &amp; Emergency</span>
+</div>

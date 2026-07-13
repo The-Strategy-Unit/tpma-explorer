@@ -47,14 +47,6 @@ app_server <- function(input, output, session) {
       .data$activity_type,
       .data$tpma_mechanism,
       .data$tpma_name
-    ) |>
-    dplyr::mutate(
-      activity_type = dplyr::case_when(
-        .data$activity_type == "IP" ~ "In",
-        .data$activity_type == "OP" ~ "Out",
-        .data$activity_type == "A&E" ~ "A&E",
-        .default = .data$activity_type
-      )
     )
 
   mechanism_order <- c(
@@ -72,19 +64,25 @@ app_server <- function(input, output, session) {
   )
 
   setting_classes <- c(
-    "In" = "tpma-ip",
-    "Out" = "tpma-op",
+    "IP" = "tpma-ip",
+    "OP" = "tpma-op",
     "A&E" = "tpma-ae"
   )
 
   # Fewer in number appear towards the top of category lanes
-  setting_order <- c("Out", "A&E", "In")
+  setting_order <- c("OP", "A&E", "IP")
 
   tpma_card <- function(label, css_class, setting) {
-    shiny::div(
-      class = paste("tpma-card", css_class),
-      shiny::div(class = "setting-tag", setting),
-      shiny::div(class = "tpma-name", label)
+    tag_class <- dplyr::case_when(
+      setting == "IP" ~ "tag-ip",
+      setting == "OP" ~ "tag-op",
+      setting == "A&E" ~ "tag-ae"
+    )
+
+    div(
+      class = "tpma-card",
+      div(class = paste("tpma-tag", tag_class), setting),
+      div(class = "tpma-name", label)
     )
   }
 

@@ -46,32 +46,52 @@ app_ui <- function(request) {
           background:#FFFFFF;
           position:relative;
         }
-
-        .setting-tag{
-          position:absolute;
-          top:6px;
-          right:8px;
-          padding:2px 6px;
-          border-radius:3px;
-          background:#F3F2F1;
-          font-size:11px;
-          font-weight:700;
+        .tpma-tag {
+          position: absolute;
+          top: 6px;
+          right: 8px;
+          padding: 2px 6px;
+          border-radius: 3px;
+          font-size: 11px;
+          font-weight: 700;
+        }
+        .setting-tag {
+          padding: 4px 8px;
+          border-radius: 4px;
+          font-size: 13px;
+          font-weight: 600;
+          color: #0B0C0C;
         }
         .tpma-name{
           padding-right:40px;
         }
-        .tpma-ip{
-          border-left:6px solid #28a197; /* Gov.uk teal */
+        .tag-ip {
+          background:#330072;   /* NHS Purple */
+          color:white;
         }
-        .tpma-op{
-          border-left:6px solid #F46A25; /* Gov.uk orange */
+        .tag-op {
+          background:#00A499;   /* NHS Aqua Green */
+          color:white;
         }
-        .tpma-ae{
-          border-left:6px solid #A285D1; /* Gov.uk light purple */
+        .tag-ae {
+          background:#ED8B00;   /* NHS Orange */
+          color:white;
         }
         .empty-cell{
           min-height:20px;
         }
+        .tag-key-item {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 8px;
+        }
+
+        .tag-key-label {
+          font-size: 14px;
+          color: #0B0C0C;
+}
+
       "
       ))
     ),
