@@ -114,6 +114,13 @@ app_server <- function(input, output, session) {
     )
   }
 
+  mechanism_hint_files <- c(
+    "Prevention" = "mechanism-prevention.md",
+    "De-adoption" = "mechanism-deadoption.md",
+    "Redirection/Substitution" = "mechanism-redirection-substitution.md",
+    "Hospital Efficiency" = "mechanism-hospital-efficiency.md"
+  )
+
   output$tpma_table <- shiny::renderUI({
     shiny::tags$table(
       class = "matrix-container",
@@ -123,10 +130,21 @@ app_server <- function(input, output, session) {
           lapply(
             mechanism_order,
             function(mechanism) {
-              shiny::tags$th(
+              tags$th(
                 scope = "col",
                 class = "col-header",
-                mechanism_labels[[mechanism]]
+                tags$div(
+                  class = "col-header-title",
+                  mechanism_labels[[mechanism]]
+                ),
+                tags$div(
+                  class = "col-header-hint",
+                  md_file_to_html(
+                    "app",
+                    "text",
+                    mechanism_hint_files[[mechanism]]
+                  )
+                )
               )
             }
           )

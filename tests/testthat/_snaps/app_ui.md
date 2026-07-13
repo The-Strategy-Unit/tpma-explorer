@@ -342,15 +342,22 @@
                 <div class="shiny-panel-conditional" data-display-if="input.page_navbar == &#39;Overview&#39;" data-ns-prefix="">
                   <div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container" data-bslib-card-init data-require-bs-caller="card()" data-require-bs-version="5">
                     <div class="card-body bslib-gap-spacing html-fill-item html-fill-container" style="margin-top:auto;margin-bottom:auto;flex:1 1 auto;"><p>The Government’s 10-Year Plan for Health sets an ambition to reduce reliance on hospitals and deliver care closer to where people live. But which forms of hospital care might be avoided or transferred into community settings? And how much hospital activity can be avoided?</p>
-      <p>By reviewing the evidence, talking to clinicians, and analysing data, we have identified 34 types of potentially mitigable hospital activity (TPMAs). These include care delivered in inpatient wards, outpatient clinics, and emergency departments. This activity can be mitigated through four mechanisms:</p>
-      <ul>
-      <li>prevention - acting upstream to improve people’s health and manage their health risks</li>
-      <li>de-adoption - stop providing treatments that are unlikely to benefit patients</li>
-      <li>redirection/substitution - delivering care in the same or a different form in the community</li>
-      <li>efficiency - improving the way we deliver care in hospital to reduce the time that patients spend there</li>
-      </ul>
+      <p>By reviewing the evidence, talking to clinicians, and analysing data, we have identified 34 types of potentially mitigable hospital activity (TPMAs). These include care delivered in inpatient wards, outpatient clinics, and emergency departments.</p>
+      <p>This activity can be mitigated through four mechanisms: prevention, de-adoption, redirection/substitution and efficiency.</p>
       <p>This tool allows you to explore these types of potentially mitigatable hospital activity: to see the level of these activities in your area or hospital, examine trends, and geographical variation.</p>
       <p>This app is in continuous development. Please give feedback by clicking the link in the top-right.</p>
+      <div class="tag-key-item">
+        <span class="setting-tag tag-ip">IP</span>
+        <span class="tag-key-label">Inpatient</span>
+      </div>
+      <div class="tag-key-item">
+        <span class="setting-tag tag-op">OP</span>
+        <span class="tag-key-label">Outpatient</span>
+      </div>
+      <div class="tag-key-item">
+        <span class="setting-tag tag-ae">A&amp;E</span>
+        <span class="tag-key-label">Accident &amp; Emergency</span>
+      </div>
       </div>
                     <script data-bslib-card-init>bslib.Card.initializeAllCards();</script>
                   </div>

@@ -16,13 +16,23 @@ app_ui <- function(request) {
           border-spacing:14px;
           table-layout:fixed;
         }
-        .col-header{
-          padding:18px;
-          text-align:center;
-          border-radius:14px;
-          font-weight:600;
+        .col-header {
+          padding: 12px 16px;
+          text-align: left;
           background:#E8EDEE;   /* NHS Light Grey */
-          color:#425563;        /* NHS Dark Grey */
+          border-bottom: 2px solid #D8DDE0;
+        }
+        .col-header-title {
+          font-size: 16px;
+          font-weight: 600;
+          margin-bottom: 4px;
+          color: #0B0C0C;
+        }
+
+        .col-header-hint {
+          font-size: 14px;
+          color: #505A5F;
+          line-height: 1.4;
         }
         .cell{
           padding:6px;
