@@ -21,28 +21,29 @@ app_ui <- function(request) {
           text-align:center;
           border-radius:14px;
           font-weight:600;
-          background:#efe3cf;
-          color:#7a4f00;
+          background:#E8EDEE;   /* NHS Light Grey */
+          color:#425563;        /* NHS Dark Grey */
         }
         .cell{
           padding:6px;
           vertical-align:top;
         }
         .tpma-card{
-          margin-bottom:8px;
+          margin-bottom:4px;
           padding:10px 12px;
-          border-radius:12px;
-          font-size:14px;
-          line-height:1.4;
+          border-radius:4px;
+          border:1px solid #E8EDEE;
+          background:#FFFFFF;
           position:relative;
         }
+
         .setting-tag{
           position:absolute;
           top:6px;
           right:8px;
-          padding:2px 8px;
-          border-radius:999px;
-          background:rgba(255,255,255,.75);
+          padding:2px 6px;
+          border-radius:3px;
+          background:#F3F2F1;
           font-size:11px;
           font-weight:700;
         }
@@ -50,16 +51,13 @@ app_ui <- function(request) {
           padding-right:40px;
         }
         .tpma-ip{
-          background:#dbe9e4;
-          color:#005a43;
+          border-left:6px solid #28a197; /* Gov.uk teal */
         }
         .tpma-op{
-          background:#e3e0f1;
-          color:#4d3ca6;
+          border-left:6px solid #F46A25; /* Gov.uk orange */
         }
         .tpma-ae{
-          background:#f2e4df;
-          color:#993300;
+          border-left:6px solid #A285D1; /* Gov.uk light purple */
         }
         .empty-cell{
           min-height:20px;
