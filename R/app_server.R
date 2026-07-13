@@ -43,7 +43,19 @@ app_server <- function(input, output, session) {
     "https://raw.githubusercontent.com/The-Strategy-Unit/TPMAs/fcc86e34b109451326385a332e89992add443ccc/reference/tpma-lookup.csv"
   ) |>
     dplyr::filter_out(.data$active_to == "NA") |>
-    dplyr::distinct(.data$activity_type, .data$tpma_mechanism, .data$tpma_name)
+    dplyr::distinct(
+      .data$activity_type,
+      .data$tpma_mechanism,
+      .data$tpma_name
+    ) |>
+    dplyr::mutate(
+      activity_type = dplyr::case_when(
+        .data$activity_type == "IP" ~ "In",
+        .data$activity_type == "OP" ~ "Out",
+        .data$activity_type == "A&E" ~ "A&E",
+        .default = .data$activity_type
+      )
+    )
 
   mechanism_order <- c(
     "Prevention",
@@ -60,12 +72,13 @@ app_server <- function(input, output, session) {
   )
 
   setting_classes <- c(
-    "IP" = "tpma-ip",
-    "OP" = "tpma-op",
+    "In" = "tpma-ip",
+    "Out" = "tpma-op",
     "A&E" = "tpma-ae"
   )
 
-  setting_order <- c("IP", "OP", "A&E")
+  # Fewer in number appear towards the top of category lanes
+  setting_order <- c("Out", "A&E", "In")
 
   tpma_card <- function(label, css_class, setting) {
     shiny::div(
