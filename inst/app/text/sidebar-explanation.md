@@ -8,8 +8,6 @@ This tool allows you to explore these types of potentially mitigatable hospital 
 
 This app is in continuous development. Please give feedback by clicking the link in the top-right.
 
-<br><br>
-
 <div class="tag-key-item">
   <span class="setting-tag tag-ip">IP</span>
   <span class="tag-key-label">Inpatient</span>

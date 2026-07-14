@@ -8,92 +8,11 @@ app_ui <- function(request) {
     selected = "Overview",
     fillable = FALSE,
     header = shiny::tags$head(
-      shiny::tags$style(shiny::HTML(
-        "
-        .matrix-container{
-          width:100%;
-          border-collapse:separate;
-          border-spacing:14px;
-          table-layout:fixed;
-        }
-        .col-header {
-          padding: 12px 16px;
-          text-align: left;
-          background:#E8EDEE;   /* NHS Light Grey */
-          border-bottom: 2px solid #D8DDE0;
-        }
-        .col-header-title {
-          font-size: 16px;
-          font-weight: 600;
-          margin-bottom: 4px;
-          color: #0B0C0C;
-        }
-
-        .col-header-hint {
-          font-size: 14px;
-          color: #505A5F;
-          line-height: 1.4;
-        }
-        .cell{
-          padding:6px;
-          vertical-align:top;
-        }
-        .tpma-card{
-          margin-bottom:4px;
-          padding:10px 12px;
-          border-radius:4px;
-          border:1px solid #E8EDEE;
-          background:#FFFFFF;
-          position:relative;
-        }
-        .tpma-tag {
-          position: absolute;
-          top: 6px;
-          right: 8px;
-          padding: 2px 6px;
-          border-radius: 3px;
-          font-size: 11px;
-          font-weight: 700;
-        }
-        .setting-tag {
-          padding: 4px 8px;
-          border-radius: 4px;
-          font-size: 13px;
-          font-weight: 600;
-          color: #0B0C0C;
-        }
-        .tpma-name{
-          padding-right:40px;
-        }
-        .tag-ip {
-          background:#330072;   /* NHS Purple */
-          color:white;
-        }
-        .tag-op {
-          background:#00A499;   /* NHS Aqua Green */
-          color:white;
-        }
-        .tag-ae {
-          background:#ED8B00;   /* NHS Orange */
-          color:white;
-        }
-        .empty-cell{
-          min-height:20px;
-        }
-        .tag-key-item {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          margin-bottom: 8px;
-        }
-
-        .tag-key-label {
-          font-size: 14px;
-          color: #0B0C0C;
-}
-
-      "
-      ))
+      shiny::tags$link(
+        rel = "stylesheet",
+        type = "text/css",
+        href = "www/tpma-overview.css"
+      )
     ),
 
     sidebar = bslib::sidebar(
