@@ -78,3 +78,6 @@
           font-size: 14px;
           color: #0B0C0C;
         }
+        #sidebar .accordion-item {
+        border: none;
+        }
