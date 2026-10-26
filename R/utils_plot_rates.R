@@ -2,8 +2,10 @@
 #'
 #' Reads the appropriate peers lookup file based on the selected geography.
 #'
-#' @param selected_geography Character. The selected geography, e.g. "nhp" or "la".
-#' @param provider Character. The provider code for which to find peers, e.g. "RCF".
+#' @param selected_geography Character. The selected geography, i.e. "nhp",
+#'     "la" or "icb".
+#' @param provider Character. The provider code for which to find peers, e.g.
+#'     "RCF".
 #'
 #' @return A data.frame with provider codes and their corresponding peers.
 #'
@@ -12,7 +14,8 @@ get_peers_lookup <- function(selected_geography, provider) {
   filename <- switch(
     selected_geography,
     "nhp" = "nhp-peers.csv",
-    "la" = "la-peers.csv"
+    "la" = "la-peers.csv",
+    "icb" = "icb-peers.csv"
   )
 
   shiny::req(filename)
@@ -30,7 +33,8 @@ get_providers_lookup <- function(selected_geography) {
   filename <- switch(
     selected_geography,
     "nhp" = "nhp-datasets.json",
-    "la" = "la-datasets.json"
+    "la" = "la-datasets.json",
+    "icb" = "icb-datasets.json"
   )
 
   provider_label_regex <- if (selected_geography == "la") {
