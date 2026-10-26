@@ -12,7 +12,7 @@ download_geo_data(
 }
 \arguments{
 \item{geography_folder}{Character. The geography level of the data to
-download. Either "provider" or "lad23cd".}
+download. Either "provider", "lad23cd" or "icb".}
 
 \item{data_version}{Character. The version of the data to download. By
 default, uses the value of the "DATA_VERSION" environment variable, or
