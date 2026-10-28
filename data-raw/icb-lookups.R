@@ -18,7 +18,8 @@ names_lkup <- purrr::map(
     props <- icb[["properties"]]
     cd <- props[["ICB26CDH"]]
     nm_prep <- props[['ICB26NM']] |>
-      stringr::str_replace("Integrated Care Board", "ICB")
+      stringr::str_remove(" Integrated Care Board$") |>
+      stringr::str_remove("^NHS ")
     nm <- glue::glue("{nm_prep} ({cd})")
     setNames(nm, cd)
   }
