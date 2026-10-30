@@ -53,6 +53,26 @@ get_providers_lookup <- function(selected_geography) {
     )
 }
 
+#' Fetch A Trust's Peers From the OpenPlan API
+#' @param provider Character. Trust code, like 'RCF'.
+#' @return A character vector of trust codes that are the peers of `dataset`.
+#' @export
+get_peers <- function(provider) {
+  token <- azkit::get_auth_token(
+    resource = Sys.getenv("OPENPLAN_API_APP_ID")
+  )$credentials$access_token
+
+  req <- httr2::request(Sys.getenv("OPENPLAN_API_BASE")) |>
+    httr2::req_url_path_append(
+      Sys.getenv("OPENPLAN_API_PATH_PEERS"),
+      provider
+    ) |>
+    httr2::req_auth_bearer_token(token)
+
+  httr2::req_perform(req) |>
+    httr2::resp_body_json(simplifyVector = TRUE)
+}
+
 #' Get Rates Data
 #'
 #' This function prepares the data for the rates_data() reactive. It moves the
