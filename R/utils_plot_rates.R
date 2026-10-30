@@ -1,23 +1,20 @@
 #' Get Peers Lookup
 #'
-#' Reads the appropriate peers lookup file based on the selected geography.
+#' Reads the appropriate peers lookup based on the selected geography.
 #'
 #' @param selected_geography Character. The selected geography, e.g. "nhp" or "la".
 #' @param provider Character. The provider code for which to find peers, e.g. "RCF".
 #'
-#' @return A data.frame with provider codes and their corresponding peers.
+#' @return A character vector of peer trust codes.
 #'
 #' @export
 get_peers_lookup <- function(selected_geography, provider) {
-  filename <- switch(
-    selected_geography,
-    "nhp" = "nhp-peers.csv",
-    "la" = "la-peers.csv"
-  )
+  if (selected_geography == "nhp") {
+    peers <- get_peers(provider)
+    return(peers)
+  }
 
-  shiny::req(filename)
-
-  app_sys("app", "reference", filename) |>
+  app_sys("app", "reference", "la-peers.csv") |>
     readr::read_csv(col_types = "cc") |>
     dplyr::filter(
       .data$procode == .env$provider,
