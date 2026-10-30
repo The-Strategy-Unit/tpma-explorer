@@ -1,23 +1,20 @@
 #' Get Peers Lookup
 #'
-#' Reads the appropriate peers lookup file based on the selected geography.
+#' Reads the appropriate peers lookup based on the selected geography.
 #'
 #' @param selected_geography Character. The selected geography, e.g. "nhp" or "la".
 #' @param provider Character. The provider code for which to find peers, e.g. "RCF".
 #'
-#' @return A data.frame with provider codes and their corresponding peers.
+#' @return A character vector of peer trust codes.
 #'
 #' @export
 get_peers_lookup <- function(selected_geography, provider) {
-  filename <- switch(
-    selected_geography,
-    "nhp" = "nhp-peers.csv",
-    "la" = "la-peers.csv"
-  )
+  if (selected_geography == "nhp") {
+    peers <- get_peers(provider)
+    return(peers)
+  }
 
-  shiny::req(filename)
-
-  app_sys("app", "reference", filename) |>
+  app_sys("app", "reference", "la-peers.csv") |>
     readr::read_csv(col_types = "cc") |>
     dplyr::filter(
       .data$procode == .env$provider,
@@ -51,6 +48,26 @@ get_providers_lookup <- function(selected_geography) {
         \(.x) stringr::str_extract(.x, provider_label_regex) |> stringr::str_squish()
       )
     )
+}
+
+#' Fetch A Trust's Peers From the OpenPlan API
+#' @param provider Character. Trust code, like 'RCF'.
+#' @return A character vector of trust codes that are the peers of `dataset`.
+#' @export
+get_peers <- function(provider) {
+  token <- azkit::get_auth_token(
+    resource = Sys.getenv("OPENPLAN_API_APP_ID")
+  )$credentials$access_token
+
+  req <- httr2::request(Sys.getenv("OPENPLAN_API_BASE")) |>
+    httr2::req_url_path_append(
+      Sys.getenv("OPENPLAN_API_PATH_PEERS"),
+      provider
+    ) |>
+    httr2::req_auth_bearer_token(token)
+
+  httr2::req_perform(req) |>
+    httr2::resp_body_json(simplifyVector = TRUE)
 }
 
 #' Get Rates Data
