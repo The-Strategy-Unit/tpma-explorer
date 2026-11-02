@@ -37,13 +37,12 @@ get_providers_lookup <- function(selected_geography) {
     "icb" = "icb-datasets.json"
   )
 
-  provider_label_regex <- if (selected_geography == "la") {
-    # e.g. remove ' (E06000014)' from the end
-    "^.*(?= \\(\\w{1}\\d{8}\\)$)"
-  } else {
-    # For now, use the trust code as its label
-    "(?<=\\()\\w+(?=\\)$)"
-  }
+  provider_label_regex <- switch(
+    selected_geography,
+    "nhp" = "(?<=\\()\\w+(?=\\)$)", # to discard all except the code, e.g. 'RCF'
+    "la" = "^.*(?= \\(\\w{1}\\d{8}\\)$)", # to discard code, e.g. ' (E06000001)'
+    "icb" = "^.*(?= \\([A-Z0-9]{3,5}\\)$)" # to discard code, e.g. ' (QOX)'
+  )
 
   app_sys("app", "reference", filename) |>
     yyjsonr::read_json_file() |>
@@ -52,7 +51,11 @@ get_providers_lookup <- function(selected_geography) {
     dplyr::mutate(
       dplyr::across(
         "provider_label",
-        \(.x) stringr::str_extract(.x, provider_label_regex) |> stringr::str_squish()
+        \(.x) {
+          stringr::str_extract(.x, provider_label_regex) |>
+            stringr::str_squish() |>
+            stringr::str_trunc(18)
+        }
       )
     )
 }
