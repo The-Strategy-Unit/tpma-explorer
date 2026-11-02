@@ -9,7 +9,7 @@
             Rates trend
             <bslib-tooltip placement="right" bsOptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
               <template>
-                <div style="text-align: left;"><p>How activity for the selected TPMA has changed over time for the chosen unit (red) and peers (grey).
+                <div style="text-align: left;"><p>How activity for the selected TPMA has changed over time for the chosen unit (red) and all other units (for ICBs) or peers (for trusts or LAs) in grey.
       Data is age-sex standardised. Years of availability will depend on the selected unit and TPMA.</p>
       </div>
               </template>

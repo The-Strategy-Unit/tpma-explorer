@@ -210,6 +210,7 @@
       </ul>
       <p><strong>Peers</strong> are nearest statistical neighbours to the chosen unit.
       Peers for NHS provider trusts are from <a href="https://app.powerbi.com/view?r=eyJrIjoiMjdiOWQ4YTktNmNiNC00MmIwLThjNzktNWVmMmJmMzllNmViIiwidCI6IjUwZjYwNzFmLWJiZmUtNDAxYS04ODAzLTY3Mzc0OGU2MjllMiIsImMiOjh9">the NHP Trust Peer Finder Tool</a> (2019) and for local authorities from the <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/healthandsocialcare/healthandwellbeing/adhocs/3048statisticalnearestneighboursforenglishuppertierandlowertierlocalauthorities">ONS</a> (2025).
+      No peers are highlighted for ICBs.
       Note that there may be incomplete matches between datasets and peers given differences in the year they were derived.
       Peers for providers R0B and R0D were inherited from their predecessors.</p>
       </div>
