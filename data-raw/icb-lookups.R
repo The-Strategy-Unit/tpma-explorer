@@ -38,11 +38,11 @@ jsonlite::write_json(
 
 # Prepare peers lookup ----
 
-# There aren't 'peers' for ICBs, so for now we return a dummy file.
+# There aren't 'peers' for ICBs, so for now we return all ICBs as peers
 
 icb_lkup <- yyjsonr::read_json_file("inst/app/reference/icb-datasets.json")
 
 icb_codes <- names(icb_lkup)
-icb_peers <- data.frame(procode = icb_codes, peer = icb_codes)
+icb_peers <- tidyr::expand_grid(procode = icb_codes, peer = icb_codes)
 
 readr::write_csv(icb_peers, "inst/app/reference/icb-peers.csv")
