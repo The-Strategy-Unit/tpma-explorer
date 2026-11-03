@@ -1,6 +1,6 @@
 #' Download Inputs Datasets for Specific Geography
 #' @param geography_folder Character. The geography level of the data to
-#'     download. Either "provider" or "lad23cd".
+#'     download. Either "provider", "lad23cd" or "icb".
 #' @param data_version Character. The version of the data to download. By
 #'     default, uses the value of the "DATA_VERSION" environment variable, or
 #'     "dev" if that variable is not set.
@@ -66,7 +66,7 @@ download_geo_data <- function(
     paste0(data_type, ".parquet")
   )
 
-  col_renames <- c(provider = "lad23cd")
+  col_renames <- c(provider = "lad23cd", provider = "icb")
 
   azkit::read_azure_parquet(
     inputs_container,
@@ -81,7 +81,7 @@ download_geo_data <- function(
 
 #' Download Inputs Datasets for Specific Geography
 #'
-#' Downloads all datasets for both "provider" and "lad23cd" geographies. See
+#' Downloads all datasets for "provider", "lad23cd" and "icb" geographies. See
 #' `download_geo_data()` for more details.
 #'
 #' @param data_version Character. The version of the data to download. By
@@ -96,7 +96,7 @@ download_all_data <- function(
   redownload = FALSE
 ) {
   purrr::map(
-    c("provider", "lad23cd"),
+    c("provider", "lad23cd", "icb"),
     download_geo_data,
     data_version = data_version,
     redownload = redownload

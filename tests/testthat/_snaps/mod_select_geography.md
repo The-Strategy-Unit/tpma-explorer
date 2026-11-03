@@ -22,13 +22,19 @@
           <div class="radio">
             <label>
               <input type="radio" name="test-geography_select" value="la" checked="checked"/>
-              <span>Local authorities (LAs)</span>
+              <span>Local Authorities (LAs)</span>
             </label>
           </div>
           <div class="radio">
             <label>
               <input type="radio" name="test-geography_select" value="nhp"/>
               <span>NHS provider trusts</span>
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="test-geography_select" value="icb"/>
+              <span>Integrated Care Boards (ICBs)</span>
             </label>
           </div>
         </div>

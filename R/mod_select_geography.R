@@ -20,8 +20,9 @@ mod_select_geography_ui <- function(id) {
       )
     ),
     choices = c(
-      "Local authorities (LAs)" = "la",
-      "NHS provider trusts" = "nhp"
+      "Local Authorities (LAs)" = "la",
+      "NHS provider trusts" = "nhp",
+      "Integrated Care Boards (ICBs)" = "icb"
     ),
     selected = "la" # default provider will be "E08000025" (Birmingham)
   )

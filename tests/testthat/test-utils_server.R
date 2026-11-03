@@ -167,7 +167,8 @@ test_that("download_all_data works", {
   download_all_data("data_version", TRUE)
 
   # assert
-  expect_called(m_download_geo_data, 2)
+  expect_called(m_download_geo_data, 3)
   expect_args(m_download_geo_data, 1, "provider", data_version = "data_version", redownload = TRUE)
   expect_args(m_download_geo_data, 2, "lad23cd", data_version = "data_version", redownload = TRUE)
+  expect_args(m_download_geo_data, 3, "icb", data_version = "data_version", redownload = TRUE)
 })

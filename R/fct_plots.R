@@ -170,8 +170,6 @@ plot_rates_box <- function(rates_box_data, y_axis_limits, base_size = 16) {
     ggplot2::ggplot(ggplot2::aes(x = "", y = .data[["rate"]])) +
     ggplot2::geom_boxplot(alpha = 0.2, outlier.shape = NA, colour = "#9d928a") +
     ggbeeswarm::geom_quasirandom(
-      # just show peers/selected provider
-      data = \(.x) dplyr::filter(.x, .data[["is_peer"]] %in% c("self", "peer")),
       ggplot2::aes(
         fill = .data[["is_peer"]],
         colour = .data[["is_peer"]]

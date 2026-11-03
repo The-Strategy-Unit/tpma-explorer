@@ -55,6 +55,63 @@ test_that("generate_rates_funnel_data", {
   expect_args(m, 1, "nhp", "rates")
 })
 
+test_that("generate_rates_funnel_data for ICBs", {
+  # arrange
+
+  rates <- tibble::tribble(
+    ~provider  , ~fyear , ~strategy    , ~std_rate , ~crude_rate ,
+    "a"        , 202223 , "strategy_a" ,         1 ,           0 ,
+    "b"        , 202223 , "strategy_a" ,         2 ,           0 ,
+    "c"        , 202223 , "strategy_a" ,         3 ,           0 ,
+    "d"        , 202223 , "strategy_a" ,         4 ,           0 ,
+    "national" , 202223 , "strategy_a" ,         5 ,           0 ,
+    "a"        , 202324 , "strategy_a" ,         6 ,           0 ,
+    "b"        , 202324 , "strategy_a" ,         7 ,           0 ,
+    "c"        , 202324 , "strategy_a" ,         8 ,           0 ,
+    "d"        , 202324 , "strategy_a" ,         9 ,           0 ,
+    "national" , 202324 , "strategy_a" ,        10 ,           0 ,
+    "a"        , 202223 , "strategy_B" ,        11 ,           0 ,
+    "a"        , 202324 , "strategy_B" ,        12 ,           0
+  )
+
+  providers_lookup <- tibble::tribble(
+    ~provider , ~label ,
+    "a"       , "A"    ,
+    "b"       , "B"    ,
+    "c"       , "C"    ,
+    "d"       , "D"
+  )
+  peers_lookup <- c("b", "c")
+
+  m <- mock(rates)
+
+  testthat::local_mocked_bindings(get_arrow_dataset = m)
+
+  expected <- tibble::tribble(
+    ~provider , ~fyear , ~strategy    , ~rate , ~national_rate , ~label , ~is_peer ,
+    "b"       , 202324 , "strategy_a" ,     7 ,             10 , "B"    , "other"   ,
+    "c"       , 202324 , "strategy_a" ,     8 ,             10 , "C"    , "other"   ,
+    "d"       , 202324 , "strategy_a" ,     9 ,             10 , "D"    , "other"  ,
+    "a"       , 202324 , "strategy_a" ,     6 ,             10 , "A"    , "self"
+  )
+
+  # act
+  actual <- generate_rates_funnel_data(
+    "icb",
+    "a",
+    "strategy_a",
+    202324,
+    providers_lookup,
+    peers_lookup
+  )
+
+  # assert
+  expect_equal(actual, expected)
+
+  expect_called(m, 1)
+  expect_args(m, 1, "icb", "rates")
+})
+
 test_that("generate_rates_trend_data", {
   # arrange
 
