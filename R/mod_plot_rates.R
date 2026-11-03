@@ -54,8 +54,9 @@ mod_plot_rates_server <- function(
       geography <- shiny::req(selected_geography())
       provider <- shiny::req(selected_provider())
       strategy <- shiny::req(selected_strategy())
+      peers_lookup <- shiny::req(peers_lookup())
 
-      generate_rates_trend_data(geography, provider, strategy, peers_lookup())
+      generate_rates_trend_data(geography, provider, strategy, peers_lookup)
     })
 
     rates_funnel_data <- shiny::reactive({
