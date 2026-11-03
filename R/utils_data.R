@@ -128,7 +128,7 @@ md_string_to_html <- function(text) {
 #' @param dataset_name Character. The name of the dataset, e.g. "rates".
 #' @return An Arrow dataset object.
 get_arrow_dataset <- function(geography, dataset_name) {
-  geo_dir <- switch(geography, "nhp" = "provider", "la" = "lad23cd")
+  geo_dir <- switch(geography, "nhp" = "provider", "la" = "lad23cd", "icb" = "icb")
   key <- paste0(geo_dir, "::", dataset_name)
 
   if (!exists(key, envir = .arrow_dataset_cache, inherits = FALSE)) {

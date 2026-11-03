@@ -2,8 +2,10 @@
 #'
 #' Reads the appropriate peers lookup based on the selected geography.
 #'
-#' @param selected_geography Character. The selected geography, e.g. "nhp" or "la".
-#' @param provider Character. The provider code for which to find peers, e.g. "RCF".
+#' @param selected_geography Character. The selected geography, i.e. "nhp",
+#'     "la" or "icb".
+#' @param provider Character. The provider code for which to find peers, e.g.
+#'     "RCF".
 #'
 #' @return A character vector of peer trust codes.
 #'
@@ -14,7 +16,15 @@ get_peers_lookup <- function(selected_geography, provider) {
     return(peers)
   }
 
-  app_sys("app", "reference", "la-peers.csv") |>
+  filename <- switch(
+    selected_geography,
+    "la" = "la-peers.csv",
+    "icb" = "icb-peers.csv"
+  )
+
+  shiny::req(filename)
+
+  app_sys("app", "reference", filename) |>
     readr::read_csv(col_types = "cc") |>
     dplyr::filter(
       .data$procode == .env$provider,
@@ -27,16 +37,16 @@ get_providers_lookup <- function(selected_geography) {
   filename <- switch(
     selected_geography,
     "nhp" = "nhp-datasets.json",
-    "la" = "la-datasets.json"
+    "la" = "la-datasets.json",
+    "icb" = "icb-datasets.json"
   )
 
-  provider_label_regex <- if (selected_geography == "la") {
-    # e.g. remove ' (E06000014)' from the end
-    "^.*(?= \\(\\w{1}\\d{8}\\)$)"
-  } else {
-    # For now, use the trust code as its label
-    "(?<=\\()\\w+(?=\\)$)"
-  }
+  provider_label_regex <- switch(
+    selected_geography,
+    "nhp" = "(?<=\\()\\w+(?=\\)$)", # to discard all except the code, e.g. 'RCF'
+    "la" = "^.*(?= \\(\\w{1}\\d{8}\\)$)", # to discard code, e.g. ' (E06000001)'
+    "icb" = "^.*(?= \\([A-Z0-9]{3,5}\\)$)" # to discard code, e.g. ' (QOX)'
+  )
 
   app_sys("app", "reference", filename) |>
     yyjsonr::read_json_file() |>
@@ -45,7 +55,11 @@ get_providers_lookup <- function(selected_geography) {
     dplyr::mutate(
       dplyr::across(
         "provider_label",
-        \(.x) stringr::str_extract(.x, provider_label_regex) |> stringr::str_squish()
+        \(.x) {
+          stringr::str_extract(.x, provider_label_regex) |>
+            stringr::str_squish() |>
+            stringr::str_trunc(18)
+        }
       )
     )
 }

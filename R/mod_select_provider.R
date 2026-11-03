@@ -33,7 +33,8 @@ mod_select_provider_server <- function(id, selected_geography) {
       filename <- switch(
         selected_geography(),
         "la" = "la-datasets.json",
-        "nhp" = "nhp-datasets.json"
+        "nhp" = "nhp-datasets.json",
+        "icb" = "icb-datasets.json"
       )
 
       shiny::req(filename)
@@ -79,11 +80,12 @@ mod_select_provider_server <- function(id, selected_geography) {
     output$choose_org_text <- shiny::renderText({
       unit <- switch(
         selected_geography(),
-        "la" = "local authority",
-        "nhp" = "provider trust"
+        "la" = "a local authority",
+        "nhp" = "a provider trust",
+        "icb" = "an ICB"
       )
 
-      glue::glue("Select a {unit}:")
+      glue::glue("Select {unit}:")
     })
 
     shiny::reactive(input$provider_select)

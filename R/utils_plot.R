@@ -30,7 +30,7 @@ generate_rates_funnel_data <- function(
       national_rate = "std_rate"
     )
 
-  df |>
+  funnel <- df |>
     dplyr::filter(!.data$provider %in% c("national", "unknown")) |>
     dplyr::inner_join(
       national,
@@ -38,7 +38,14 @@ generate_rates_funnel_data <- function(
     ) |>
     dplyr::rename(rate = "std_rate") |>
     dplyr::select(-"crude_rate") |>
-    dplyr::inner_join(providers_lookup, by = "provider") |> # adds plotting label
+    dplyr::inner_join(providers_lookup, by = "provider") # adds plotting label
+
+  if (selected_geography == "icb") {
+    # ICBs don't have peers, but we want to show all ICBs as 'other'
+    peers_lookup <- c()
+  }
+
+  funnel |>
     dplyr::mutate(
       is_peer = dplyr::case_when(
         .data$provider == .env$selected_provider ~ "self",

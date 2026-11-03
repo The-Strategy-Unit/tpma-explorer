@@ -28,7 +28,7 @@ names_lkup <- purrr::map(
 
 jsonlite::write_json(
   names_lkup,
-  "inst/app/data/la-datasets.json",
+  "inst/app/reference/la-datasets.json",
   auto_unbox = TRUE,
   pretty = TRUE
 )
@@ -64,4 +64,4 @@ nbrs_lkup <- readxl::read_xlsx(
   dplyr::slice(1:11) |> # self and 10 peers
   dplyr::ungroup()
 
-readr::write_csv(nbrs_lkup, "inst/app/data/la-peers.csv")
+readr::write_csv(nbrs_lkup, "inst/app/reference/la-peers.csv")
