@@ -19,6 +19,7 @@ Depends:
 Imports:
     arrow,
     azkit,
+    AzureAuth,
     bsicons,
     bslib,
     config,
