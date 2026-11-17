@@ -114,6 +114,36 @@ md_string_to_html <- function(text) {
   shiny::HTML(markdown::mark_html(text, output = FALSE, template = FALSE))
 }
 
+create_openplan_api_request <- function(...) {
+  uri <- Sys.getenv("OPENPLAN_API_URI")
+  app_id <- Sys.getenv("OPENPLAN_API_APP_ID")
+
+  token <- azkit::get_auth_token(
+    resource = app_id,
+    tenant = Sys.getenv("AZ_TENANT_ID")
+  ) |>
+    AzureAuth::extract_jwt()
+
+  httr2::request(uri) |>
+    httr2::req_auth_bearer_token(token) |>
+    httr2::req_url_path(...)
+}
+
+#' Fetch A Trust's Peers From the OpenPlan API
+#' @param provider Character. Trust code, like `"RCF"`.
+#' @return A character vector of trust codes that are the peers of `provider`.
+#' @export
+get_peers <- function(provider) {
+  create_openplan_api_request(
+    "v1",
+    "reference",
+    "peers",
+    "provider",
+    provider
+  ) |>
+    httr2::req_perform() |>
+    httr2::resp_body_json()
+}
 
 # ------------------------------------------------------------------------------
 .arrow_dataset_cache <- new.env(parent = emptyenv())
