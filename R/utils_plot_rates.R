@@ -26,6 +26,31 @@ get_peers_lookup <- function(selected_geography, provider) {
   get_peers(selected_geography, provider)
 }
 
+#' Fetch Peers From the OpenPlan API
+#' @param geography Character. The selected geography, i.e. "nhp", "la" or "icb".
+#' @param provider Character. The provider code for which to find peers, e.g. "RCF".
+#' @return A character vector of codes that are the peers of `provider`.
+#' @export
+get_peers <- function(geography, provider) {
+  geography <- switch(
+    geography,
+    "nhp" = "provider",
+    "la" = "local_authority"
+  )
+
+  peers <- create_openplan_api_request(
+    "v1",
+    "reference",
+    "peers",
+    geography,
+    provider
+  ) |>
+    httr2::req_perform() |>
+    httr2::resp_body_json(simplify = TRUE) # return a vector
+
+  peers[peers != provider] # don't include if self is listed as peer
+}
+
 get_providers_lookup <- function(selected_geography) {
   filename <- switch(
     selected_geography,

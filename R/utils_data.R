@@ -133,29 +133,6 @@ create_openplan_api_request <- function(...) {
     httr2::req_url_path(...)
 }
 
-#' Fetch A Trust's Peers From the OpenPlan API
-#' @param geography Character. The selected geography, i.e. "nhp", "la" or "icb".
-#' @param provider Character. The provider code for which to find peers, e.g. "RCF".
-#' @return A character vector of trust codes that are the peers of `provider`.
-#' @export
-get_peers <- function(geography, provider) {
-  geography <- switch(
-    geography,
-    "nhp" = "provider",
-    "la" = "local_authority"
-  )
-
-  create_openplan_api_request(
-    "v1",
-    "reference",
-    "peers",
-    geography,
-    provider
-  ) |>
-    httr2::req_perform() |>
-    httr2::resp_body_json(simplify = TRUE)
-}
-
 # ------------------------------------------------------------------------------
 .arrow_dataset_cache <- new.env(parent = emptyenv())
 
