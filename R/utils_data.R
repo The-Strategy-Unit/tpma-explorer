@@ -114,6 +114,10 @@ md_string_to_html <- function(text) {
   shiny::HTML(markdown::mark_html(text, output = FALSE, template = FALSE))
 }
 
+#' Convert a Markdown String to HTML
+#' @param ... Character strings. Path to build full request URL from API URI.
+#' @return A httr2_request object.
+#' @export
 create_openplan_api_request <- function(...) {
   uri <- Sys.getenv("OPENPLAN_API_URI")
   app_id <- Sys.getenv("OPENPLAN_API_APP_ID")
@@ -130,19 +134,26 @@ create_openplan_api_request <- function(...) {
 }
 
 #' Fetch A Trust's Peers From the OpenPlan API
-#' @param provider Character. Trust code, like `"RCF"`.
+#' @param geography Character. The selected geography, i.e. "nhp", "la" or "icb".
+#' @param provider Character. The provider code for which to find peers, e.g. "RCF".
 #' @return A character vector of trust codes that are the peers of `provider`.
 #' @export
-get_peers <- function(provider) {
+get_peers <- function(geography, provider) {
+  geography <- switch(
+    geography,
+    "nhp" = "provider",
+    "la" = "local_authority"
+  )
+
   create_openplan_api_request(
     "v1",
     "reference",
     "peers",
-    "provider",
+    geography,
     provider
   ) |>
     httr2::req_perform() |>
-    httr2::resp_body_json()
+    httr2::resp_body_json(simplify = TRUE)
 }
 
 # ------------------------------------------------------------------------------

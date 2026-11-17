@@ -4,10 +4,12 @@
 \alias{get_peers}
 \title{Fetch A Trust's Peers From the OpenPlan API}
 \usage{
-get_peers(provider)
+get_peers(geography, provider)
 }
 \arguments{
-\item{provider}{Character. Trust code, like \code{"RCF"}.}
+\item{geography}{Character. The selected geography, i.e. "nhp", "la" or "icb".}
+
+\item{provider}{Character. The provider code for which to find peers, e.g. "RCF".}
 }
 \value{
 A character vector of trust codes that are the peers of \code{provider}.

@@ -11,26 +11,19 @@
 #'
 #' @export
 get_peers_lookup <- function(selected_geography, provider) {
-  if (selected_geography == "nhp") {
-    peers <- get_peers(provider)
+  if (selected_geography == "icb") {
+    peers <- app_sys("app", "reference", "icb-peers.csv") |>
+      readr::read_csv(col_types = "cc") |>
+      dplyr::filter(
+        .data$procode == .env$provider,
+        .data$peer != .env$provider
+      ) |>
+      dplyr::pull(.data$peer)
+
     return(peers)
   }
 
-  filename <- switch(
-    selected_geography,
-    "la" = "la-peers.csv",
-    "icb" = "icb-peers.csv"
-  )
-
-  shiny::req(filename)
-
-  app_sys("app", "reference", filename) |>
-    readr::read_csv(col_types = "cc") |>
-    dplyr::filter(
-      .data$procode == .env$provider,
-      .data$peer != .env$provider
-    ) |>
-    dplyr::pull(.data$peer)
+  get_peers(selected_geography, provider)
 }
 
 get_providers_lookup <- function(selected_geography) {
