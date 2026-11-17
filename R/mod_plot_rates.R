@@ -36,18 +36,21 @@ mod_plot_rates_server <- function(
 
   # return the shiny module
   shiny::moduleServer(id, function(input, output, session) {
-    peers_lookup <- shiny::reactive({
-      geography <- shiny::req(selected_geography())
-      provider <- shiny::req(selected_provider())
-
-      get_peers_lookup(geography, provider)
-    })
-
     providers_lookup <- shiny::reactive({
       selected_geography <- shiny::req(selected_geography())
       get_providers_lookup(selected_geography)
     }) |>
       shiny::bindEvent(selected_geography())
+
+    peers_lookup <- shiny::reactive({
+      geography <- shiny::req(selected_geography())
+      provider <- shiny::req(selected_provider())
+
+      # the geography/provider pair must match before getting peers
+      shiny::req(provider %in% providers_lookup()[["provider"]])
+
+      get_peers_lookup(geography, provider)
+    })
 
     #  Prepare data ----
     rates_trend_data <- shiny::reactive({
