@@ -7,7 +7,7 @@
 get_peers(geography = c("la", "nhp"), provider)
 }
 \arguments{
-\item{geography}{Character. The selected geography, i.e. "nhp", "la" or "icb".}
+\item{geography}{Character. The selected geography, i.e. "nhp" or "la".}
 
 \item{provider}{Character. The provider code for which to find peers, e.g. "RCF".}
 }
