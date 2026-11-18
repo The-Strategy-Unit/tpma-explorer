@@ -152,6 +152,26 @@ test_that("modules are correctly instantiated", {
   )
 })
 
+test_that("get_peers returns the peers from the response (provider)", {
+  # arrange
+  stub(get_peers, "create_openplan_api_request", "req")
+  stub(get_peers, "httr2::req_perform", "resp")
+  stub(get_peers, "httr2::resp_body_json", c("RYY", "RZZ"))
+
+  # act and assert
+  expect_equal(get_peers("nhp", "RXX"), c("RYY", "RZZ"))
+})
+
+test_that("get_peers returns the peers from the response (la)", {
+  # arrange
+  stub(get_peers, "create_openplan_api_request", "req")
+  stub(get_peers, "httr2::req_perform", "resp")
+  stub(get_peers, "httr2::resp_body_json", c("E06000002", "E06000003"))
+
+  # act and assert
+  expect_equal(get_peers("la", "E06000001"), c("E06000002", "E06000003"))
+})
+
 test_that("peers_lookup", {
   # arrange
   mocks <- server_mod_plot_rates_server_tests()
