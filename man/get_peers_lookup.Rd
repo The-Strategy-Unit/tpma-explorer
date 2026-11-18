@@ -4,7 +4,7 @@
 \alias{get_peers_lookup}
 \title{Get Peers Lookup}
 \usage{
-get_peers_lookup(selected_geography, provider)
+get_peers_lookup(selected_geography = c("la", "nhp", "icb"), provider)
 }
 \arguments{
 \item{selected_geography}{Character. The selected geography, i.e. "nhp",

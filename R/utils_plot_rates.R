@@ -10,7 +10,12 @@
 #' @return A character vector of peer trust codes.
 #'
 #' @export
-get_peers_lookup <- function(selected_geography, provider) {
+get_peers_lookup <- function(
+  selected_geography = c("la", "nhp", "icb"),
+  provider
+) {
+  selected_geography <- match.arg(selected_geography)
+
   if (selected_geography == "icb") {
     peers <- app_sys("app", "reference", "icb-peers.csv") |>
       readr::read_csv(col_types = "cc") |>
@@ -27,11 +32,13 @@ get_peers_lookup <- function(selected_geography, provider) {
 }
 
 #' Fetch Peers From the OpenPlan API
-#' @param geography Character. The selected geography, i.e. "nhp", "la" or "icb".
+#' @param geography Character. The selected geography, i.e. "nhp" or "la".
 #' @param provider Character. The provider code for which to find peers, e.g. "RCF".
 #' @return A character vector of codes that are the peers of `provider`.
 #' @export
-get_peers <- function(geography, provider) {
+get_peers <- function(geography = c("la", "nhp"), provider) {
+  geography <- match.arg(geography)
+
   geography <- switch(
     geography,
     "nhp" = "provider",

@@ -39,15 +39,32 @@ test_that("get_peers_lookup reads the csv for icb", {
   expect_called(api_mock, 0)
 })
 
-test_that("get_peers_lookup errors when the provider is missing", {
-  expect_error(get_peers_lookup("other"))
+test_that("get_peers_lookup errors for an unknown geography without calling the API", {
+  # arrange
+  api_mock <- mock()
+  stub(get_peers_lookup, "get_peers", api_mock)
+
+  # act and assert
+  expect_error(get_peers_lookup("other", "R00"))
+  expect_called(api_mock, 0)
+})
+
+test_that("get_peers errors for a geography without an API endpoint", {
+  # arrange
+  request_mock <- mock()
+  stub(get_peers, "create_openplan_api_request", request_mock)
+
+  # act and assert
+  expect_error(get_peers("icb", "QOX"))
+  expect_error(get_peers("other", "R00"))
+  expect_called(request_mock, 0)
 })
 
 test_that("get_peers returns the peers from the response", {
   # arrange
-  mockery::stub(get_peers, "create_openplan_api_request", "req")
-  mockery::stub(get_peers, "httr2::req_perform", "resp")
-  mockery::stub(get_peers, "httr2::resp_body_json", c("RYY", "RZZ"))
+  stub(get_peers, "create_openplan_api_request", "req")
+  stub(get_peers, "httr2::req_perform", "resp")
+  stub(get_peers, "httr2::resp_body_json", c("RYY", "RZZ"))
 
   # act and assert
   expect_equal(get_peers("nhp", "RXX"), c("RYY", "RZZ"))
@@ -55,9 +72,9 @@ test_that("get_peers returns the peers from the response", {
 
 test_that("get_peers drops the provider itself from its peers", {
   # arrange
-  mockery::stub(get_peers, "create_openplan_api_request", "req")
-  mockery::stub(get_peers, "httr2::req_perform", "resp")
-  mockery::stub(get_peers, "httr2::resp_body_json", c("RXX", "RYY", "RZZ"))
+  stub(get_peers, "create_openplan_api_request", "req")
+  stub(get_peers, "httr2::req_perform", "resp")
+  stub(get_peers, "httr2::resp_body_json", c("RXX", "RYY", "RZZ"))
 
   # act and assert
   expect_equal(get_peers("nhp", "RXX"), c("RYY", "RZZ"))
@@ -65,8 +82,8 @@ test_that("get_peers drops the provider itself from its peers", {
 
 test_that("get_peers propagates a 400 from the API", {
   # arrange
-  mockery::stub(get_peers, "create_openplan_api_request", "req")
-  mockery::stub(
+  stub(get_peers, "create_openplan_api_request", "req")
+  stub(
     get_peers,
     "httr2::req_perform",
     function(...) rlang::abort("HTTP 400 Bad Request.", class = "httr2_http_400")

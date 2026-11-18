@@ -4,7 +4,7 @@
 \alias{get_peers}
 \title{Fetch Peers From the OpenPlan API}
 \usage{
-get_peers(geography, provider)
+get_peers(geography = c("la", "nhp"), provider)
 }
 \arguments{
 \item{geography}{Character. The selected geography, i.e. "nhp", "la" or "icb".}
