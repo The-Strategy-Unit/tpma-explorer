@@ -1,39 +1,79 @@
-test_that("get_peers_lookup", {
+test_that("get_peers_lookup uses get_peers for nhp and la", {
   # arrange
-  expected_nhp <- c(
-    "R1H",
-    "RJE",
-    "RRK",
-    "RHQ",
-    "RR8",
-    "RVV",
-    "RTR",
-    "RX1",
-    "RHM",
-    "RXF"
-  )
-  expected_la <- c(
-    "E06000003",
-    "E08000018",
-    "E08000017",
-    "E06000006",
-    "E08000024",
-    "E08000016",
-    "E08000037",
-    "E07000034",
-    "E08000036",
-    "E08000023"
-  )
+  m <- mock(c("R1H", "RJE"), c("E06000003", "E08000018"))
+  stub(get_peers_lookup, "get_peers", m)
 
   # act
   actual_nhp <- get_peers_lookup("nhp", "R0A")
   actual_la <- get_peers_lookup("la", "E06000001")
 
   # assert
-  expect_equal(actual_nhp, expected_nhp)
-  expect_equal(actual_la, expected_la)
+  expect_equal(actual_nhp, c("R1H", "RJE"))
+  expect_equal(actual_la, c("E06000003", "E08000018"))
+  expect_called(m, 2)
+  expect_args(m, 1, "nhp", "R0A")
+  expect_args(m, 2, "la", "E06000001")
+})
 
+test_that("get_peers_lookup reads the csv for icb", {
+  # arrange
+  icb_peers_csv <- withr::local_tempfile(fileext = ".csv")
+  tibble::tribble(
+    ~procode , ~peer ,
+    "QOX"    , "QOX" , # self listed as a peer, should be dropped
+    "QOX"    , "QWE" ,
+    "QOX"    , "QJG" ,
+    "QWE"    , "QOX"   # a different provider's row, should be dropped
+  ) |>
+    readr::write_csv(icb_peers_csv)
+
+  api_mock <- mock()
+  stub(get_peers_lookup, "get_peers", api_mock)
+  stub(get_peers_lookup, "app_sys", icb_peers_csv)
+
+  # act
+  actual <- get_peers_lookup("icb", "QOX")
+
+  # assert
+  expect_equal(actual, c("QWE", "QJG"))
+  expect_called(api_mock, 0)
+})
+
+test_that("get_peers_lookup errors when the provider is missing", {
   expect_error(get_peers_lookup("other"))
+})
+
+test_that("get_peers returns the peers from the response", {
+  # arrange
+  mockery::stub(get_peers, "create_openplan_api_request", "req")
+  mockery::stub(get_peers, "httr2::req_perform", "resp")
+  mockery::stub(get_peers, "httr2::resp_body_json", c("RYY", "RZZ"))
+
+  # act and assert
+  expect_equal(get_peers("nhp", "RXX"), c("RYY", "RZZ"))
+})
+
+test_that("get_peers drops the provider itself from its peers", {
+  # arrange
+  mockery::stub(get_peers, "create_openplan_api_request", "req")
+  mockery::stub(get_peers, "httr2::req_perform", "resp")
+  mockery::stub(get_peers, "httr2::resp_body_json", c("RXX", "RYY", "RZZ"))
+
+  # act and assert
+  expect_equal(get_peers("nhp", "RXX"), c("RYY", "RZZ"))
+})
+
+test_that("get_peers propagates a 400 from the API", {
+  # arrange
+  mockery::stub(get_peers, "create_openplan_api_request", "req")
+  mockery::stub(
+    get_peers,
+    "httr2::req_perform",
+    function(...) rlang::abort("HTTP 400 Bad Request.", class = "httr2_http_400")
+  )
+
+  # act and assert
+  expect_error(get_peers("nhp", ""), class = "httr2_http_400")
 })
 
 test_that("get_providers_lookup", {

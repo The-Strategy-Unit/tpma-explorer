@@ -165,6 +165,41 @@ test_that("md_string_to_html", {
   expect_args(m2, 1, "content")
 })
 
+test_that("create_openplan_api_request builds the URL and bearer header", {
+  # arrange
+  withr::local_envvar(
+    OPENPLAN_API_URI = "https://api.example.com",
+    OPENPLAN_API_APP_ID = "app-id",
+    AZ_TENANT_ID = "tenant-id"
+  )
+  token_mock <- mockery::mock("token_object")
+  jwt_mock <- mockery::mock("fake-jwt")
+  testthat::local_mocked_bindings(
+    get_auth_token = token_mock,
+    .package = "azkit"
+  )
+  testthat::local_mocked_bindings(
+    extract_jwt = jwt_mock,
+    .package = "AzureAuth"
+  )
+
+  # act
+  req <- create_openplan_api_request("v1", "reference", "peers", "provider", "RXX")
+
+  # assert
+  expect_equal(
+    req$url,
+    "https://api.example.com/v1/reference/peers/provider/RXX"
+  )
+  expect_equal(
+    httr2::req_get_headers(req, redacted = "reveal")$Authorization,
+    "Bearer fake-jwt"
+  )
+  mockery::expect_called(token_mock, 1)
+  mockery::expect_args(token_mock, 1, resource = "app-id", tenant = "tenant-id")
+  mockery::expect_args(jwt_mock, 1, "token_object")
+})
+
 test_that("get_arrow_dataset", {
   # arrange
   m <- mock("dataset", cycle = TRUE)

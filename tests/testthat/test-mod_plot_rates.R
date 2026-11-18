@@ -170,13 +170,12 @@ test_that("peers_lookup", {
     {
       # assert
       expect_equal(peers_lookup(), "peers_lookup")
-
       expect_called(m, 1)
       expect_args(m, 1, "nhp", "R00")
 
       selected_geography("la")
       selected_provider("E06000001")
-      peers_lookup()
+      expect_equal(peers_lookup(), "peers_lookup")
       expect_called(m, 2)
       expect_args(m, 2, "la", "E06000001")
     }
@@ -200,13 +199,12 @@ test_that("providers_lookup", {
     ),
     {
       # assert
-      expect_equal(providers_lookup(), "providers_lookup")
-
+      expect_equal(providers_lookup(), providers_lookup_nhp)
       expect_called(m, 1)
       expect_args(m, 1, "nhp")
 
       selected_geography("la")
-      providers_lookup()
+      expect_equal(providers_lookup(), providers_lookup_la)
       expect_called(m, 2)
       expect_args(m, 2, "la")
     }
@@ -265,7 +263,7 @@ test_that("rates_funnel_data", {
         "R00",
         "Strategy A",
         202324,
-        "providers_lookup",
+        providers_lookup_nhp,
         "peers_lookup"
       )
     }
