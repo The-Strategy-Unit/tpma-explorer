@@ -105,7 +105,12 @@ test_that("get_providers_lookup", {
     "E00000002" = "LA B (E00000002)"
   )
 
-  m <- mock(nhp, la)
+  icb <- list(
+    "QOX" = "NHS ICB A (QOX)",
+    "QWE" = "NHS ICB B (QWE)"
+  )
+
+  m <- mock(nhp, la, icb)
   local_mocked_bindings(read_json_file = m, .package = "yyjsonr")
   local_mocked_bindings(app_sys = file.path)
 
@@ -117,14 +122,20 @@ test_that("get_providers_lookup", {
     provider = c("E00000001", "E00000002"),
     provider_label = c("LA A", "LA B")
   )
+  expected_icb <- tibble::tibble(
+    provider = c("QOX", "QWE"),
+    provider_label = c("NHS ICB A", "NHS ICB B")
+  )
 
   # act
   actual_nhp <- get_providers_lookup("nhp")
   actual_la <- get_providers_lookup("la")
+  actual_icb <- get_providers_lookup("icb")
 
   # assert
   expect_equal(actual_nhp, expected_nhp)
   expect_equal(actual_la, expected_la)
+  expect_equal(actual_icb, expected_icb)
 
   expect_error(get_providers_lookup("other"))
 })

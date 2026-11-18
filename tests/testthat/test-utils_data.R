@@ -209,16 +209,20 @@ test_that("get_arrow_dataset", {
   )
 
   # act
-  actual1 <- get_arrow_dataset("nhp", "dataset")
-  actual2 <- get_arrow_dataset("la", "dataset")
+  actual_nhp <- get_arrow_dataset("nhp", "dataset")
+  actual_la <- get_arrow_dataset("la", "dataset")
+  actual_icb <- get_arrow_dataset("icb", "dataset")
 
   # assert
-  expect_equal(actual1, "dataset")
-  expect_equal(actual2, "dataset")
-  expect_called(m, 2)
+  expect_equal(actual_nhp, "dataset")
+  expect_equal(actual_la, "dataset")
+  expect_equal(actual_icb, "dataset")
+  expect_called(m, 3)
   expect_args(m, 1, "app_data/provider/dataset.parquet")
   expect_args(m, 2, "app_data/lad23cd/dataset.parquet")
+  expect_args(m, 3, "app_data/icb/dataset.parquet")
 
   expect_equal(.arrow_dataset_cache[["provider::dataset"]], "dataset")
   expect_equal(.arrow_dataset_cache[["lad23cd::dataset"]], "dataset")
+  expect_equal(.arrow_dataset_cache[["icb::dataset"]], "dataset")
 })
