@@ -26,7 +26,7 @@ test_that("server returns reactive", {
 
 test_that("providers reactive", {
   # arrange
-  m <- mock("providers nhp", "providers la")
+  m <- mock("providers nhp", "providers la", "providers icb")
 
   testthat::local_mocked_bindings(
     "read_json_file" = m,
@@ -50,20 +50,16 @@ test_that("providers reactive", {
       selected_geography("la")
       expect_equal(providers(), "providers la")
 
+      selected_geography("icb")
+      expect_equal(providers(), "providers icb")
+
       selected_geography("other")
       expect_error(providers())
 
-      expect_called(m, 2)
-      expect_args(
-        m,
-        1,
-        "inst/app/reference/nhp-datasets.json"
-      )
-      expect_args(
-        m,
-        2,
-        "inst/app/reference/la-datasets.json"
-      )
+      expect_called(m, 3)
+      expect_args(m, 1, "inst/app/reference/nhp-datasets.json")
+      expect_args(m, 2, "inst/app/reference/la-datasets.json")
+      expect_args(m, 3, "inst/app/reference/icb-datasets.json")
     }
   )
 })
@@ -80,7 +76,8 @@ test_that("it updates the select input", {
   testthat::local_mocked_bindings(
     "read_json_file" = mock(
       list("A" = "a", "B" = "b"),
-      list("C" = "c", "D" = "d")
+      list("C" = "c", "D" = "d"),
+      list("E" = "e", "F" = "f")
     ),
     .package = "yyjsonr"
   )
@@ -115,6 +112,18 @@ test_that("it updates the select input", {
         "provider_select",
         choices = c("c" = "C", "d" = "D"),
         selected = "E08000025" # default selection
+      )
+
+      selected_geography("icb")
+      session$private$flush()
+      expect_called(m, 3)
+      expect_args(
+        m,
+        3,
+        session,
+        "provider_select",
+        choices = c("e" = "E", "f" = "F"),
+        selected = "QHL" # default selection
       )
     }
   )
@@ -154,4 +163,10 @@ test_that("it selects the restored value when it is valid", {
       )
     }
   )
+})
+
+test_that("get_provider_prompt", {
+  expect_equal(as.character(get_provider_prompt("la")), "Select a local authority:")
+  expect_equal(as.character(get_provider_prompt("nhp")), "Select a provider trust:")
+  expect_equal(as.character(get_provider_prompt("icb")), "Select an ICB:")
 })
