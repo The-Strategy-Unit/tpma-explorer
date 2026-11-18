@@ -66,6 +66,8 @@ mod_select_provider_server <- function(id, selected_geography) {
           "E08000025" # Birmingham
         } else if (geography == "nhp") {
           "RRK" # University Hospitals Birmingham NHS Foundation Trust
+        } else if (geography == "icb") {
+          "QHL" # Birmingham and Solihull
         }
       }
 
