@@ -50,6 +50,10 @@ Note that you should deploy to the 'dev' deployment following pull-requests, or 
 
 Underlying data is generated via the NHP inputs-data pipeline in [the nhp_data repository](https://github.com/The-Strategy-Unit/nhp_data/) and is read into the app from the parquet files in the relevant Azure container (named in the `AZ_CONTAINER_INPUTS` environment variable).
 
+Supporting data files, such as lookups, are stored in `inst/`.
+Peers data is fetched from [the OpenPlan API](https://openplan-api-dev.azurewebsites.net/docs).
+
+
 #### Version
 
 The version of the data fetched by the app is controlled by the `DATA_VERSION` environment variable.

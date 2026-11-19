@@ -1,32 +1,61 @@
 #' Get Peers Lookup
 #'
-#' Reads the appropriate peers lookup file based on the selected geography.
+#' Reads the appropriate peers lookup based on the selected geography.
 #'
 #' @param selected_geography Character. The selected geography, i.e. "nhp",
 #'     "la" or "icb".
 #' @param provider Character. The provider code for which to find peers, e.g.
 #'     "RCF".
 #'
-#' @return A data.frame with provider codes and their corresponding peers.
+#' @return A character vector of peer trust codes.
 #'
 #' @export
-get_peers_lookup <- function(selected_geography, provider) {
-  filename <- switch(
-    selected_geography,
-    "nhp" = "nhp-peers.csv",
-    "la" = "la-peers.csv",
-    "icb" = "icb-peers.csv"
+get_peers_lookup <- function(
+  selected_geography = c("la", "nhp", "icb"),
+  provider
+) {
+  selected_geography <- match.arg(selected_geography)
+
+  if (selected_geography == "icb") {
+    peers <- app_sys("app", "reference", "icb-peers.csv") |>
+      readr::read_csv(col_types = "cc") |>
+      dplyr::filter(
+        .data$procode == .env$provider,
+        .data$peer != .env$provider
+      ) |>
+      dplyr::pull(.data$peer)
+
+    return(peers)
+  }
+
+  get_peers(selected_geography, provider)
+}
+
+#' Fetch Peers From the OpenPlan API
+#' @param geography Character. The selected geography, i.e. "nhp" or "la".
+#' @param provider Character. The provider code for which to find peers, e.g. "RCF".
+#' @return A character vector of codes that are the peers of `provider`.
+#' @export
+get_peers <- function(geography = c("la", "nhp"), provider) {
+  geography <- match.arg(geography)
+
+  geography <- switch(
+    geography,
+    "nhp" = "provider",
+    "la" = "local_authority"
   )
 
-  shiny::req(filename)
+  peers <- create_openplan_api_request(
+    "v1",
+    "reference",
+    "peers",
+    geography,
+    provider
+  ) |>
+    httr2::req_perform() |>
+    httr2::resp_body_json(simplify = TRUE) # return a vector
 
-  app_sys("app", "reference", filename) |>
-    readr::read_csv(col_types = "cc") |>
-    dplyr::filter(
-      .data$procode == .env$provider,
-      .data$peer != .env$provider
-    ) |>
-    dplyr::pull(.data$peer)
+  peers[peers != provider] # don't include if self is listed as peer
 }
 
 get_providers_lookup <- function(selected_geography) {

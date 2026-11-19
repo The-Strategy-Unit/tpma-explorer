@@ -1,3 +1,12 @@
+providers_lookup_nhp <- tibble::tibble(
+  provider = c("R00", "R01"),
+  provider_label = c("R00", "R01")
+)
+providers_lookup_la <- tibble::tibble(
+  provider = c("E06000001", "E06000002"),
+  provider_label = c("LA A", "LA B")
+)
+
 setup_mod_plot_rates_ui_tests <- function(.env = parent.frame()) {
   setup_ui_test(.env)
 
@@ -18,7 +27,11 @@ server_mod_plot_rates_server_tests <- function(.env = parent.frame()) {
     "make_strategy_group_lookup" = mockery::mock("strategy_group_lookup"),
 
     "get_peers_lookup" = mockery::mock("peers_lookup", cycle = TRUE),
-    "get_providers_lookup" = mockery::mock("providers_lookup", cycle = TRUE),
+    "get_providers_lookup" = mockery::mock(
+      providers_lookup_nhp,
+      providers_lookup_la,
+      cycle = TRUE
+    ),
     "get_rates_data" = mockery::mock("rates"),
     "generate_rates_trend_data" = mockery::mock("rates_trend_data"),
     "generate_rates_funnel_data" = mockery::mock("rates_funnel_data"),

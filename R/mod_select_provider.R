@@ -66,6 +66,8 @@ mod_select_provider_server <- function(id, selected_geography) {
           "E08000025" # Birmingham
         } else if (geography == "nhp") {
           "RRK" # University Hospitals Birmingham NHS Foundation Trust
+        } else if (geography == "icb") {
+          "QHL" # Birmingham and Solihull
         }
       }
 
@@ -75,17 +77,10 @@ mod_select_provider_server <- function(id, selected_geography) {
         choices = provider_choices,
         selected = selected_value
       )
-    })
 
-    output$choose_org_text <- shiny::renderText({
-      unit <- switch(
-        selected_geography(),
-        "la" = "a local authority",
-        "nhp" = "a provider trust",
-        "icb" = "an ICB"
-      )
-
-      glue::glue("Select {unit}:")
+      output$choose_org_text <- shiny::renderText({
+        get_provider_prompt(geography)
+      })
     })
 
     shiny::reactive(input$provider_select)

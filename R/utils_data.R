@@ -114,6 +114,24 @@ md_string_to_html <- function(text) {
   shiny::HTML(markdown::mark_html(text, output = FALSE, template = FALSE))
 }
 
+#' Convert a Markdown String to HTML
+#' @param ... Character strings. Path to build full request URL from API URI.
+#' @return A httr2_request object.
+#' @export
+create_openplan_api_request <- function(...) {
+  uri <- Sys.getenv("OPENPLAN_API_URI")
+  app_id <- Sys.getenv("OPENPLAN_API_APP_ID")
+
+  token <- azkit::get_auth_token(
+    resource = app_id,
+    tenant = Sys.getenv("AZ_TENANT_ID")
+  ) |>
+    AzureAuth::extract_jwt()
+
+  httr2::request(uri) |>
+    httr2::req_auth_bearer_token(token) |>
+    httr2::req_url_path(...)
+}
 
 # ------------------------------------------------------------------------------
 .arrow_dataset_cache <- new.env(parent = emptyenv())

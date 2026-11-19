@@ -4,7 +4,7 @@
 \alias{get_peers_lookup}
 \title{Get Peers Lookup}
 \usage{
-get_peers_lookup(selected_geography, provider)
+get_peers_lookup(selected_geography = c("la", "nhp", "icb"), provider)
 }
 \arguments{
 \item{selected_geography}{Character. The selected geography, i.e. "nhp",
@@ -14,8 +14,8 @@ get_peers_lookup(selected_geography, provider)
 "RCF".}
 }
 \value{
-A data.frame with provider codes and their corresponding peers.
+A character vector of peer trust codes.
 }
 \description{
-Reads the appropriate peers lookup file based on the selected geography.
+Reads the appropriate peers lookup based on the selected geography.
 }

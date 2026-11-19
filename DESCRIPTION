@@ -1,6 +1,6 @@
 Package: tpma.explorer
 Title: Explore Opportunities to Reduce Hospital Care
-Version: 0.8.0.9000
+Version: 0.10.0
 Authors@R: c(
     person("Matt", "Dray", , "matt.dray@nhs.net", role = c("aut", "cre")),
     person("Tom", "Jemmett", , "thomas.jemmett@nhs.net", role = "aut"),
@@ -19,6 +19,7 @@ Depends:
 Imports:
     arrow,
     azkit,
+    AzureAuth,
     bsicons,
     bslib,
     config,
